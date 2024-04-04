@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@picocss/pico": "^2.0.6",
+    "ag-grid-community": "^31.2.0",
+    "ag-grid-react": "^31.2.0",
     "axios": "^1.6.8",
     "chart.js": "^4.4.2",
     "jsonwebtoken": "^9.0.2",
