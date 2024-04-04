@@ -1,13 +1,15 @@
 import "./App.scss";
+import { Route, Routes } from "react-router-dom";
+import LanguageSelector from "./components/LanguageSelector";
 
 function App() {
-	return (
-		<>
-			<p className="read-the-docs">
-				Click on the Vite and React logos to learn more
-			</p>
-		</>
-	);
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<LanguageSelector />} />
+      </Routes>
+    </>
+  );
 }
 
 export default App;
