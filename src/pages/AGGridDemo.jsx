@@ -50,7 +50,6 @@ function AGGridDemo() {
 				displayKey: "All",
 				displayName: "All",
 				predicate: (_, cellValue) => {
-					console.log(cellValue);
 					return true;
 				},
 				numberOfInputs: 0,
@@ -64,7 +63,11 @@ function AGGridDemo() {
 
 	// Column Definitions: Defines the columns to be displayed.
 	const [colDefs, setColDefs] = useState([
-		{ field: "date", valueFormatter: (d) => `${d.value.replaceAll(".", "-")}` },
+		{
+			field: "date",
+			valueFormatter: (d) => `${d.value.replaceAll(".", "-")}`,
+			filter: "agDateColumnFilter",
+		},
 		{ field: "description", filter: true },
 		{
 			field: "amount",
