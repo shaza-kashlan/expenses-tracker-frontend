@@ -13,10 +13,10 @@ import { useEffect } from "react";
 function App() {
   //get information from contexts
   const { user, setUser } = useContext(AuthContext);
-  
+
   useEffect(() => {
     // Change language to English when the app starts
-    i18n.changeLanguage("en");
+    i18n.changeLanguage("de");
   }, []);
 
   return (
@@ -33,9 +33,8 @@ function App() {
           }
         />
         <Route path="*" element={<h1> 404 Not found</h1>} />
-        
-       <Route path="/" element={<ExampleTranslation />} />
 
+        <Route path="/" element={<ExampleTranslation />} />
       </Routes>
     </>
   );
