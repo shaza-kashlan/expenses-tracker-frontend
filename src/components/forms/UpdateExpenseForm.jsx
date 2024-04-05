@@ -2,9 +2,11 @@ import React from "react";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../contexts/AuthContext";
+import { useTranslation } from "react-i18next";
 
-const UpdateExpenseForm = () => {
+const UpadteExpenseForm = () => {
+  const { expenseId } = useParams();
+
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
@@ -12,41 +14,40 @@ const UpdateExpenseForm = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [expenseType, setExpenseType] = useState("");
   const [notes, setNotes] = useState("");
+  const [tags, setTags] = useState("");
 
-  const { authenticateUser } = useContext(AuthContext);
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
   const nav = useNavigate();
+  const { t } = useTranslation();
 
-  // ******************* get the information of the ad **********************
+  // ******************* get the information of the expense **********************
   useEffect(() => {
-    const getProduct = async () => {
+    const getExpense = async () => {
       try {
-        const response = await axios(`${API_URL}/new/${productId}`);
-        console.log("here is details of edited product", response.data);
-        setTitle(response.data.title);
+        const response = await axios(`${API_URL}/expenses/${expenseId}`);
+        console.log("here is details of expense", response.data);
+        setDescription(response.data.description);
+        setAmount(response.data.amount)
         setCategory(response.data.category)
-        setCondition(response.data.condtion)
-        setDescription(response.data.description)
-        setPrice(response.data.price)
-        setImageUrl(response.data.imageUrl)
-        setEmail(response.data.email)
-        setPhone(response.data.phone)
-        setPostCode(response.data.postCode)
-        setStreet(response.data.street)
+        setDate(response.data.date)
+        setPaymentMethod(response.data.paymentMethod)
+        setExpenseType(response.data.expenseType)
+        setNotes(response.data.notes)
+        setTags(response.data.tags)
 
       } catch (error) {
-        console.log(error);
+        console.log("there was an error while fetching expense to update", err.response.data.message);
+        setError(err.response.data.message);
       }
     };
-    getProduct();
-  }, [productId]);
+    getExpense();
+  }, [expenseId]);
 
 
-
-// *********** create new expense *************
-  const handleExpense = event => {
+// *********** update expense *************
+  const handleUpdateExpense = event => {
     event.preventDefault();
-    const newExpense = {
+    const updatedExpense = {
       description,
       amount,
       category,
@@ -54,26 +55,27 @@ const UpdateExpenseForm = () => {
       paymentMethod,
       expenseType,
       notes,
+      tags,
     };
 
     axios
-      .post(`${API_URL}/expenses`, newExpense)
+      .put(`${API_URL}/expenses`, updatedExpense)
       .then((response) => {
-        console.log("new expense was created", response.data);
+        console.log("updated expense was created", response.data);
         nav("/");
       })
       .catch((err) => {
-        console.log("there was an error while adding new expense", err.response.data.message);
+        console.log("there was an error while updating expense", err.response.data.message);
         setError(err.response.data.message);
       });
   };
 
   return (
     <div>
-      <form onSubmit={handleExpense}>
+      <form onSubmit={handleUpdateExpense}>
         <div>
           <div>
-            <label>Description</label>
+            <label>{t("Description")}</label>
             <input
               type="text"
               value={description}
@@ -81,11 +83,11 @@ const UpdateExpenseForm = () => {
                 setDescription(e.target.value);
               }}
               required
-              placeholder="Description"
+              placeholder={t({description})}
             />
           </div>
           <div>
-            <label>Amount</label>
+            <label>{t("Amount")}</label>
             <input
               type="text"
               value={amount}
@@ -93,32 +95,32 @@ const UpdateExpenseForm = () => {
                 setAmount(e.target.value);
               }}
               required
-              placeholder="amount"
+              placeholder={t({amount})}
             />
           </div>
           <div>
-            <label>Category</label>
+            <label>{t("Category")}</label>
             <select
               name="category"
               onChange={(e) => {
                 setCategory(e.target.value);
               }}
             >
-              <option value="Home">Home</option>
-              <option value="Food">Food</option>
-              <option value="Travel">Travel</option>
-              <option value="Entertainment">Entertainment</option>
-              <option value="Clothing">Clothing</option>
-              <option value="Shoping">Shoping</option>
-              <option value="Transportation">Transportation</option>
-              <option value="Repair">Repair</option>
-              <option value="Pet">Pet</option>
-              <option value="Health">Health</option>
-              <option value="Other">Other</option>
+              <option value="Home">{t("Home")}</option>
+              <option value="Food">{t("Food")}</option>
+              <option value="Travel">{t("Travel")}</option>
+              <option value="Entertainment">{t("Entertainment")}</option>
+              <option value="Clothing">{t("Clothing")}</option>
+              <option value="Shoping">{t("Shoping")}</option>
+              <option value="Transportation">{t("Transportation")}</option>
+              <option value="Repair">{t("Repair")}</option>
+              <option value="Pet">{t("Pet")}</option>
+              <option value="Health">{t("Health")}</option>
+              <option value="Other">{t("Other")}</option>
             </select>
           </div>
           <div>
-            <label>Date</label>
+            <label>{t("Date")}</label>
             <input
               type="text"
               value={date}
@@ -126,48 +128,71 @@ const UpdateExpenseForm = () => {
                 setDate(e.target.value);
               }}
               required
-              placeholder="Date"
+              placeholder={t({date})}
             />
           </div>
           <div>
-            <label>payment Method</label>
+            <label>{t("payment Method")}</label>
             <select
               name="paymentMethod"
               onChange={(e) => {
                 setPaymentMethod(e.target.value);
               }}
             >
-              <option value="bankAccount">Bank Account</option>
-              <option value="Cash">Cash</option>
+              <option value="cash">{t("Cash")}</option>
+              <option value="creditCard">{t("Credit Card")}</option>
+              <option value="onlineTransfer">{t("Online Transfer")}</option>
             </select>
           </div>
           <div>
-            <label>Expense Type</label>
-            <input
-              type="text"
-              value={expenseType}
+            <label>{t("Expense Type")}</label>
+            <select
+              name="ExpenseType"
               onChange={(e) => {
                 setExpenseType(e.target.value);
               }}
-              placeholder="Expense Type"
-            />
+            >
+              <option value="one-time">{t("one-time")}</option>
+              <option value="recurring">{t("recurring")}</option>
+              <option value="reimbursable">{t("reimbursable")}</option>
+            </select>
           </div>
           <div>
-          <label>Notes</label>
+          <label>{t("Notes")}</label>
             <input
               type="text"
               value={notes}
               onChange={(e) => {
                 setNotes(e.target.value);
               }}
-              placeholder="Notes"
+              placeholder={t({notes})}
             />
           </div>
+          <div>
+      <label>{t("Personal")}</label>
+        <input
+          type="radio"
+          value="Personal"
+          checked={tags === "Personal"}
+          onChange={(e) => {
+            setTags(e.target.value);
+          }}
+        />
+      <label>{t("Business")}</label>
+        <input
+          type="radio"
+          value="Business"
+          checked={tags === "Business"}
+          onChange={(e) => {
+            setTags(e.target.value);
+          }}
+        />
+    </div>
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit">{t("Submit")}</button>
       </form>
     </div>
   );
 };
 
-export default ExpenseForm;
+export default UpadteExpenseForm;

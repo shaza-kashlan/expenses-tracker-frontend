@@ -2,7 +2,9 @@ import React from "react";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../contexts/AuthContext";
+import { useTranslation } from "react-i18next";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const ExpenseForm = () => {
   const [description, setDescription] = useState("");
@@ -12,13 +14,14 @@ const ExpenseForm = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [expenseType, setExpenseType] = useState("");
   const [notes, setNotes] = useState("");
+  const [tags, setTags] = useState("");
 
-  const { authenticateUser } = useContext(AuthContext);
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
   const nav = useNavigate();
+  const { t } = useTranslation();
 
-// *********** create new expense *************
-  const handleExpense = event => {
+  // *********** create new expense *************
+  const handleExpense = (event) => {
     event.preventDefault();
     const newExpense = {
       description,
@@ -37,7 +40,10 @@ const ExpenseForm = () => {
         nav("/");
       })
       .catch((err) => {
-        console.log("there was an error while adding new expense", err.response.data.message);
+        console.log(
+          "there was an error while adding new expense",
+          err.response.data.message
+        );
         setError(err.response.data.message);
       });
   };
@@ -47,7 +53,7 @@ const ExpenseForm = () => {
       <form onSubmit={handleExpense}>
         <div>
           <div>
-            <label>Description</label>
+            <label>{t("Description")}</label>
             <input
               type="text"
               value={description}
@@ -55,11 +61,11 @@ const ExpenseForm = () => {
                 setDescription(e.target.value);
               }}
               required
-              placeholder="Description"
+              placeholder={t("Description")}
             />
           </div>
           <div>
-            <label>Amount</label>
+            <label>{t("Amount")}</label>
             <input
               type="text"
               value={amount}
@@ -67,78 +73,108 @@ const ExpenseForm = () => {
                 setAmount(e.target.value);
               }}
               required
-              placeholder="amount"
+              placeholder={t("Amount")}
             />
           </div>
           <div>
-            <label>Category</label>
+            <label>{t("Category")}</label>
             <select
               name="category"
               onChange={(e) => {
                 setCategory(e.target.value);
               }}
             >
-              <option value="Home">Home</option>
-              <option value="Food">Food</option>
-              <option value="Travel">Travel</option>
-              <option value="Entertainment">Entertainment</option>
-              <option value="Clothing">Clothing</option>
-              <option value="Shoping">Shoping</option>
-              <option value="Transportation">Transportation</option>
-              <option value="Repair">Repair</option>
-              <option value="Pet">Pet</option>
-              <option value="Health">Health</option>
-              <option value="Other">Other</option>
+              <option value="Home">{t("Home")}</option>
+              <option value="Food">{t("Food")}</option>
+              <option value="Travel">{t("Travel")}</option>
+              <option value="Entertainment">{t("Entertainment")}</option>
+              <option value="Clothing">{t("Clothing")}</option>
+              <option value="Shoping">{t("Shoping")}</option>
+              <option value="Transportation">{t("Transportation")}</option>
+              <option value="Repair">{t("Repair")}</option>
+              <option value="Pet">{t("Pet")}</option>
+              <option value="Health">{t("Health")}</option>
+              <option value="Other">{t("Other")}</option>
             </select>
           </div>
           <div>
-            <label>Date</label>
-            <input
+            <label>{t("Date")}</label>
+            <DatePicker
+              selected={date}
+              onChange={(Date) => {
+                setDate(Date);
+              }}
+              dateFormat="dd/MM/yyyy"
+            />
+            {/* <input
               type="text"
               value={date}
               onChange={(e) => {
                 setDate(e.target.value);
               }}
               required
-              placeholder="Date"
-            />
+              placeholder={t("Date")}
+            /> */}
           </div>
           <div>
-            <label>payment Method</label>
+            <label>{t("payment Method")}</label>
             <select
               name="paymentMethod"
               onChange={(e) => {
                 setPaymentMethod(e.target.value);
               }}
             >
-              <option value="bankAccount">Bank Account</option>
-              <option value="Cash">Cash</option>
+              <option value="cash">{t("Cash")}</option>
+              <option value="creditCard">{t("Credit Card")}</option>
+              <option value="onlineTransfer">{t("Online Transfer")}</option>
             </select>
           </div>
           <div>
-            <label>Expense Type</label>
-            <input
-              type="text"
-              value={expenseType}
+            <label>{t("Expense Type")}</label>
+            <select
+              name="ExpenseType"
               onChange={(e) => {
                 setExpenseType(e.target.value);
               }}
-              placeholder="Expense Type"
-            />
+            >
+              <option value="one-time">{t("one-time")}</option>
+              <option value="recurring">{t("recurring")}</option>
+              <option value="reimbursable">{t("reimbursable")}</option>
+            </select>
           </div>
           <div>
-          <label>Notes</label>
+            <label>{t("Notes")}</label>
             <input
               type="text"
               value={notes}
               onChange={(e) => {
                 setNotes(e.target.value);
               }}
-              placeholder="Notes"
+              placeholder={t("Notes")}
+            />
+          </div>
+          <div>
+            <label>{t("Personal")}</label>
+            <input
+              type="radio"
+              value="Personal"
+              checked={tags === "Personal"}
+              onChange={(e) => {
+                setTags(e.target.value);
+              }}
+            />
+            <label>{t("Business")}</label>
+            <input
+              type="radio"
+              value="Business"
+              checked={tags === "Business"}
+              onChange={(e) => {
+                setTags(e.target.value);
+              }}
             />
           </div>
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit">{t("Submit")}</button>
       </form>
     </div>
   );

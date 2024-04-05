@@ -9,5 +9,37 @@
   "repeat_password": "Repeat Password",
   "sign_up": "Sign Up",
   "login": "Login",
-  "logout": "Logout"
+  "logout": "Logout",
+  "Description":"Description",
+  "Amount":"Amount",
+  "Category":"Category",
+  "Home":"Home",
+  "Food":"Food",
+  "Travel":"Travel",
+  "Entertainment": "Entertainment",
+  "Clothing":"Clothing",
+  "Shoping": "Shoping",
+  "Transportation": "Transportation",
+  "Repair":"Repair",
+  "Pet":"Pet",
+  "Health":"Health",
+  "Other": "Other",
+  "Date":"Date",
+  "payment Method": "payment Method",
+  "Bank Account":"Bank Account",
+  "Cash": "Cash",
+  "Online Transfer":"Online Transfer",
+  "one-time": "one-time",
+  "recurring": "recurring",
+  "reimbursable": "reimbursable",
+  "Expense Type": "Expense Type",
+  "Notes": "Notes",
+  "Personal":"Personal",
+  "Business":"Business",
+  "Submit":"Submit"
+
+
+
+
+  
 }
