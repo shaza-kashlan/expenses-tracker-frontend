@@ -37,28 +37,27 @@ export const Login = () => {
   };
   return (
     <div>
-      <h2>Login</h2>
       <form onSubmit={handleLogin}>
-        <label>
-          emailAddress:
-          <input
-            type="emailAddress"
-            value={emailAddress}
-            onChange={(e) => {
-              setEmailAddress(e.target.value);
-            }}
-          />
-        </label>
-        <label>
-          Password:
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
-        </label>
+        <input
+          type="email"
+          value={emailAddress}
+          onChange={(e) => {
+            setEmailAddress(e.target.value);
+          }}
+          required
+          placeholder="Email"
+        />
+
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+          required
+          placeholder="Password"
+        />
+
         <button>Login</button>
       </form>
       {error ? <h4 className="error-message">{error}</h4> : null}
