@@ -6,6 +6,7 @@ import SignUp from "./components/forms/Signup";
 import { Login } from "./components/forms/Login";
 import { HomePage } from "./pages/HomePage";
 import { IsProtected } from "./components/forms/IsProtected";
+import ExpenseForm from "./components/forms/ExpenseForm";
 
 function App() {
   //get information from contexts
@@ -24,6 +25,9 @@ function App() {
             </IsProtected>
           }
         />
+        <Route path="/newexpense" element={
+        <ExpenseForm />
+        } />
         <Route path="*" element={<h1> 404 Not found</h1>} />
       </Routes>
     </>
