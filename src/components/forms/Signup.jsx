@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 export default function SignUp() {
 	const [userName, setUserName] = useState("");
@@ -12,6 +13,8 @@ export default function SignUp() {
 	const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 
 	const nav = useNavigate();
+
+	const { t } = useTranslation();
 
 	const handleSignup = (event) => {
 		event.preventDefault();
@@ -37,12 +40,12 @@ export default function SignUp() {
 	};
 	return (
 		<>
-			<h2>Sign up with us</h2>
+			<h2>{t("sign_up_with_us")}</h2>
 			<form onSubmit={handleSignup} id="signup-form">
 				<input
 					type="text"
 					value={userName}
-					placeholder="User Name"
+					placeholder={t("user_name")}
 					onChange={(e) => {
 						setUserName(e.target.value);
 					}}
@@ -50,7 +53,7 @@ export default function SignUp() {
 				/>
 				<input
 					type="email"
-					placeholder="Email"
+					placeholder={t("email")}
 					value={emailAddress}
 					onChange={(e) => {
 						setEmailAddress(e.target.value);
@@ -60,7 +63,7 @@ export default function SignUp() {
 
 				<input
 					type="password"
-					placeholder="Password"
+					placeholder={t("password")}
 					value={password}
 					onChange={(e) => {
 						setPassword(e.target.value);
@@ -70,7 +73,7 @@ export default function SignUp() {
 
 				<input
 					type="password"
-					placeholder="Repeat Password"
+					placeholder={t("repeat_password")}
 					value={repeatPassword}
 					onChange={(e) => setRepeatPassword(e.target.value)}
 					required

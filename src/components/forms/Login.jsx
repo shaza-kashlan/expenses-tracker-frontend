@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
+import { useTranslation } from "react-i18next";
 
 export const Login = () => {
 	const [emailAddress, setEmailAddress] = useState("");
@@ -10,6 +11,7 @@ export const Login = () => {
 	const { authenticateUser } = useContext(AuthContext);
 	const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 	const nav = useNavigate();
+	const { t } = useTranslation();
 
 	const handleLogin = (event) => {
 		event.preventDefault();
@@ -45,7 +47,7 @@ export const Login = () => {
 						setEmailAddress(e.target.value);
 					}}
 					required
-					placeholder="Email"
+					placeholder={t("email")}
 				/>
 
 				<input
@@ -55,10 +57,10 @@ export const Login = () => {
 						setPassword(e.target.value);
 					}}
 					required
-					placeholder="Password"
+					placeholder={t("password")}
 				/>
 
-				<button type="submit">Login</button>
+				<button type="submit">{t("login")}</button>
 				{error ? <h4 className="error-message">{error}</h4> : null}
 			</form>
 			<p>
