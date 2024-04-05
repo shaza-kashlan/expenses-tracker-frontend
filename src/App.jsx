@@ -11,6 +11,7 @@ import ExampleTranslation from "./components/ExampleTranslation";
 import i18n from "../i18n";
 import { useEffect } from "react";
 import AGGridDemo from "./pages/AGGridDemo";
+export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 
 function App() {
 	//get information from contexts
@@ -34,10 +35,11 @@ function App() {
 						</IsProtected>
 					}
 				/>
-				<Route path="*" element={<h1> 404 Not found</h1>} />
 
 				<Route path="/" element={<ExampleTranslation />} />
 				<Route path="/grid" element={<AGGridDemo />} />
+
+				<Route path="*" element={<h1> 404 Not found</h1>} />
 			</Routes>
 		</>
 	);
