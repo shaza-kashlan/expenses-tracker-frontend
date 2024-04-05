@@ -1,0 +1,13 @@
+{
+  "hello": "Hello",
+  "cancel": "Cancel",
+  "continue": "Continue",
+  "sign_up_with_us": "Sign up with us",
+  "user_name": "User Name",
+  "password": "Password",
+  "email": "E-Mail",
+  "repeat_password": "Repeat Password",
+  "sign_up": "Sign Up",
+  "login": "Login",
+  "logout": "Logout"
+}

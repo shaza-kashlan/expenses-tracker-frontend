@@ -1,36 +1,44 @@
+import { useContext } from "react";
 import "./App.scss";
-import { useState } from "react";
-import { AgGridReact } from "ag-grid-react"; // AG Grid Component
-import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
-import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
+
+import { Route, Routes } from "react-router-dom";
+import { AuthContext } from "./contexts/AuthContext";
+import SignUp from "./components/forms/Signup";
+import { Login } from "./components/forms/Login";
+import { HomePage } from "./pages/HomePage";
+import { IsProtected } from "./components/forms/IsProtected";
+import ExampleTranslation from "./components/ExampleTranslation";
+import i18n from "../i18n";
+import { useEffect } from "react";
+import AGGridDemo from "./pages/AGGridDemo";
 
 function App() {
-	// Row Data: The data to be displayed.
-	const [rowData, setRowData] = useState([
-		{ make: "Tesla", model: "Model Y", price: 64950, electric: true },
-		{ make: "Ford", model: "F-Series", price: 33850, electric: false },
-		{ make: "Toyota", model: "Corolla", price: 29600, electric: false },
-	]);
+	//get information from contexts
+	const { user, setUser } = useContext(AuthContext);
 
-	// Column Definitions: Defines the columns to be displayed.
-	const [colDefs, setColDefs] = useState([
-		{ field: "make" },
-		{ field: "model" },
-		{ field: "price" },
-		{ field: "electric" },
-	]);
+	useEffect(() => {
+		// Change language to English when the app starts
+		i18n.changeLanguage("de");
+	}, []);
 
 	return (
 		<>
-			<p className="read-the-docs">
-				Click on the Vite and React logos to learn more
-			</p>
-			<div
-				className="ag-theme-quartz" // applying the grid theme
-				style={{ height: 500 }} // the grid will fill the size of the parent container
-			>
-				<AgGridReact rowData={rowData} columnDefs={colDefs} />
-			</div>
+			<Routes>
+				<Route path="/" element={<SignUp />} />
+				<Route path="/login" element={<Login />} />
+				<Route
+					path="/home"
+					element={
+						<IsProtected>
+							<HomePage />
+						</IsProtected>
+					}
+				/>
+				<Route path="*" element={<h1> 404 Not found</h1>} />
+
+				<Route path="/" element={<ExampleTranslation />} />
+				<Route path="/grid" element={<AGGridDemo />} />
+			</Routes>
 		</>
 	);
 }
