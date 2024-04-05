@@ -1,8 +1,9 @@
 import { useNavigate, Link } from "react-router-dom";
-import { useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 const Header = ({ loggedin }) => {
 	const navigate = useNavigate();
+	const { t } = useTranslation();
 
 	return (
 		<header>
@@ -27,7 +28,7 @@ const Header = ({ loggedin }) => {
 							className="button-small"
 							onClick={() => navigate("/login")}
 						>
-							Log in
+							{t("login")}
 						</button>
 					</ul>
 				)}
