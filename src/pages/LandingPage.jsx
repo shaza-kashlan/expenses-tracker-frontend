@@ -1,13 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import i18n from "../../i18n";
 
 const LandingPage = () => {
 	const navigate = useNavigate();
-	const handleChangeLanguage = (lang) => {
-		i18n.changeLanguage(lang);
-	};
 	const { t } = useTranslation();
+
 	return (
 		<div id="landing-page-content">
 			<h1>{t("jaet")}</h1>
