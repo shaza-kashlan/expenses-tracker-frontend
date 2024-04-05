@@ -1,5 +1,12 @@
 {
   "hello": "Hallo",
   "cancel": "Abbrechen",
-  "continue": "Weiter"
+  "continue": "Weiter",
+  "sign_up_with_us": "Registrieren Sie sich bei uns",
+  "password": "Passwort",
+  "email": "E-Mail",
+  "repeat_password": "Passwort wiederholen",
+  "sign_up": "Registrieren",
+  "login": "Anmelden",
+  "logout": "Abmelden"
 }
