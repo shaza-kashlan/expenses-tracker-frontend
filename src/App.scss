@@ -11,9 +11,65 @@
   $enable-semantic-container: true
 );
 
+body {
+  height: 100dvh;
+}
+
 #root {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  height: 100%;
   text-align: center;
+  background-color: azure;
+}
+
+header {
+  background-color: bisque;
+  max-width: 100% !important;
+  height: 75px;
+  
+  > nav {
+    background-color: burlywood;
+    margin: 0 auto;
+    padding: 0 1rem;
+    @media screen and (min > 576px) {
+      max-width: 510px;
+    }
+    @media screen and (width > 768px) {
+      max-width: 700px;
+    }
+    @media screen and (width > 1024px) {
+      max-width: 950px;
+    }
+
+    > ul > a > li {
+      font-size: xx-large;
+      padding: 0;
+    }
+
+    button[type=button] {
+      margin-bottom: 0;
+    }
+  }
+}
+
+main {
+  max-width: 1280px;
+  background-color: beige;
+  height: calc(100% - 75px);
+  display: flex;
+  flex-direction: column;
+}
+
+.button-small {
+  padding: .25rem;
+}
+
+#login-form, #signup-form {
+  margin: auto;
+  padding: 0rem .5rem 3rem .5rem;
+
+  @media screen and (width > 576px) {
+    padding: 0rem 2rem 3rem 2rem;
+  }
+  
 }
