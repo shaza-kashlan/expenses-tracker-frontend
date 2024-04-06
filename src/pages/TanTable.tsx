@@ -8,8 +8,9 @@ import {
 	getCoreRowModel,
 	useReactTable,
 	getSortedRowModel,
-	SortingState,
+	type SortingState,
 	getFilteredRowModel } from '@tanstack/react-table'
+import React from "react";
 
 
 
@@ -416,13 +417,13 @@ const myData = [
     },
 ]
 	
-const columnHelper = createColumnHelper<Person>()
+const columnHelper = createColumnHelper<Expense>()
 
 const columns = [
 	columnHelper.accessor('date', {
 		cell: info => info.getValue(),
 		footer: info => info.column.id,
-		sortDescFirst: true,
+		sortDescFirst: false,
 		sortingFn: 'datetime',
 	}),
 	columnHelper.accessor('description', {
@@ -431,10 +432,23 @@ const columns = [
 	}),
 	columnHelper.accessor('amount', {
 		cell: info => info.getValue().toFixed(2) + " €",
-		footer: info => info.column.id
+		footer: info => info.column.id,
+		sortingFn: 'basic',
 	}),
 	columnHelper.accessor('payment_method', {
-		cell: info => info.getValue(),
+		cell: info => {
+			const value = info.getValue();
+			if (value === "bank_statement") {
+				return "Bank"
+			}
+			if (value === "credit_card_statement") {
+				return "Credit"
+			}
+			if (value === "cash") {
+				return "Cash"
+			}
+			return value
+		},
 		footer: info => info.column.id
 	})
 ]
@@ -471,9 +485,12 @@ const columnsOrig = [
 
 const TanTable = () => {
 
-	const [data, _setData] = useState(() => [...myData])
+	const [data, _setData] = useState(() => [...myData.sort((a,b) => b.date - a.date)])
 	const rerender = useReducer(() => ({}), {})[1]
-	const [sorting, setSorting] = useState<SortingState>([])
+	const [sorting, setSorting] = useState<SortingState>([			{
+		id: 'date',
+		desc: true, // sort by name in descending order by default
+	}])
 
 
 	// useEffect(() => {
@@ -495,7 +512,7 @@ const table = useReactTable({
 	columns,
 	state: {
 		sorting,
-	  },
+	},
 	onSortingChange: setSorting,
 	getCoreRowModel: getCoreRowModel(),
 	getSortedRowModel: getSortedRowModel(),
