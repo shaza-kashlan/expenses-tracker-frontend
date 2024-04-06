@@ -10,7 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@picocss/pico": "^2.0.6",
+    "@tanstack/match-sorter-utils": "^8.15.1",
     "@tanstack/react-table": "^8.15.3",
     "ag-grid-community": "^31.2.0",
     "ag-grid-react": "^31.2.0",
