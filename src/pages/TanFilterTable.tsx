@@ -1,5 +1,4 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import React, {useState} from 'react'
 
 import './index.css'
 
@@ -28,8 +27,6 @@ import {
   rankItem,
   compareItems,
 } from '@tanstack/match-sorter-utils'
-
-import { makeData, type Person } from './makeData'
 
 declare module '@tanstack/react-table' {
   interface FilterFns {
@@ -472,64 +469,6 @@ function TanFilterTable() {
   const columnHelper = createColumnHelper<Expense>()
   const columns = React.useMemo<ColumnDef<Expense, any>[]>(
     () => [
-    //   {
-    //     header: 'Name',
-    //     footer: props => props.column.id,
-    //     columns: [
-    //       {
-    //         accessorKey: 'firstName',
-    //         cell: info => info.getValue(),
-    //         footer: props => props.column.id,
-    //       },
-    //       {
-    //         accessorFn: row => row.lastName,
-    //         id: 'lastName',
-    //         cell: info => info.getValue(),
-    //         header: () => <span>Last Name</span>,
-    //         footer: props => props.column.id,
-    //       },
-    //       {
-    //         accessorFn: row => `${row.firstName} ${row.lastName}`,
-    //         id: 'fullName',
-    //         header: 'Full Name',
-    //         cell: info => info.getValue(),
-    //         footer: props => props.column.id,
-    //         filterFn: 'fuzzy',
-    //         sortingFn: fuzzySort,
-    //       },
-    //     ],
-    //   },
-    //   {
-    //     header: 'Info',
-    //     footer: props => props.column.id,
-    //     columns: [
-    //       {
-    //         accessorKey: 'age',
-    //         header: () => 'Age',
-    //         footer: props => props.column.id,
-    //       },
-    //       {
-    //         header: 'More Info',
-    //         columns: [
-    //           {
-    //             accessorKey: 'visits',
-    //             header: () => <span>Visits</span>,
-    //             footer: props => props.column.id,
-    //           },
-    //           {
-    //             accessorKey: 'status',
-    //             header: 'Status',
-    //             footer: props => props.column.id,
-    //           },
-    //           {
-    //             accessorKey: 'progress',
-    //             header: 'Profile Progress',
-    //             footer: props => props.column.id,
-    //           },
-    //         ],
-    //       },
-    //     ],
-    //   },
     columnHelper.accessor('date', {
 		cell: info => info.getValue(),
 		footer: info => info.column.id,
@@ -574,6 +513,14 @@ function TanFilterTable() {
     filterFns: {
       fuzzy: fuzzyFilter,
     },
+    initialState: {
+        sorting: [
+          {
+            id: 'date',
+            desc: true, // sort by name in descending order by default
+          },
+        ],
+      },
     state: {
       columnFilters,
       globalFilter,
@@ -593,10 +540,11 @@ function TanFilterTable() {
     debugColumns: false,
   })
 
+
   React.useEffect(() => {
-    if (table.getState().columnFilters[0]?.id === 'fullName') {
-      if (table.getState().sorting[0]?.id !== 'fullName') {
-        table.setSorting([{ id: 'fullName', desc: false }])
+    if (table.getState().columnFilters[0]?.id === 'date') {
+      if (table.getState().sorting[0]?.id !== 'date') {
+        table.setSorting([{ id: 'date', desc: true }])
       }
     }
   }, [table.getState().columnFilters[0]?.id])
