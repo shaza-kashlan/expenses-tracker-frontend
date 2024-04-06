@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import axios, { Axios } from "axios";
+import axios from "axios";
+import { API_URL } from "../App";
+
 import { AgGridReact } from "ag-grid-react"; // AG Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
-import { API_URL } from "../App";
-import ExpenseFilter from "../components/grid/ExpenseFilter";
 
 function AGGridDemo() {
 	// Row Data: The data to be displayed.
@@ -61,6 +61,42 @@ function AGGridDemo() {
 		closeOnApply: true,
 	};
 
+	const methodFilterParams = {
+		filterOptions: [
+			{
+				displayKey: "bank",
+				displayName: "Bank",
+				predicate: (_, cellValue) =>
+					cellValue === "bank_account" || cellValue === "bank_statement",
+				numberOfInputs: 0,
+			},
+			{
+				displayKey: "credit",
+				displayName: "Credit",
+				predicate: (_, cellValue) => cellValue === "credit_card_statement",
+				numberOfInputs: 0,
+			},
+			{
+				displayKey: "cash",
+				displayName: "Cash",
+				predicate: (_, cellValue) => cellValue === "cash",
+				numberOfInputs: 0,
+			},
+			{
+				displayKey: "All",
+				displayName: "All",
+				predicate: (_, cellValue) => {
+					return true;
+				},
+				numberOfInputs: 0,
+			},
+		],
+		defaultOption: "All",
+		maxNumConditions: 1,
+		buttons: ["apply"],
+		closeOnApply: true,
+	};
+
 	// Column Definitions: Defines the columns to be displayed.
 	const [colDefs, setColDefs] = useState([
 		{
@@ -83,7 +119,23 @@ function AGGridDemo() {
 			filterParams: amountFilterParams,
 		},
 		{ field: "category" },
-		{ field: "payment_method" },
+		{
+			field: "payment_method",
+			filter: true,
+			filterParams: methodFilterParams,
+			valueFormatter: (d) => {
+				if (d.value.startsWith("bank_")) {
+					return "Bank";
+				}
+				if (d.value.startsWith("credit_card_")) {
+					return "Credit";
+				}
+				if (d.value.startsWith("cash")) {
+					return "Cash";
+				}
+				return d.value;
+			},
+		},
 	]);
 
 	const pagination = true;
@@ -106,9 +158,33 @@ function AGGridDemo() {
 
 	return (
 		<>
-			<p className="read-the-docs">
-				Click on the Vite and React logos to learn more
-			</p>
+			<h1>AG Table Demo</h1>
+			<ul
+				style={{
+					listStyleType: "none",
+					textAlign: "left",
+					border: "1px grey solid",
+				}}
+			>
+				<li style={{ listStyleType: "none", fontWeight: "600" }}>Findings:</li>
+				<li style={{ listStyleType: "none" }}>
+					+ Getting data in is super easy
+				</li>
+				<li style={{ listStyleType: "none" }}>+ Great built in filters</li>
+				<li style={{ listStyleType: "none" }}>
+					+ Still very fast even with a lot of data
+				</li>
+				<li style={{ listStyleType: "none" }}>
+					- Not too great in mobile view by default
+				</li>
+				<li style={{ listStyleType: "none" }}>
+					- Column grouping and totals are enterprise feature
+				</li>
+				<li style={{ listStyleType: "none" }}>
+					- We would still need to do styling because it looks quite corporate
+					by default
+				</li>
+			</ul>
 			<div
 				className="ag-theme-quartz" // applying the grid theme
 				style={{ height: "750px" }} // the grid will fill the size of the parent container
