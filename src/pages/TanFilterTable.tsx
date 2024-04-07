@@ -512,7 +512,7 @@ function TanFilterTable() {
             const theAmount = info.getValue()
             return <span className={theAmount < 0 ? 'rag-red' : "rag-green"}>{theAmount.toFixed(2)} €</span>
         },
-		footer: info => info.column.id,
+		footer: ({table}) => table.getFilteredRowModel().rows.reduce((total,row) => total + +row.getValue("amount"),0).toFixed(2) + ' €',
 		sortingFn: 'basic',
 	}),
 	columnHelper.accessor('payment_method', {
@@ -555,10 +555,7 @@ function TanFilterTable() {
     state: {
       columnFilters,
       globalFilter,
-      pagination: {
-        pageSize: 20,
-        pageIndex: 0
-      }
+
     },
     onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
@@ -679,6 +676,22 @@ function TanFilterTable() {
             )
           })}
         </tbody>
+        <tfoot>
+          {table.getFooterGroups().map(footerGroup => (
+            <tr key={footerGroup.id}>
+              {footerGroup.headers.map(header => (
+                <th key={header.id}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.footer,
+                        header.getContext()
+                      )}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </tfoot>
       </table>
       <div className="h-2" />
       <div className="flex items-center gap-2">
