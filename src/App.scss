@@ -30,7 +30,7 @@ header {
   height: 75px;
   justify-content: center;
   align-content: center;
-  
+
   > nav {
     background-color: burlywood;
     margin: 0 auto;
@@ -50,7 +50,7 @@ header {
       padding: 0;
     }
 
-    button[type=button] {
+    button[type="button"] {
       margin-bottom: 0;
     }
   }
@@ -62,20 +62,21 @@ main {
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: var(--pico-block-spacing-vertical) 0  !important;
+  padding: var(--pico-block-spacing-vertical) 0 !important;
 }
 
 .button-small {
-  padding: .25rem;
+  padding: 0.25rem;
 }
 
-#login-form, #signup-form {
+#login-form,
+#signup-form {
   margin: auto;
-  padding: 0rem .5rem 3rem .5rem;
+  padding: 0rem 0.5rem 3rem 0.5rem;
 
   @media screen and (width > 576px) {
     padding: 0rem 2rem 3rem 2rem;
-  } 
+  }
 }
 
 #landing-page-content {
@@ -85,10 +86,10 @@ main {
   .parallax {
     /* The image used */
     //background-image: url("https://picsum.photos/500/300");
-  
+
     /* Set a specific height */
     min-height: 300px;
-  
+
     /* Create the parallax scrolling effect */
     background-attachment: fixed;
     background-position: center;
@@ -104,5 +105,69 @@ main {
   button {
     margin: 0 auto 3rem auto;
     max-width: 500px;
+  }
+}
+
+#add-expense-form,
+#update-expense-form {
+  padding: 0rem 3rem 3rem 3rem;
+  margin: 0;
+
+  h3 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  input,
+  select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+
+  .form-group {
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  .tooltip {
+    display: inline;
+  }
+
+  small {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-style: italic;
+  }
+
+  button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    margin-bottom: 10px;
+    justify-content: flex-start;
+  }
+
+  input[type="checkbox"] {
+    margin-left: 1rem;
+    margin-top: 1rem;
+    width: auto;
   }
 }

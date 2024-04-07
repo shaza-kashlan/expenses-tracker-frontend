@@ -96,7 +96,7 @@ const AddExpenseSourceForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} id="add-expense-form">
       <h3>Add New Expense Source </h3>
       <input
         type="text"
@@ -143,6 +143,7 @@ const AddExpenseSourceForm = () => {
             value={formData.mapping.date}
             onChange={handleChange}
             placeholder={t("date")}
+            onTouchStart={(e) => e.stopPropagation()}
           />
         </div>
       </Tooltip>
@@ -155,6 +156,7 @@ const AddExpenseSourceForm = () => {
             value={formData.mapping.description}
             onChange={handleChange}
             placeholder={t("description")}
+            onTouchStart={(e) => e.stopPropagation()}
           />
         </div>
       </Tooltip>
@@ -167,18 +169,20 @@ const AddExpenseSourceForm = () => {
             value={formData.mapping.notes}
             onChange={handleChange}
             placeholder={t("notes")}
+            onTouchStart={(e) => e.stopPropagation()}
           />
         </div>
       </Tooltip>
       <Tooltip title={t("amount-tooltip")} placement="top-start">
         <div className="form-group">
           <input
-            type="Number"
+            type="text"
             className="form-control"
             name="mapping.amount"
             value={formData.mapping.amount}
             onChange={handleChange}
             placeholder={t("amount")}
+            onTouchStart={(e) => e.stopPropagation()}
           />
         </div>
       </Tooltip>
@@ -191,6 +195,7 @@ const AddExpenseSourceForm = () => {
             value={formData.mapping.payee}
             onChange={handleChange}
             placeholder={t("payee")}
+            onTouchStart={(e) => e.stopPropagation()}
           />
         </div>
       </Tooltip>
