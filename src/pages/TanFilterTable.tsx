@@ -50,6 +50,16 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   return itemRank.passed
 }
 
+const typeFilter: FilterFn<any> = (row, columnId, value) => {
+    if (value === "expense") {
+        return row.getValue(columnId) < 0
+    }
+    if (value === "income") {
+        return row.getValue(columnId) > 0
+    }
+    return true
+}
+
 const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
   let dir = 0
 
@@ -517,7 +527,7 @@ function TanFilterTable() {
         sorting: [
           {
             id: 'date',
-            desc: true, // sort by name in descending order by default
+            desc: true, 
           },
         ],
       },
@@ -527,7 +537,7 @@ function TanFilterTable() {
     },
     onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
-    globalFilterFn: fuzzyFilter,
+    globalFilterFn: typeFilter,// fuzzyFilter,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -551,13 +561,26 @@ function TanFilterTable() {
 
   return (
     <div className="p-2">
-      <div>
+      {/* <div>
         <DebouncedInput
           value={globalFilter ?? ''}
-          onChange={value => setGlobalFilter(String(value))}
+          onChange={() => "foo"}
           className="p-2 font-lg shadow border border-block"
           placeholder="Search all columns..."
         />
+      </div> */}
+      <div>
+            <select 
+                defaultValue={"all"}
+                onChange={event => {
+                    console.log(event.target.value)
+                    setGlobalFilter(String(event.target.value))
+                }
+                }>  
+                <option value="all">All</option>
+                <option value="expense">Expense</option>
+                <option value="income">Income</option> 
+            </select>
       </div>
       <div className="h-2" />
       <table>
@@ -660,7 +683,7 @@ function TanFilterTable() {
           </strong>
         </span>
         <span className="flex items-center gap-1">
-          | Go to page:
+          {" "}| Go to page:
           <input
             type="number"
             defaultValue={table.getState().pagination.pageIndex + 1}
