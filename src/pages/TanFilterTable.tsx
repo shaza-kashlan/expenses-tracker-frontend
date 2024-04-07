@@ -555,6 +555,10 @@ function TanFilterTable() {
     state: {
       columnFilters,
       globalFilter,
+      pagination: {
+        pageSize: 20,
+        pageIndex: 0
+      }
     },
     onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
@@ -735,7 +739,7 @@ function TanFilterTable() {
             table.setPageSize(Number(e.target.value))
           }}
         >
-          {[20, 30, 40, 50].map(pageSize => (
+          {[10, 20, 30, 40, 50].map(pageSize => (
             <option key={pageSize} value={pageSize}>
               Show {pageSize}
             </option>
