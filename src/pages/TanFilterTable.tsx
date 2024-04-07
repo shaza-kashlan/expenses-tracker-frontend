@@ -1,4 +1,6 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect, useReducer, useMemo} from 'react'
+import axios from 'axios'
+import { API_URL } from '../App'
 
 import './index.css'
 
@@ -27,6 +29,7 @@ import {
   rankItem,
   compareItems,
 } from '@tanstack/match-sorter-utils'
+import { useNavigate } from 'react-router-dom'
 
 declare module '@tanstack/react-table' {
   interface FilterFns {
@@ -80,6 +83,7 @@ type Expense = {
 	amount: number
 	date: string
 	payment_method: string
+    _id: string
 }
 
 const myData = [
@@ -469,16 +473,26 @@ const myData = [
 ]
 
 function TanFilterTable() {
-  const rerender = React.useReducer(() => ({}), {})[1]
+  const rerender = useReducer(() => ({}), {})[1]
+  const navigate = useNavigate()
 
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
     []
   )
-  const [globalFilter, setGlobalFilter] = React.useState('')
+  const [globalFilter, setGlobalFilter] = useState('')
 
   const columnHelper = createColumnHelper<Expense>()
-  const columns = React.useMemo<ColumnDef<Expense, any>[]>(
+  const columns = useMemo<ColumnDef<Expense, any>[]>(
     () => [
+    columnHelper.accessor('_id', {
+        header: "",
+        enableColumnFilter: false,
+        cell: info => {
+            const theID = info.getValue()
+            return (<button className='button-more-info' type="button" onClick={() => navigate(`/expenses/${theID}`)}><img src="/open.png" alt="open" /></button>)
+        },
+        footer: info => info.column.id
+    }),
     columnHelper.accessor('date', {
 		cell: info => info.getValue(),
 		footer: info => info.column.id,
@@ -486,11 +500,18 @@ function TanFilterTable() {
 		sortingFn: 'datetime',
 	}),
 	columnHelper.accessor('description', {
-		cell: info => `${info.getValue().slice(0,25)} ...`,
+		cell: info => {
+            //console.log(info)
+            const theDescription = info.getValue()
+            return theDescription.length > 25 ? `${info.getValue().slice(0,25)} ...` : theDescription
+        },
 		footer: info => info.column.id
 	}),
 	columnHelper.accessor('amount', {
-		cell: info => `${info.getValue().toFixed(2)} €`,
+		cell: info => {
+            const theAmount = info.getValue()
+            return <span className={theAmount < 0 ? 'rag-red' : "rag-green"}>{theAmount.toFixed(2)} €</span>
+        },
 		footer: info => info.column.id,
 		sortingFn: 'basic',
 	}),
@@ -509,12 +530,12 @@ function TanFilterTable() {
 			return value
 		},
 		footer: info => info.column.id
-	})
+	}),
     ],
     []
   )
 
-  const [data, setData] = React.useState<Expense[]>(myData)
+  const [data, setData] = useState<Expense[]>(myData)
   const refreshData = () => setData(myData)
 
   const table = useReactTable({
@@ -550,8 +571,22 @@ function TanFilterTable() {
     debugColumns: false,
   })
 
+  useEffect(() => {
+    const getExpenses = async () => {
+        const token = localStorage.getItem("accessToken");
+        const expenses = await axios.get(`${API_URL}/expenses`, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+        console.log(expenses.data);
+        console.log(`got ${expenses.data.length} expenses`);
+        setData(expenses.data);
+        return;
+    };
+    getExpenses();
+}, []);
 
-  React.useEffect(() => {
+
+  useEffect(() => {
     if (table.getState().columnFilters[0]?.id === 'date') {
       if (table.getState().sorting[0]?.id !== 'date') {
         table.setSorting([{ id: 'date', desc: true }])
@@ -732,7 +767,7 @@ function Filter({
 
   const columnFilterValue = column.getFilterValue()
 
-  const sortedUniqueValues = React.useMemo(
+  const sortedUniqueValues = useMemo(
     () =>
       typeof firstValue === 'number'
         ? []
@@ -807,13 +842,13 @@ function DebouncedInput({
   onChange: (value: string | number) => void
   debounce?: number
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'>) {
-  const [value, setValue] = React.useState(initialValue)
+  const [value, setValue] = useState(initialValue)
 
-  React.useEffect(() => {
+  useEffect(() => {
     setValue(initialValue)
   }, [initialValue])
 
-  React.useEffect(() => {
+  useEffect(() => {
     const timeout = setTimeout(() => {
       onChange(value)
     }, debounce)
