@@ -97,6 +97,7 @@ const AddExpenseSourceForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <h3>Add New Expense Source </h3>
       <input
         type="text"
         name="name"
