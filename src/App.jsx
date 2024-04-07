@@ -34,9 +34,9 @@ function App() {
           }
         />
         <Route path="/newexpense" element={
-          // <IsProtected>
+            <IsProtected>
             <ExpenseForm />
-            // </IsProtected>
+             </IsProtected>
         } />
         <Route path="*" element={<h1> 404 Not found</h1>} />
 

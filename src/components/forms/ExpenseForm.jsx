@@ -3,8 +3,8 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const ExpenseForm = () => {
   const [description, setDescription] = useState("");
@@ -21,7 +21,7 @@ const ExpenseForm = () => {
   const { t } = useTranslation();
 
   // *********** create new expense *************
-  const handleExpense = (event) => {
+  const handleExpense = async (event) => {
     event.preventDefault();
     const newExpense = {
       description,
@@ -32,20 +32,34 @@ const ExpenseForm = () => {
       expenseType,
       notes,
     };
+    console.log("newExpense", newExpense);
 
-    axios
-      .post(`${API_URL}/expenses`, newExpense)
-      .then((response) => {
-        console.log("new expense was created", response.data);
-        nav("/");
-      })
-      .catch((err) => {
-        console.log(
-          "there was an error while adding new expense",
-          err.response.data.message
-        );
-        setError(err.response.data.message);
+    // Retrieve token from local storage
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+      console.error("Access token not found in local storage");
+      return;
+    }
+
+    // Set headers with token
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    // axios
+    //   .get(`${API_URL}/expenses`, {
+    //     headers: { Authorization: `Bearer ${token}` },
+    //   })
+    //   .then((response) => console.log("responseee", response.data))
+    //   .catch((error) => console.log(error));
+    try {
+      const response = await axios.post(`${API_URL}/expenses`, newExpense, {
+        headers
       });
+      console.log("Expense added successfully:", response.data);
+    } catch (error) {
+      console.error("There was a problem adding the expense:", error);
+    }
   };
 
   return (
@@ -105,16 +119,9 @@ const ExpenseForm = () => {
                 setDate(Date);
               }}
               dateFormat="dd/MM/yyyy"
-            />
-            {/* <input
-              type="text"
-              value={date}
-              onChange={(e) => {
-                setDate(e.target.value);
-              }}
               required
               placeholder={t("Date")}
-            /> */}
+            />
           </div>
           <div>
             <label>{t("payment Method")}</label>
