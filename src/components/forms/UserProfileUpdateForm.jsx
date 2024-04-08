@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+import profileImage from "../../assets/images/ProfileIcon.png";
 
 const UserProfileUpdateForm = () => {
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
@@ -22,7 +23,7 @@ const UserProfileUpdateForm = () => {
     mobileNumber: "",
   });
 
-  const [thumbnail, setThumbnail] = useState(null);
+  const [thumbnail, setThumbnail] = useState(profileImage);
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
@@ -162,7 +163,7 @@ const UserProfileUpdateForm = () => {
               style={{
                 width: "100px",
                 height: "100px",
-                borderRadius: "50%",
+                borderRadius: "40%",
                 overflow: "hidden",
                 display: "inline-block",
                 position: "relative",
@@ -172,13 +173,10 @@ const UserProfileUpdateForm = () => {
                 src={thumbnail}
                 alt="Thumbnail"
                 style={{
-                  maxWidth: "100%",
-                  maxHeight: "100%",
+                  width: "100%",
+                  height: "100%",
                   objectFit: "cover",
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
+                  borderRadius: "50%",
                 }}
               />
             </div>
