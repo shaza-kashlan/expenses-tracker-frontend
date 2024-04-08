@@ -14,44 +14,67 @@ export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 import LandingPage from "./pages/LandingPage";
 import Header from "./components/navigation/Header";
 import Expenses from "./pages/Expenses.jsx";
-
+import AddExpenseSource from "./components/forms/AddExpenseSource";
+import UpdateExpenseSource from "./components/forms/UpdateExpenseSource";
 
 function App() {
-	//get information from contexts
-	const { user, setUser } = useContext(AuthContext);
+  //get information from contexts
+  const { user, setUser } = useContext(AuthContext);
 
-	useEffect(() => {
-		// Change language to English when the app starts
-		i18n.changeLanguage("en");
-	}, []);
+  useEffect(() => {
+    // Change language to English when the app starts
+    i18n.changeLanguage("en");
+  }, []);
 
-	return (
-		<>
-			<Header loggedin={user ? true : false} />
+  return (
+    <>
+      <Header loggedin={user ? true : false} />
+      <main>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/home"
+            element={
+              <IsProtected>
+                <HomePage />
+              </IsProtected>
+            }
+          />
+          <Route path="*" element={<h1> 404 Not found</h1>} />
 
-			<main>
-				<Routes>
-					<Route path="/" element={<LandingPage />} />
-					<Route path="/signup" element={<SignUp />} />
-					<Route path="/login" element={<Login />} />
-					<Route
-						path="/home"
-						element={
-							<IsProtected>
-								<HomePage />
-							</IsProtected>
-						}
-					/>
+          <Route path="/translation" element={<ExampleTranslation />} />
+          <Route
+            path="/profile"
+            element={
+              <IsProtected>
+                <HomePage />
+              </IsProtected>
+            }
+          />
+          <Route
+            path="/sources"
+            element={
+              <IsProtected>
+                <AddExpenseSource />
+              </IsProtected>
+            }
+          />
+          <Route
+            path="/sources/:sourceId"
+            element={
+              <IsProtected>
+                <UpdateExpenseSource />
+              </IsProtected>
+            }
+          />
+              <Route path="/expenses" element={<IsProtected><Expenses /></IsProtected>} />
+        </Routes>
+      </main>
+    </>
+  );
 
-					<Route path="/" element={<ExampleTranslation />} />
-
-					<Route path="/expenses" element={<IsProtected><Expenses /></IsProtected>} />
-
-					<Route path="*" element={<h1> 404 Not found</h1>} />
-				</Routes>
-			</main>
-		</>
-	);
 }
 
 export default App;
