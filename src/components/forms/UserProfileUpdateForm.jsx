@@ -18,7 +18,7 @@ const UserProfileUpdateForm = () => {
       postcode: "",
       country: "",
     },
-    image: null,
+    imageUrl: null,
     mobileNumber: "",
   });
 
@@ -53,12 +53,12 @@ const UserProfileUpdateForm = () => {
             postcode: userData.address?.postcode || "",
             country: userData.address?.country || "",
           },
-          image: userData.image || null,
           mobileNumber: userData.mobileNumber || "",
+          imageUrl: userData.imageUrl || "",
         }));
 
-        if (userData.image) {
-          setThumbnail(userData.image);
+        if (userData.imageUrl) {
+          setThumbnail(userData.imageUrl);
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -82,40 +82,63 @@ const UserProfileUpdateForm = () => {
   };
 
   const handleImageChange = async (e) => {
-    const formData = new FormData();
     const file = e.target.files[0];
-    formData.append("file", file);
-    formData.append("upload_preset", "luxmtkpk");
+    const formData = new FormData();
+    formData.append("imageUrl", file);
+
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      console.error("Access token not found in local storage");
+      return;
+    }
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
+    };
 
     try {
-      const response = await axios.post(
-        "https://api.cloudinary.com/v1_1/doceqzmuk/image/upload",
-        formData
-      );
-      setThumbnail(response.data.secure_url);
+      const response = await axios.post(`${API_URL}/users/upload`, formData, {
+        headers,
+      });
+
+      // Assuming the response from Cloudinary contains the image URL
+      const imageUrl = response.data.imageUrl;
+
+      // Update thumbnail with the Cloudinary URL
+      setThumbnail(imageUrl);
+
+      console.log("Response from upload:", response.data);
     } catch (error) {
       console.error("Error uploading image:", error);
     }
   };
 
-  const handleUploadClick = () => {
-    const fileInput = document.getElementById("fileInput");
-    fileInput.click();
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      if (!/^\+\d{10,15}$/.test(formData.mobileNumber)) {
-        alert('Invalid mobile number format. Please use format: "+1234567890"');
-        return;
-      }
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      console.error("Access token not found in local storage");
+      return;
+    }
 
-      const response = await axios.put(
-        `${API_URL}/users/${formData._id}`,
-        formData
-      );
+    try {
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      // Update formData with imageUrl from thumbnail (Cloudinary URL)
+      const updatedFormData = {
+        ...formData,
+        imageUrl: thumbnail, // Assuming thumbnail is the Cloudinary URL
+      };
+
+      console.log("\n \n useform to send", updatedFormData);
+      const response = await axios.put(`${API_URL}/users`, updatedFormData, {
+        headers,
+      });
+
       console.log("User profile updated successfully:", response.data);
     } catch (error) {
       console.error("Error updating user profile:", error.message);
@@ -127,10 +150,7 @@ const UserProfileUpdateForm = () => {
       <h2>Update Profile</h2>
       <form onSubmit={handleSubmit}>
         {/* Profile Image */}
-        <div
-          className="form-field"
-          style={{ textAlign: "center", marginBottom: "20px" }}
-        >
+        <div style={{ textAlign: "center", marginBottom: "20px" }}>
           <label
             htmlFor="fileInput"
             style={{ cursor: "pointer", display: "block" }}
@@ -219,7 +239,6 @@ const UserProfileUpdateForm = () => {
             onChange={handleChange}
             pattern="^\+\d{10,15}$"
             title="Please use format: '+1234567890'"
-            required
           />
         </div>
 
