@@ -11,6 +11,8 @@ import i18n from "../i18n";
 import { useEffect } from "react";
 import LandingPage from "./pages/LandingPage";
 import Header from "./components/navigation/Header";
+import Dashboard from "./pages/Dashboard";
+import {myData} from "../demo-data"
 
 function App() {
 	//get information from contexts
@@ -30,6 +32,14 @@ function App() {
 					<Route path="/" element={<LandingPage />} />
 					<Route path="/signup" element={<SignUp />} />
 					<Route path="/login" element={<Login />} />
+					<Route
+						path="/dashboard"
+						element={
+							<IsProtected>
+								<Dashboard data={myData} />
+							</IsProtected>
+						}
+					/>
 					<Route
 						path="/home"
 						element={

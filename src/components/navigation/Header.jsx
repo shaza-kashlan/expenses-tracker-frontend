@@ -16,7 +16,7 @@ const Header = ({ loggedin }) => {
 				{loggedin ? (
 					<ul>
 						<li>
-							<button className="button-small" type="button">
+							<button className="button-small" type="button" onClick={() => navigate("/dashboard")}>
 								dashboard
 							</button>
 						</li>
