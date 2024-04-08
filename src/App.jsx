@@ -10,12 +10,10 @@ import { IsProtected } from "./components/forms/IsProtected";
 import ExampleTranslation from "./components/ExampleTranslation";
 import i18n from "../i18n";
 import { useEffect } from "react";
-import AGGridDemo from "./pages/AGGridDemo";
-import TanTable from "./pages/TanTable.tsx";
-import TanFilterTable from "./pages/TanFilterTable.tsx";
 export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 import LandingPage from "./pages/LandingPage";
 import Header from "./components/navigation/Header";
+import Expenses from "./pages/Expenses.jsx";
 
 
 function App() {
@@ -29,25 +27,29 @@ function App() {
 
 	return (
 		<>
-			<Routes>
-				<Route path="/" element={<SignUp />} />
-				<Route path="/login" element={<Login />} />
-				<Route
-					path="/home"
-					element={
-						<IsProtected>
-							<HomePage />
-						</IsProtected>
-					}
-				/>
+			<Header loggedin={user ? true : false} />
 
-				<Route path="/" element={<ExampleTranslation />} />
-				<Route path="/grid" element={<AGGridDemo />} />
-				<Route path="/tantable" element={<TanTable />} />
-				<Route path="/tanfiltertable" element={<TanFilterTable />} />
+			<main>
+				<Routes>
+					<Route path="/" element={<LandingPage />} />
+					<Route path="/signup" element={<SignUp />} />
+					<Route path="/login" element={<Login />} />
+					<Route
+						path="/home"
+						element={
+							<IsProtected>
+								<HomePage />
+							</IsProtected>
+						}
+					/>
 
-				<Route path="*" element={<h1> 404 Not found</h1>} />
-			</Routes>
+					<Route path="/" element={<ExampleTranslation />} />
+
+					<Route path="/expenses" element={<IsProtected><Expenses /></IsProtected>} />
+
+					<Route path="*" element={<h1> 404 Not found</h1>} />
+				</Routes>
+			</main>
 		</>
 	);
 }
