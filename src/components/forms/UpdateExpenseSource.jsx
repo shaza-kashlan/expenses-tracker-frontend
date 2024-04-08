@@ -179,7 +179,7 @@ const UpdateExpenseSource = () => {
           <div>
             <label>{t("Date")}</label>
             <input
-              type="datetime-local"
+              type="text"
               id="mapping-date"
               name="mapping.date"
               value={formData.mapping.date}

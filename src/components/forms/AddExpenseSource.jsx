@@ -137,7 +137,7 @@ const AddExpenseSourceForm = () => {
       <Tooltip title={t("date-tooltip")} placement="top-start">
         <div className="form-group">
           <input
-            type="datetime-local"
+            type="text"
             className="form-control"
             name="mapping.date"
             value={formData.mapping.date}
