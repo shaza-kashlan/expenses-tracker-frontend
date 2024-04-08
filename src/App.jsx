@@ -14,6 +14,9 @@ import AGGridDemo from "./pages/AGGridDemo";
 import TanTable from "./pages/TanTable.tsx";
 import TanFilterTable from "./pages/TanFilterTable.tsx";
 export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
+import LandingPage from "./pages/LandingPage";
+import Header from "./components/navigation/Header";
+
 
 function App() {
 	//get information from contexts
@@ -21,7 +24,7 @@ function App() {
 
 	useEffect(() => {
 		// Change language to English when the app starts
-		i18n.changeLanguage("de");
+		i18n.changeLanguage("en");
 	}, []);
 
 	return (
