@@ -1,5 +1,6 @@
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import WalletSummaryCard from '../components/WalletSummaryCard';
 
 const Dashboard = ({data}) => {
 
@@ -9,7 +10,7 @@ const Dashboard = ({data}) => {
         <h1>Dashboard</h1>
         <p>Got {data.length} bits of data</p>
 
-        {wallets.map(wallet => <p key={wallet}>{wallet}</p>)}
+        {wallets.map(wallet => <WalletSummaryCard key={wallet} data={data.filter(expense => expense.wallet === wallet)} />)}
         
     </div>
   )

@@ -11,13 +11,11 @@ import i18n from "../i18n";
 import { useEffect } from "react";
 import LandingPage from "./pages/LandingPage";
 import Header from "./components/navigation/Header";
-<<<<<<< HEAD
 import Dashboard from "./pages/Dashboard";
-import {myData} from "../demo-data"
-=======
 import AddExpenseSource from "./components/forms/AddExpenseSource";
 import UpdateExpenseSource from "./components/forms/UpdateExpenseSource";
->>>>>>> main
+
+import {myData} from "../demo-data"
 
 function App() {
   //get information from contexts
