@@ -50,5 +50,10 @@
   "format-source-information": "Formatierungsinformationen der Quelle",
   "add-expense-form": "Quelle für Ausgaben hinzufügen",
   "fill-required-fields": "Bitte füllen Sie alle erforderlichen Felder aus",
-  "expense-source-added": "Ausgabenquelle erfolgreich hinzugefügt!"
+  "expense-source-added": "Ausgabenquelle erfolgreich hinzugefügt!",
+  "update-source-form": "Update Quellformular",
+  "failed-to-add-expense": "Fehler beim Hinzufügen der Ausgabenquelle. Bitte versuchen Sie es später erneut",
+  "failed-to-update-expense": "Fehler beim Aktualisieren der Ausgabenquelle. Bitte versuchen Sie es später erneut",
+  "update-expense-form": "Ausgabensquelle aktualisieren",
+  "expense-source-updated": "Ausgabensquelle erfolgreich aktualisiert!"
 }

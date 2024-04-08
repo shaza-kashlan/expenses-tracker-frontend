@@ -11,7 +11,8 @@ import i18n from "../i18n";
 import { useEffect } from "react";
 import LandingPage from "./pages/LandingPage";
 import Header from "./components/navigation/Header";
-import AddExpenseSourceForm from "./components/forms/AddExpenseSource";
+import AddExpenseSource from "./components/forms/AddExpenseSource";
+import UpdateExpenseSource from "./components/forms/UpdateExpenseSource";
 
 function App() {
   //get information from contexts
@@ -19,7 +20,7 @@ function App() {
 
   useEffect(() => {
     // Change language to English when the app starts
-    i18n.changeLanguage("de");
+    i18n.changeLanguage("en");
   }, []);
 
   return (
@@ -54,7 +55,15 @@ function App() {
             path="/sources"
             element={
               <IsProtected>
-                <AddExpenseSourceForm />
+                <AddExpenseSource />
+              </IsProtected>
+            }
+          />
+          <Route
+            path="/sources/:sourceId"
+            element={
+              <IsProtected>
+                <UpdateExpenseSource />
               </IsProtected>
             }
           />

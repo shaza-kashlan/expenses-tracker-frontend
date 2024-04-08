@@ -50,5 +50,11 @@
   "mapping-source-information": "Source fields mapping information",
   "format-source-information": "Source fields format information",
   "add-expense-form": "Add Expense Source",
-  "fill-required-fields": "Please fill out all required fields."
+  "fill-required-fields": "Please fill out all required fields",
+  "expense-source-added": "Expense Source Added Successfully!",
+  "update-source-form": "Update Source Form",
+  "failed-to-add-expense-source": "Failed to add expense source. Please try again later",
+  "failed-to-update-expense-source": "Failed to update expense source. Please try again later",
+  "update-expense-form": "Update Expense Source Form",
+  "expense-source-updated": "Expense Source Updated Successfully!"
 }

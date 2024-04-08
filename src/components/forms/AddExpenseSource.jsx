@@ -152,7 +152,7 @@ const AddExpenseSource = () => {
         ...openSnackBar,
         open: true,
         severity: "error",
-        message: "Failed to add expense source. Please try again later.",
+        message: t("failed-to-add-expense-source"),
       });
     }
   };
