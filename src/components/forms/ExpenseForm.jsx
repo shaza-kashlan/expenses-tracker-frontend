@@ -16,25 +16,12 @@ const ExpenseForm = () => {
     description: "",
     amount: "",
     category:"",
-    // category: {
-    //   name: "",
-    //   public: true,
-    // },
     date: "",
     payment_method: "",
     expense_type: "",
     notes: "",
+    tags:"",
   });
-
-  // const [description, setDescription] = useState("");
-  // const [amount, setAmount] = useState("");
-  // const [category, setCategory] = useState(null);
-  // const [date, setDate] = useState("");
-  // const [payment_method, setPayment_method] = useState("");
-  // const [expense_type, setExpense_type] = useState("");
-  // const [notes, setNotes] = useState("");
-  // const [tags, setTags] = useState("");
-  // const [name, setName] = useState("");
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -67,18 +54,6 @@ const ExpenseForm = () => {
   // *********** create new expense *************
   const handleExpense = async (event) => {
     event.preventDefault();
-    // const newExpense = {
-    //   description,
-    //   amount,
-    //   category:{
-    //     name
-    //   },
-    //   date,
-    //   payment_method,
-    //   expense_type,
-    //   notes,
-    // };
-    // console.log("newExpense", newExpense);
 
     // Retrieve token from local storage
     const token = localStorage.getItem("accessToken");
@@ -114,6 +89,7 @@ const ExpenseForm = () => {
         payment_method: "",
         expense_type: "",
         notes: "",
+        tags:""
       });
     } catch (error) {
       console.error("There was a problem adding the expense:", error);
@@ -121,32 +97,8 @@ const ExpenseForm = () => {
   };
 
   return (
-    <div>
       <form onSubmit={handleExpense}>
         <h3>Add New Expense</h3>
-
-        {/* <div>
-          <input
-            type="text"
-            name="category.name"
-            value={formData.category.name}
-            onChange={handleChange}
-            placeholder={t("enter_the_name_of_category")}
-            required
-          />
-        </div> */}
-
-        <div>
-          <input
-            type="text"
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-            placeholder={t("enter_the_name_of_category")}
-            required
-          />
-        </div>
-
         <div>
           <input
             type="text"
@@ -167,13 +119,12 @@ const ExpenseForm = () => {
             placeholder={t("Amount")}
           />
         </div>
-        {/* <div>
+        <div>
           <select
             name="category"
             required
-            onChange={(e) => {
-              setCategory(e.target.value);
-            }}
+            value={formData.category}
+            onChange={handleChange}
           >
             <option value="">{t("select-catagory of expense")}</option>
             <option value="Home">{t("Home")}</option>
@@ -188,12 +139,12 @@ const ExpenseForm = () => {
             <option value="Health">{t("Health")}</option>
             <option value="Other">{t("Other")}</option>
           </select>
-        </div> */}
+        </div>
         {/* <small>{t("date")}</small> */}
         <Tooltip title={t("date-tooltip")} placement="top-start">
           <div className="form-group">
             <input
-              type="datetime-local"
+              type="text"
               className="form-control"
               name="date"
               value={formData.date}
@@ -237,30 +188,20 @@ const ExpenseForm = () => {
             placeholder={t("Notes")}
           />
         </div>
-        {/* <div>
-          <label>
-            {t("Personal")}
-            <input
-              type="checkbox"
-              name="Personal"
-              checked={formData.public}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            {t("Business")}
-            <input
-              type="checkbox"
-              name="Business"
-              checked={formData.Business}
-              onChange={handleChange}
-            />
-          </label>
-        </div> */}
+        <div>
+          <select
+            name="tags"
+            value={formData.tags}
+            onChange={handleChange}
+          >
+            <option value="">{t("select-Expense label")}</option>
+            <option value="Personal">{t("Personal")}</option>
+            <option value="Business">{t("Business")}</option>
+          </select>
+        </div>
 
         <button type="submit">{t("Add new Expense")}</button>
       </form>
-    </div>
   );
 };
 
