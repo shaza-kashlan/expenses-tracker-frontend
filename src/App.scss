@@ -121,12 +121,10 @@ main {
   input,
   select {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
-    font-size: 16px;
+    font-size: 14px;
   }
 
   .form-group {
@@ -143,16 +141,7 @@ main {
     margin-bottom: 10px;
     font-size: 14px;
     font-style: italic;
-  }
-
-  button {
-    color: #fff;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    width: 100%;
+    color: #928d8d;
   }
 
   label {
@@ -166,7 +155,38 @@ main {
 
   input[type="checkbox"] {
     margin-left: 1rem;
-    margin-top: 1rem;
     width: auto;
+    appearance: none; /* Remove default appearance */
+    -webkit-appearance: none; /* Remove default appearance for WebKit browsers */
+    border: 1px solid #ccc; /* Border for custom checkbox */
+    border-radius: 4px; /* Rounded corners */
+    width: 16px; /* Size of checkbox */
+    height: 16px; /* Size of checkbox */
+    background-color: rgb(223, 223, 231); /* Background color of the checkbox */
+    cursor: pointer; /* Show pointer cursor on hover */
+  }
+
+  /* Style for the checked state of the checkbox */
+  input[type="checkbox"]:checked {
+    background-color: rgb(93, 22, 22);
+  }
+
+  .muiCard-root {
+    margin-bottom: 1rem; /* Add margin between cards */
+    border: 1px solid #ccc; /* Example border for cards */
+    border-radius: 8px; /* Rounded corners for cards */
+    box-shadow: 0 2px 4px rgba(235, 2, 2, 0.1); /* Shadow effect for cards */
+  }
+  .muiCardHeader-root {
+    background-color: #f0f0f0; /* Background color for card header */
+    padding: 12px 16px; /* Padding for card header */
+    border-bottom: 1px solid #ccc; /* Bottom border for card header */
+  }
+  .muiCardContent-root {
+    background-color: #ccc; /* Background color for card content */
+    padding: 16px; /* Padding inside card content */
+  }
+  .MuiCardHeader-title {
+    font-size: 18px; /* Set the desired font size */
   }
 }

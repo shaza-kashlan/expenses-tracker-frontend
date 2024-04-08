@@ -9,10 +9,9 @@ import { IsProtected } from "./components/forms/IsProtected";
 import ExampleTranslation from "./components/ExampleTranslation";
 import i18n from "../i18n";
 import { useEffect } from "react";
-import AddExpenseSourceForm from "./components/forms/AddExpenseSource";
-import UpdateExpenseSource from "./components/forms/UpdateExpenseSource";
 import LandingPage from "./pages/LandingPage";
 import Header from "./components/navigation/Header";
+import AddExpenseSourceForm from "./components/forms/AddExpenseSource";
 
 function App() {
   //get information from contexts
@@ -20,7 +19,7 @@ function App() {
 
   useEffect(() => {
     // Change language to English when the app starts
-    i18n.changeLanguage("en");
+    i18n.changeLanguage("de");
   }, []);
 
   return (
@@ -40,6 +39,17 @@ function App() {
               </IsProtected>
             }
           />
+          <Route path="*" element={<h1> 404 Not found</h1>} />
+
+          <Route path="/translation" element={<ExampleTranslation />} />
+          <Route
+            path="/profile"
+            element={
+              <IsProtected>
+                <HomePage />
+              </IsProtected>
+            }
+          />
           <Route
             path="/sources"
             element={
@@ -48,17 +58,6 @@ function App() {
               </IsProtected>
             }
           />
-          <Route
-            path="/sources/:sourceId"
-            element={
-              <IsProtected>
-                <UpdateExpenseSource />
-              </IsProtected>
-            }
-          />
-          <Route path="*" element={<h1> 404 Not found</h1>} />
-
-          <Route path="/translation" element={<ExampleTranslation />} />
         </Routes>
       </main>
     </>

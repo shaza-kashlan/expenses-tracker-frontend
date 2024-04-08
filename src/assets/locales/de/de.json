@@ -43,5 +43,12 @@
   "number-style": "Bitte wählen Sie, ob die Nummerierung im Euro-Stil verwendet wird, zum Beispiel 1.234,56",
   "public-des": "Bitte wählen Sie aus, ob diese Quelle mit anderen Benutzern geteilt werden soll oder ob sie privat bleiben soll",
   "public": "Öffentlich",
-  "uniqFiels-des": "Bitte füllen Sie das Feld aus, das zur eindeutigen Identifizierung eines Einnahmen- oder Ausgabenpostens verwendet werden kann"
+  "uniqFiels-des": "Bitte füllen Sie das Feld aus, das zur eindeutigen Identifizierung eines Einnahmen- oder Ausgabenpostens verwendet werden kann",
+  "date-Format": "Füllen Sie das Datumsformat aus, das in Ihrer Aussage verwendet wird",
+  "general-source-information": "Allgemeine Informationsquelle",
+  "mapping-source-information": "Feldzuordnungsinformationen der Quelle",
+  "format-source-information": "Formatierungsinformationen der Quelle",
+  "add-expense-form": "Quelle für Ausgaben hinzufügen",
+  "fill-required-fields": "Bitte füllen Sie alle erforderlichen Felder aus",
+  "expense-source-added": "Ausgabenquelle erfolgreich hinzugefügt!"
 }

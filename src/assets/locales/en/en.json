@@ -41,8 +41,14 @@
   "notes-tooltip": "Please fill in the notes field from your bank statement file",
   "amount-tooltip": "Please fill in the amount field from your bank statement file",
   "payee-tooltip": "Please fill in the payee field from your bank statement file",
-  "number-style": "Please choose whether Euro-style numbering is used, for example 1.234,56",
-  "public-des": "Please choose whether this source can be shared with other users or if it should be kept private",
+  "number-style": " choose whether Euro-style numbering is used, for example 1.234,56",
+  "public-des": "choose whether this source can be shared with other or if it should be kept private",
   "public": "Public",
-  "uniqFiels-des": "Please fill the name of the field that can be used to uniquely identify an income or expense item"
+  "uniqFiels-des": "fill the name of the field that can be used to uniquely identify an income or expense item",
+  "date-Format": "fill the date format is using in your statement",
+  "gerneral-source-information": "General source information",
+  "mapping-source-information": "Source fields mapping information",
+  "format-source-information": "Source fields format information",
+  "add-expense-form": "Add Expense Source",
+  "fill-required-fields": "Please fill out all required fields."
 }
