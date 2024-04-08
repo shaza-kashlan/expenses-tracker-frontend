@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Tooltip from "@mui/material/Tooltip";
 
 const ExpenseForm = () => {
   const [description, setDescription] = useState("");
@@ -46,15 +47,10 @@ const ExpenseForm = () => {
     const headers = {
       Authorization: `Bearer ${token}`,
     };
-    // axios
-    //   .get(`${API_URL}/expenses`, {
-    //     headers: { Authorization: `Bearer ${token}` },
-    //   })
-    //   .then((response) => console.log("responseee", response.data))
-    //   .catch((error) => console.log(error));
+
     try {
       const response = await axios.post(`${API_URL}/expenses`, newExpense, {
-        headers
+        headers,
       });
       console.log("Expense added successfully:", response.data);
     } catch (error) {
@@ -65,9 +61,9 @@ const ExpenseForm = () => {
   return (
     <div>
       <form onSubmit={handleExpense}>
+        <h3>Add New Expense</h3>
         <div>
           <div>
-            <label>{t("Description")}</label>
             <input
               type="text"
               value={description}
@@ -79,7 +75,6 @@ const ExpenseForm = () => {
             />
           </div>
           <div>
-            <label>{t("Amount")}</label>
             <input
               type="text"
               value={amount}
@@ -91,13 +86,14 @@ const ExpenseForm = () => {
             />
           </div>
           <div>
-            <label>{t("Category")}</label>
             <select
               name="category"
+              required
               onChange={(e) => {
                 setCategory(e.target.value);
               }}
             >
+              <option value="">{t("select-catagory of expense")}</option>
               <option value="Home">{t("Home")}</option>
               <option value="Food">{t("Food")}</option>
               <option value="Travel">{t("Travel")}</option>
@@ -111,46 +107,49 @@ const ExpenseForm = () => {
               <option value="Other">{t("Other")}</option>
             </select>
           </div>
+          {/* <small>{t("date")}</small> */}
+          <Tooltip title={t("date-tooltip")} placement="top-start">
+            <div className="form-group">
+              <input
+                type="datetime-local"
+                className="form-control"
+                name="date"
+                value={date}
+                onChange={(e) => {
+                  setDate(e.target.value);
+                }}
+                placeholder={t("date")}
+                onTouchStart={(e) => e.stopPropagation()}
+              />
+            </div>
+          </Tooltip>
           <div>
-            <label>{t("Date")}</label>
-            <DatePicker
-              selected={date}
-              onChange={(Date) => {
-                setDate(Date);
-              }}
-              dateFormat="dd/MM/yyyy"
-              required
-              placeholder={t("Date")}
-            />
-          </div>
-          <div>
-            <label>{t("payment Method")}</label>
             <select
               name="paymentMethod"
               onChange={(e) => {
                 setPaymentMethod(e.target.value);
               }}
             >
+              <option value="">{t("select-Payment method")}</option>
               <option value="cash">{t("Cash")}</option>
               <option value="creditCard">{t("Credit Card")}</option>
               <option value="onlineTransfer">{t("Online Transfer")}</option>
             </select>
           </div>
           <div>
-            <label>{t("Expense Type")}</label>
             <select
               name="ExpenseType"
               onChange={(e) => {
                 setExpenseType(e.target.value);
               }}
             >
+              <option value="">{t("select-Expense type")}</option>
               <option value="one-time">{t("one-time")}</option>
               <option value="recurring">{t("recurring")}</option>
               <option value="reimbursable">{t("reimbursable")}</option>
             </select>
           </div>
           <div>
-            <label>{t("Notes")}</label>
             <input
               type="text"
               value={notes}
@@ -161,7 +160,7 @@ const ExpenseForm = () => {
             />
           </div>
           <div>
-            <label>{t("Personal")}</label>
+            <label>{t("Personal")}
             <input
               type="radio"
               value="Personal"
@@ -169,8 +168,8 @@ const ExpenseForm = () => {
               onChange={(e) => {
                 setTags(e.target.value);
               }}
-            />
-            <label>{t("Business")}</label>
+            /></label>
+            <label>{t("Business")}
             <input
               type="radio"
               value="Business"
@@ -178,10 +177,10 @@ const ExpenseForm = () => {
               onChange={(e) => {
                 setTags(e.target.value);
               }}
-            />
+            /></label>
           </div>
         </div>
-        <button type="submit">{t("Submit")}</button>
+        <button type="submit">{t("Add new Expense")}</button>
       </form>
     </div>
   );
