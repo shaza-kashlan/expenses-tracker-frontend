@@ -14,6 +14,7 @@ import AddExpenseSourceForm from "./components/forms/AddExpenseSource";
 import UpdateExpenseSource from "./components/forms/UpdateExpenseSource";
 import LandingPage from "./pages/LandingPage";
 import Header from "./components/navigation/Header";
+import UpadteExpenseForm from "./components/forms/UpdateExpenseForm";
 
 function App() {
   //get information from contexts
@@ -62,6 +63,14 @@ function App() {
             element={
               <IsProtected>
                 <ExpenseForm />
+              </IsProtected>
+            }
+          />
+          <Route
+            path="/expenses/:expenseId"
+            element={
+              <IsProtected>
+                <UpadteExpenseForm />
               </IsProtected>
             }
           />
