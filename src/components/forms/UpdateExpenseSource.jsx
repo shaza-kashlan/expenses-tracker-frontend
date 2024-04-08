@@ -47,7 +47,7 @@ const UpdateExpenseSource = () => {
           name: existingSource.name || "",
           type: existingSource.type || "",
           format: existingSource.format || "",
-          public: existingSource.public || true,
+          public: existingSource.public,
           uniqueField: existingSource.uniqueField || "",
           mapping: {
             ...formData.mapping,
@@ -71,6 +71,7 @@ const UpdateExpenseSource = () => {
     const { name, value, type, checked } = e.target;
     const newValue = type === "checkbox" ? checked : value;
 
+    // For nested fields like mapping.date, split the name to access nested properties
     const [fieldName, nestedKey] = name.split(".");
 
     setFormData((prevData) => {
@@ -83,6 +84,7 @@ const UpdateExpenseSource = () => {
           },
         };
       } else {
+        // If the field is not nested, update it directly
         return {
           ...prevData,
           [name]: newValue,
@@ -118,8 +120,9 @@ const UpdateExpenseSource = () => {
 
   return (
     <form onSubmit={handleSubmit} id="update-expense-form">
-      <h3>Update Expense Source </h3>
+      <h3>Update Expense Source</h3>
 
+      {/* Name */}
       <div className="form-field">
         <label>{t("Name")}</label>
         <input
@@ -132,6 +135,7 @@ const UpdateExpenseSource = () => {
         />
       </div>
 
+      {/* Type */}
       <div className="form-field">
         <label>{t("Type")}</label>
         <select
@@ -150,6 +154,7 @@ const UpdateExpenseSource = () => {
         </select>
       </div>
 
+      {/* Format */}
       <div className="form-field">
         <label>{t("Format")}</label>
         <select
@@ -167,77 +172,78 @@ const UpdateExpenseSource = () => {
         </select>
       </div>
 
+      {/* Mapping Fields */}
       <div className="form-field">
         <small>{t("mapping")}</small>
         <Tooltip title={t("date-tooltip")} placement="top-start">
-          <label>{t("Date")}</label>
-          <input
-            type="datetime-local"
-            id="mapping-date"
-            name="mapping.date"
-            value={formData.mapping.date}
-            onChange={handleChange}
-            placeholder={t("date")}
-            onTouchStart={(e) => e.stopPropagation()}
-          />
+          <div>
+            <label>{t("Date")}</label>
+            <input
+              type="datetime-local"
+              id="mapping-date"
+              name="mapping.date"
+              value={formData.mapping.date}
+              onChange={handleChange}
+              placeholder={t("date")}
+              onTouchStart={(e) => e.stopPropagation()}
+            />
+          </div>
+        </Tooltip>
+        <Tooltip title={t("description-tooltip")} placement="top-start">
+          <div className="form-group">
+            <input
+              type="text"
+              className="form-control"
+              name="mapping.description"
+              value={formData.mapping.description}
+              onChange={handleChange}
+              placeholder={t("description")}
+              onTouchStart={(e) => e.stopPropagation()}
+            />
+          </div>
+        </Tooltip>
+        <Tooltip title={t("notes-tooltip")} placement="top-start">
+          <div className="form-group">
+            <input
+              type="text"
+              className="form-control"
+              name="mapping.notes"
+              value={formData.mapping.notes}
+              onChange={handleChange}
+              placeholder={t("notes")}
+              onTouchStart={(e) => e.stopPropagation()}
+            />
+          </div>
+        </Tooltip>
+        <Tooltip title={t("amount-tooltip")} placement="top-start">
+          <div className="form-group">
+            <input
+              type="text"
+              className="form-control"
+              name="mapping.amount"
+              value={formData.mapping.amount}
+              onChange={handleChange}
+              placeholder={t("amount")}
+              onTouchStart={(e) => e.stopPropagation()}
+            />
+          </div>
+        </Tooltip>
+        <Tooltip title={t("payee-tooltip")} placement="top-start">
+          <div className="form-group">
+            <input
+              type="text"
+              className="form-control"
+              name="mapping.payee"
+              value={formData.mapping.payee}
+              onChange={handleChange}
+              placeholder={t("payee")}
+              onTouchStart={(e) => e.stopPropagation()}
+            />
+          </div>
         </Tooltip>
       </div>
-      <Tooltip title={t("description-tooltip")} placement="top-start">
-        <div className="form-field">
-          <label>{t("Description")}</label>
-          <input
-            type="text"
-            id="mapping-description"
-            name="mapping.description"
-            value={formData.mapping.description}
-            onChange={handleChange}
-            placeholder={t("description")}
-            onTouchStart={(e) => e.stopPropagation()}
-          />
-        </div>
-      </Tooltip>
-      <Tooltip title={t("notes-tooltip")} placement="top-start">
-        <div className="form-field">
-          <label>{t("Notes")}</label>
-          <input
-            type="text"
-            id="mapping-notes"
-            name="mapping.notes"
-            value={formData.mapping.notes}
-            onChange={handleChange}
-            placeholder={t("notes")}
-            onTouchStart={(e) => e.stopPropagation()}
-          />
-        </div>
-      </Tooltip>
-      <Tooltip title={t("amount-tooltip")} placement="top-start">
-        <div className="form-field">
-          <label>{t("Amount")}</label>
-          <input
-            type="text"
-            id="mapping-amount"
-            name="mapping.amount"
-            value={formData.mapping.amount}
-            onChange={handleChange}
-            placeholder={t("amount")}
-            onTouchStart={(e) => e.stopPropagation()}
-          />
-        </div>
-      </Tooltip>
-      <Tooltip title={t("payee-tooltip")} placement="top-start">
-        <div className="form-field">
-          <label>{t("Payee")}</label>
-          <input
-            type="text"
-            id="mapping-payee"
-            name="mapping.payee"
-            value={formData.mapping.payee}
-            onChange={handleChange}
-            placeholder={t("payee")}
-            onTouchStart={(e) => e.stopPropagation()}
-          />
-        </div>
-      </Tooltip>
+
+      {/* Number Style */}
       <div className="form-field">
         <small>{t("number-style")}</small>
         <label>{t("Number Style")}</label>
@@ -253,6 +259,7 @@ const UpdateExpenseSource = () => {
         </select>
       </div>
 
+      {/* Public */}
       <div className="form-field">
         <small>{t("public-des")}</small>
         <label>
@@ -265,6 +272,8 @@ const UpdateExpenseSource = () => {
           />
         </label>
       </div>
+
+      {/* Unique Field */}
       <div className="form-field">
         <small>{t("uniqFiels-des")}</small>
         <input
@@ -276,6 +285,7 @@ const UpdateExpenseSource = () => {
         />
       </div>
 
+      {/* Submit Button */}
       <button type="submit">{t("Update Expense Source")}</button>
     </form>
   );
