@@ -187,7 +187,7 @@ const ExpenseTable = ({data = []}) => {
             )
           })}
         </tbody>
-        <tfoot style={{visibility: "none"}}>
+        <tfoot style={{visibility: "hidden"}}>
           {table.getFooterGroups().map(footerGroup => (
             <tr key={footerGroup.id}>
               {footerGroup.headers.map(header => (
