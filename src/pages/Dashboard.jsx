@@ -10,7 +10,7 @@ const Dashboard = ({data}) => {
         <h1>Dashboard</h1>
         <p>Got {data.length} bits of data</p>
 
-        {wallets.map(wallet => <WalletSummaryCard key={wallet} data={data.filter(expense => expense.wallet === wallet)} />)}
+        {wallets.map(wallet => <WalletSummaryCard key={wallet} wallet={wallet} data={data.filter(expense => expense.wallet === wallet)} />)}
         
     </div>
   )

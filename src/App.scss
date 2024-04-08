@@ -24,7 +24,7 @@ body {
   grid-template-rows: 75px 1fr;
 }
 
-header {
+header#main-header {
   background-color: bisque;
   max-width: 100% !important;
   height: 75px;
@@ -188,5 +188,46 @@ main {
   }
   .MuiCardHeader-title {
     font-size: 18px; /* Set the desired font size */
+  }
+}
+
+.align-right {
+  margin-left: auto;
+}
+
+.wallet-summary-card {
+  max-width: 80%; 
+  margin: 1rem auto;
+
+  > header {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: baseline;
+    > p {
+      margin: 0;
+      font-weight: 600;
+
+    }
+  }
+
+  > section {
+    text-align: left;
+    font-size: smaller;
+    p {
+      margin-bottom: 5px;
+      &.push-apart {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
+
+  > footer {
+    display: flex;
+    justify-content: space-between;
+    > button {
+      margin-bottom: 0;
+    }
   }
 }

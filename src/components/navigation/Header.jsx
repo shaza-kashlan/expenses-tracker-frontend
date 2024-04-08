@@ -6,7 +6,7 @@ const Header = ({ loggedin }) => {
 	const { t } = useTranslation();
 
 	return (
-		<header>
+		<header id="main-header">
 			<nav>
 				<ul>
 					<Link to="/">
