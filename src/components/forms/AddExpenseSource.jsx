@@ -52,6 +52,7 @@ const AddExpenseSource = () => {
       payee: "",
     },
     numberStyle: "normal",
+    image: null,
     dateFormat: "",
   });
 

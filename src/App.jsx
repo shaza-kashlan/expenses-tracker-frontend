@@ -14,6 +14,7 @@ import { useEffect } from "react";
 export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 import LandingPage from "./pages/LandingPage";
 import Header from "./components/navigation/Header";
+import UserProfileUpdateForm from "./components/forms/UserProfileUpdateForm";
 import UpdateExpenseForm from "./components/forms/UpdateExpenseForm";
 import Expenses from "./pages/Expenses.jsx";
 import AddExpenseSource from "./components/forms/AddExpenseSource";
