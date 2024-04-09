@@ -17,7 +17,7 @@ import {
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
-const UpadteExpenseForm = () => {
+const UpdateExpenseForm = () => {
   const { expenseId } = useParams();
 
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
@@ -226,7 +226,7 @@ const UpadteExpenseForm = () => {
               type="number"
               name="amount"
               id="amount"
-              value={formData.amount}
+              value={Math.abs(formData.amount)}
               onChange={handleChange}
               placeholder={t("Amount")}
               required
@@ -276,6 +276,7 @@ const UpadteExpenseForm = () => {
               <option value="cash">{t("Cash")}</option>
             </select>
             <select
+            className="hidden"
               name="expense_type"
               value={formData.expense_type}
               onChange={handleChange}
@@ -323,4 +324,4 @@ const UpadteExpenseForm = () => {
   );
 };
 
-export default UpadteExpenseForm;
+export default UpdateExpenseForm;

@@ -82,10 +82,6 @@ main {
   padding: var(--pico-block-spacing-vertical) 0 !important;
 }
 
-.button-small {
-  padding: 0.25rem;
-}
-
 #login-form,
 #signup-form {
   margin: auto;
@@ -264,4 +260,19 @@ main {
   .MuiCardHeader-title {
     font-size: 18px; /* Set the desired font size */
   }
+
+  .MuiCardHeader-action {
+    visibility: hidden;
+  }
+}
+
+// utilities
+
+.button-small {
+  padding: 0.25rem;
+}
+
+.hidden {
+  visibility: hidden;
+  height: 0;
 }

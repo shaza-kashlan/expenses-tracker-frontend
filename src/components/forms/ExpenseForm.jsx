@@ -52,15 +52,15 @@ const ExpenseForm = () => {
     const { name, value } = e.target;
 
     setFormData((prevData) => {
-      if (name === "amount") {
-        const updatedAmount =
-          tabValue === 0 ? -Math.abs(value) : Math.abs(value);
+      // if (name === "amount") {
+      //   const updatedAmount =
+      //     tabValue === 0 ? -Math.abs(value) : Math.abs(value);
 
-        return {
-          ...prevData,
-          [name]: updatedAmount,
-        };
-      }
+      //   return {
+      //     ...prevData,
+      //     [name]: updatedAmount,
+      //   };
+      // }
 
       // For other fields, keep the existing values unchanged
       return {
@@ -70,7 +70,7 @@ const ExpenseForm = () => {
     });
   };
 
-  const handleTabChange = (event, newValue) => {
+  const handleTabChange = (_, newValue) => {
     setTabValue(newValue);
     setFormData({
       ...formData,
@@ -104,9 +104,13 @@ const ExpenseForm = () => {
 
     // Send formData to backend server
     console.log("form data", formData);
+    const newExpense = {
+      ...formData,
+      amount:  tabValue === 0 ? -Math.abs(formData.amount) : Math.abs(formData.amount)
+    }
 
     try {
-      const response = await axios.post(`${API_URL}/expenses`, formData, {
+      const response = await axios.post(`${API_URL}/expenses`, newExpense, {
         headers,
       });
       console.log("Entry added successfully:", response.data);
@@ -239,6 +243,7 @@ const ExpenseForm = () => {
               <option value="cash">{t("Cash")}</option>
             </select>
             <select
+              className="hidden"
               name="expense_type"
               value={formData.expense_type}
               onChange={handleChange}
