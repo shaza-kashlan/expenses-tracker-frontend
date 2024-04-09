@@ -18,6 +18,8 @@
     "@mui/x-charts": "^7.1.1",
     "@picocss/pico": "^2.0.6",
     "@splidejs/react-splide": "^0.7.12",
+    "@tanstack/match-sorter-utils": "^8.15.1",
+    "@tanstack/react-table": "^8.15.3",
     "axios": "^1.6.8",
     "chart.js": "^4.4.2",
     "dayjs": "^1.11.10",
