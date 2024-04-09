@@ -71,5 +71,17 @@
   "public-des": "Bitte wählen Sie aus, ob diese Quelle mit anderen Benutzern geteilt werden soll oder ob sie privat bleiben soll",
   "public": "Öffentlich",
   "uniqFiels-des": "Bitte füllen Sie das Feld aus, das zur eindeutigen Identifizierung eines Einnahmen- oder Ausgabenpostens verwendet werden kann",
-  "select-catagory of expense": "Ausgabenkategorie auswählen"
+  "select-catagory of expense": "Ausgabenkategorie auswählen",
+  "date-Format": "Füllen Sie das Datumsformat aus, das in Ihrer Aussage verwendet wird",
+  "general-source-information": "Allgemeine Informationsquelle",
+  "mapping-source-information": "Feldzuordnungsinformationen der Quelle",
+  "format-source-information": "Formatierungsinformationen der Quelle",
+  "add-expense-form": "Quelle für Ausgaben hinzufügen",
+  "fill-required-fields": "Bitte füllen Sie alle erforderlichen Felder aus",
+  "expense-source-added": "Ausgabenquelle erfolgreich hinzugefügt!",
+  "update-source-form": "Update Quellformular",
+  "failed-to-add-expense": "Fehler beim Hinzufügen der Ausgabenquelle. Bitte versuchen Sie es später erneut",
+  "failed-to-update-expense": "Fehler beim Aktualisieren der Ausgabenquelle. Bitte versuchen Sie es später erneut",
+  "update-expense-form": "Ausgabensquelle aktualisieren",
+  "expense-source-updated": "Ausgabensquelle erfolgreich aktualisiert!"
 }
