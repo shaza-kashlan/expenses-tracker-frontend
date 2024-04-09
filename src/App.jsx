@@ -7,12 +7,14 @@ import SignUp from "./components/forms/Signup";
 import { Login } from "./components/forms/Login";
 import { HomePage } from "./pages/HomePage";
 import { IsProtected } from "./components/forms/IsProtected";
+import ExpenseForm from "./components/forms/ExpenseForm";
 import ExampleTranslation from "./components/ExampleTranslation";
 import i18n from "../i18n";
 import { useEffect } from "react";
 export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 import LandingPage from "./pages/LandingPage";
 import Header from "./components/navigation/Header";
+import UpdateExpenseForm from "./components/forms/UpdateExpenseForm";
 import Expenses from "./pages/Expenses.jsx";
 import AddExpenseSource from "./components/forms/AddExpenseSource";
 import UpdateExpenseSource from "./components/forms/UpdateExpenseSource";
@@ -69,7 +71,25 @@ function App() {
               </IsProtected>
             }
           />
-              <Route path="/expenses" element={<IsProtected><Expenses /></IsProtected>} />
+          <Route
+            path="/expenses"
+            element={
+              <IsProtected>
+                <ExpenseForm />
+              </IsProtected>
+            }
+          />
+          <Route
+            path="/expenses/:expenseId"
+            element={
+              <IsProtected>
+                <UpdateExpenseForm />
+              </IsProtected>
+            }
+          />
+          <Route path="*" element={<h1> 404 Not found</h1>} />
+
+          <Route path="/translation" element={<ExampleTranslation />} />
         </Routes>
       </main>
     </>
