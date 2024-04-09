@@ -398,8 +398,4 @@ const AddExpenseSource = () => {
   );
 };
 
-<<<<<<< HEAD
-export default AddExpenseSourceForm;
-=======
 export default AddExpenseSource;
->>>>>>> main

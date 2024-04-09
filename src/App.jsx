@@ -14,13 +14,10 @@ import { useEffect } from "react";
 export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 import LandingPage from "./pages/LandingPage";
 import Header from "./components/navigation/Header";
-<<<<<<< HEAD
 import UpadteExpenseForm from "./components/forms/UpdateExpenseForm";
-=======
 import Expenses from "./pages/Expenses.jsx";
 import AddExpenseSource from "./components/forms/AddExpenseSource";
 import UpdateExpenseSource from "./components/forms/UpdateExpenseSource";
->>>>>>> main
 
 function App() {
   //get information from contexts
