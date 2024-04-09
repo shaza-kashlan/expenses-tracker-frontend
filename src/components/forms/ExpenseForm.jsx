@@ -37,9 +37,9 @@ const ExpenseForm = () => {
 
   const [formData, setFormData] = useState({
     description: "",
-    amount: 0,
+    amount: "",
     category: "",
-    date: "",
+    date: new Date().toISOString().split("T")[0],
     payment_method: "",
     expense_type: "expense", // Default to expense
     notes: "",
@@ -78,7 +78,8 @@ const ExpenseForm = () => {
       description: "",
       amount: "",
       category: "",
-      date: "",
+      date: new Date().toISOString().split("T")[0],
+
       payment_method: "",
       notes: "",
       tags: "",
@@ -123,7 +124,7 @@ const ExpenseForm = () => {
         description: "",
         amount: 0,
         category: "",
-        date: null,
+        date: new Date().toISOString().split("T")[0],
         payment_method: "",
         expense_type: tabValue === 0 ? "expense" : "income",
         notes: "",
@@ -173,6 +174,7 @@ const ExpenseForm = () => {
             <Tab label={t("Income")} />
           </Tabs>
           <div className="muiCardContent-root">
+            <small>{t("Description")}</small>
             <input
               type="text"
               name="description"
@@ -181,6 +183,7 @@ const ExpenseForm = () => {
               placeholder={t("Description")}
               required
             />
+            <small>{t("Amount")}</small>
             <input
               type="number"
               name="amount"
@@ -190,15 +193,16 @@ const ExpenseForm = () => {
               placeholder={t("Amount")}
               required
             />
+            <small>{t("date")}</small>
             <input
-              type="datetime-local"
+              type="date"
               name="date"
               value={formData.date || ""}
               onChange={handleChange}
               placeholder={t("date")}
               required
             />
-
+            <small>{t("select-catagory of expense")}</small>
             <select
               name="category"
               value={formData.category}
@@ -218,25 +222,32 @@ const ExpenseForm = () => {
               <option value="Health">{t("Health")}</option>
               <option value="660d67ada9de44c5a8b6ca2a">{t("Other")}</option>
             </select>
+            <small>{t("select-type")}</small>
             <select
               name="payment_method"
               value={formData.payment_method}
               onChange={handleChange}
               required
             >
-              <option value="">{t("select-payment-method")}</option>
+              <option value="">{t("select-type")}</option>
+              <option value="bank_statement">{t("bank_statement")}</option>
+              <option value="credit_card_statement">
+                {t("credit_card_statement")}
+              </option>
+              <option value="invoice">{t("invoice")}</option>
               <option value="cash">{t("Cash")}</option>
-              <option value="creditCard">{t("Credit Card")}</option>
             </select>
             <select
               name="expense_type"
               value={formData.expense_type}
               onChange={handleChange}
               required
+              disabled
             >
               <option value="expense">{t("Expense")}</option>
               <option value="income">{t("Income")}</option>
             </select>
+            <small>{t("Notes")}</small>
             <input
               type="text"
               name="notes"
@@ -244,6 +255,7 @@ const ExpenseForm = () => {
               onChange={handleChange}
               placeholder={t("Notes")}
             />
+            <small>{t("Tags")}</small>
             <input
               type="text"
               name="tags"
@@ -271,7 +283,7 @@ const ExpenseForm = () => {
         </Alert>
       </Snackbar>
 
-      <button type="submit">{t("Add new Entry")}</button>
+      <button type="submit">{t("add-new-expense")}</button>
     </form>
   );
 };

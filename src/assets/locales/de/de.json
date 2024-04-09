@@ -33,8 +33,8 @@
   "reimbursable": "erstattungsfähig",
   "Expense Type": "Ausgabentyp",
   "Notes": "Notizen",
-  "Personal":"Persönlich",
-  "Business":"Geschäft",
+  "Personal": "Persönlich",
+  "Business": "Geschäft",
   "Submit": "Einreichen",
   "dashboard": "Dashboard",
   "jaet": "Nur noch ein Ausgabenprotokollierungsanwendungsoftware",
@@ -43,7 +43,7 @@
   "lp-claim-three": "import your money movements",
   "name": "Name",
   "type-of-expense": "Art der Ausgaben",
-  "select-type": "Typ auswählen",
+  "select-type": "Zahlungsmethode auswählen",
   "bank_statement": "Kontoauszug",
   "credit_card_statement": "Kreditkartenabrechnung",
   "invoice": "Rechnung",
@@ -83,5 +83,9 @@
   "failed-to-add-expense": "Fehler beim Hinzufügen der Ausgabenquelle. Bitte versuchen Sie es später erneut",
   "failed-to-update-expense": "Fehler beim Aktualisieren der Ausgabenquelle. Bitte versuchen Sie es später erneut",
   "update-expense-form": "Ausgabensquelle aktualisieren",
-  "expense-source-updated": "Ausgabensquelle erfolgreich aktualisiert!"
+  "expense-source-updated": "Ausgabensquelle erfolgreich aktualisiert!",
+  "general-entry-information": "Allgemeine Transaktionsinformationen",
+  "add-new-expense": "Neue Transaktion hinzufügen",
+  "entry-added-success": "Ausgabe erfolgreich hinzugefügt!",
+  "entry-add-error": "Fehler beim Hinzufügen der Ausgabe. Bitte versuchen Sie es später erneut."
 }
