@@ -10,11 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mui/icons-material": "^5.15.15",
     "@mui/material": "^5.15.15",
     "@picocss/pico": "^2.0.6",
+    "@tanstack/match-sorter-utils": "^8.15.1",
+    "@tanstack/react-table": "^8.15.3",
+    "ag-grid-community": "^31.2.0",
+    "ag-grid-react": "^31.2.0",
     "axios": "^1.6.8",
     "chart.js": "^4.4.2",
-    "date-fns": "^3.6.0",
+    "dayjs": "^1.11.10",
     "jsonwebtoken": "^9.0.2",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
