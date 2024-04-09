@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
+import { API_URL } from "../App";
 
 const AuthContext = createContext();
 
@@ -8,7 +9,6 @@ const AuthWrapper = ({ children }) => {
 	const [user, setUser] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 
 	const authenticateUser = () => {
 		const accessToken = localStorage.getItem("accessToken");

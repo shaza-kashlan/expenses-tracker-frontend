@@ -14,9 +14,10 @@ import {
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { API_URL } from "../../App";
 
 const ExpenseForm = () => {
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
+
   const { t } = useTranslation();
   //state for snackbar alert
   const [openSnackBar, setOpenSnackBar] = React.useState({
@@ -148,7 +149,7 @@ const ExpenseForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} id="add-expense-form">
+    <form onSubmit={handleSubmit} id="add-expense-form"  className="collapsible-form ">
       <Card>
         <CardHeader
           title={t("general-entry-information")}

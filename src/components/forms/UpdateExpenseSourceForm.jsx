@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 import {
   Card,
   CardHeader,
@@ -12,14 +13,15 @@ import {
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { API_URL } from "../../App";
 
-const AddExpenseSource = () => {
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
+const UpdateExpenseSourceForm = () => {
+  const { sourceId } = useParams();
   const { t } = useTranslation();
   //state for collapse cards
-  const [gerneralSectionOpen, setGeneralSectionOpen] = useState(false);
-  const [mappingSectionOpen, setMappingSection] = useState(false);
-  const [formatSectionOpen, setFormatSectionOpen] = useState(false);
+  const [gerneralSectionOpen, setGeneralSectionOpen] = useState(true);
+  const [mappingSectionOpen, setMappingSection] = useState(true);
+  const [formatSectionOpen, setFormatSectionOpen] = useState(true);
 
   //state for snackbar alert
   const [openSnackBar, setOpenSnackBar] = React.useState({
@@ -27,7 +29,6 @@ const AddExpenseSource = () => {
     vertical: "top",
     horizontal: "center",
   });
-
   const { vertical, horizontal, open } = openSnackBar;
 
   const handleClose = (event, reason) => {
@@ -52,21 +53,61 @@ const AddExpenseSource = () => {
       payee: "",
     },
     numberStyle: "normal",
-    image: null,
-    dateFormat: "",
+    dateFormat: "", // New field added
   });
+
+  useEffect(() => {
+    const fetchSourceData = async () => {
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        console.error("Access token not found in local storage");
+        return;
+      }
+
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      try {
+        const response = await axios.get(`${API_URL}/sources/${sourceId}`, {
+          headers: headers,
+        });
+        const existingSource = response.data;
+
+        // Update formData with existing source data
+        setFormData({
+          name: existingSource.name || "",
+          type: existingSource.type || "",
+          format: existingSource.format || "",
+          public: existingSource.public,
+          uniqueField: existingSource.uniqueField || "",
+          mapping: {
+            date: existingSource.mapping?.date || "",
+            description: existingSource.mapping?.description || "",
+            notes: existingSource.mapping?.notes || "",
+            amount: existingSource.mapping?.amount || "",
+            payee: existingSource.mapping?.payee || "",
+          },
+          numberStyle: existingSource.numberStyle || "normal",
+          dateFormat: existingSource.dateFormat || "", // New field added
+        });
+      } catch (error) {
+        console.error("Error fetching source data:", error);
+      }
+    };
+
+    fetchSourceData();
+  }, [sourceId]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-
     const newValue = type === "checkbox" ? checked : value;
 
-    // Split the name into nested levels based on dots (.)
+    // For nested fields like mapping.date, split the name to access nested properties
     const [fieldName, nestedKey] = name.split(".");
 
     setFormData((prevData) => {
-      // If the field name corresponds to a nested property like "mapping.date"
-      if (nestedKey && prevData[fieldName]) {
+      if (nestedKey) {
         return {
           ...prevData,
           [fieldName]: {
@@ -74,13 +115,13 @@ const AddExpenseSource = () => {
             [nestedKey]: newValue,
           },
         };
+      } else {
+        // If the field is not nested, update it directly
+        return {
+          ...prevData,
+          [name]: newValue,
+        };
       }
-
-      // Otherwise, update the top-level field directly
-      return {
-        ...prevData,
-        [name]: newValue,
-      };
     });
   };
 
@@ -101,65 +142,43 @@ const AddExpenseSource = () => {
       setGeneralSectionOpen(true);
       return;
     }
-    // Retrieve token from local storage
     const token = localStorage.getItem("accessToken");
-
     if (!token) {
       console.error("Access token not found in local storage");
       return;
     }
 
-    // Set headers with token
     const headers = {
       Authorization: `Bearer ${token}`,
     };
 
-    // Send formData to backend server
-    console.log("form data", formData);
-
     try {
-      const response = await axios.post(`${API_URL}/sources`, formData, {
-        headers,
-      });
+      const response = await axios.put(
+        `${API_URL}/sources/${sourceId}`,
+        formData,
+        { headers }
+      );
 
-      console.log("Source added successfully:", response.data);
+      console.log("Source updated successfully:", response.data);
       setOpenSnackBar({
         ...openSnackBar,
         open: true,
         severity: "success",
-        message: t("expense-source-added"),
-      });
-
-      // Reset form data
-      setFormData({
-        name: "",
-        type: "",
-        format: "",
-        public: true,
-        uniqueField: "",
-        mapping: {
-          date: "",
-          description: "",
-          notes: "",
-          amount: "",
-          payee: "",
-        },
-        numberStyle: "normal",
-        dateFormat: "",
+        message: t("expense-source-updated"),
       });
     } catch (error) {
-      console.error("There was a problem adding the source:", error);
+      console.error("There was a problem updating the source:", error);
       setOpenSnackBar({
         ...openSnackBar,
         open: true,
         severity: "error",
-        message: t("failed-to-add-expense-source"),
+        message: t("failed-to-update-expense-source"),
       });
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} id="add-expense-form">
+    <form onSubmit={handleSubmit} id="add-expense-source-form" className="collapsible-form ">
       <Card className="muiCard-root">
         <CardHeader
           className="muiCardHeader-root"
@@ -391,12 +410,12 @@ const AddExpenseSource = () => {
           variant="filled"
           sx={{ width: "100%" }}
         >
-          {openSnackBar.message || t("expense-source-added")}
+          {openSnackBar.message || t("expense-source-updated")}
         </Alert>
       </Snackbar>
-      <button type="submit">{t("add-expense-form")}</button>
+      <button type="submit">{t("update-expense-form")}</button>
     </form>
   );
 };
 
-export default AddExpenseSource;
+export default UpdateExpenseSourceForm;

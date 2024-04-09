@@ -3,13 +3,14 @@ import { useContext, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useTranslation } from "react-i18next";
+import { API_URL } from "../../App";
 
 export const Login = () => {
 	const [emailAddress, setEmailAddress] = useState("");
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState(null);
 	const { authenticateUser } = useContext(AuthContext);
-	const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
+
 	const nav = useNavigate();
 	const { t } = useTranslation();
 
