@@ -153,6 +153,7 @@ const ExpenseForm = () => {
               onClick={() => setGeneralSectionOpen(!generalSectionOpen)}
               aria-label="expand"
               size="small"
+              disabled
             >
               {generalSectionOpen ? (
                 <KeyboardArrowUpIcon />
