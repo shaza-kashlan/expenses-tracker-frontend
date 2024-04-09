@@ -87,7 +87,7 @@ const Dashboard = ({data}) => {
         </Splide>
         <hr />
         <h2>Income vs Expense</h2>
-        <div style={{minHeight: "600px", minWidth:"100%"}}>
+        <div style={{minHeight: "600px", maxHeight: "600px", minWidth:"100%", maxWidth:"100%"}}>
           <BarChart
             dataset={expenseByTypeAndWallet}
             xAxis={[{ scaleType: 'band', dataKey: "wallet" }]}
@@ -97,14 +97,14 @@ const Dashboard = ({data}) => {
 
         <hr />
         <h2>Total tracked expenses</h2>
-        <div style={{minHeight: "400px", minWidth:"100%"}}>
+        <div style={{minHeight: "400px", maxHeight: "600px", minWidth:"80%",  maxWidth:"80%"}}>
           <PieChart 
             series={[{data: expenseCountByWallet}]}
             slotProps={{
               legend: {
                 direction: 'row',
                 position: { vertical: 'bottom', horizontal: 'right' },
-                padding: 50,
+                padding: 25,
               },
             }}
           />
