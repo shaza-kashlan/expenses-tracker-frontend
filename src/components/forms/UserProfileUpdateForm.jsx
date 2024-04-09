@@ -40,7 +40,7 @@ const UserProfileUpdateForm = () => {
       try {
         const response = await axios.get(`${API_URL}/users`, { headers });
         const userData = response.data;
-
+        console.log("response", userData);
         setFormData((prevFormData) => ({
           ...prevFormData,
           emailAddress: userData.emailAddress || "",
