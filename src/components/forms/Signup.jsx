@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+import { API_URL } from "../../App";
 
 export default function SignUp() {
 	const [userName, setUserName] = useState("");
@@ -9,8 +10,6 @@ export default function SignUp() {
 	const [password, setPassword] = useState("");
 	const [repeatPassword, setRepeatPassword] = useState("");
 	const [error, setError] = useState("");
-
-	const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 
 	const nav = useNavigate();
 
