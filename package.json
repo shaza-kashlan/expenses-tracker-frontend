@@ -15,6 +15,7 @@
     "@fontsource/roboto": "^5.0.12",
     "@mui/icons-material": "^5.15.15",
     "@mui/material": "^5.15.15",
+    "@mui/x-charts": "^7.1.1",
     "@picocss/pico": "^2.0.6",
     "@splidejs/react-splide": "^0.7.12",
     "axios": "^1.6.8",
