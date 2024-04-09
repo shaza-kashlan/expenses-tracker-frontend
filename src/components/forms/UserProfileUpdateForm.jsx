@@ -9,7 +9,6 @@ const UserProfileUpdateForm = () => {
 
   const [formData, setFormData] = useState({
     emailAddress: "",
-    password: "",
     userName: "",
     fullName: "",
     address: {
