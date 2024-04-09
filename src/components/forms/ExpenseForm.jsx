@@ -110,11 +110,11 @@ const ExpenseForm = () => {
         headers,
       });
       console.log("Entry added successfully:", response.data);
-
       // Show success Snackbar
       setOpenSnackBar({
-        ...openSnackBar,
         open: true,
+        vertical: "top",
+        horizontal: "center",
         severity: "success",
         message: t("entry-added-success"),
       });

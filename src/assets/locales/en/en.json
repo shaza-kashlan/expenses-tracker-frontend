@@ -89,5 +89,10 @@
   "general-entry-information": "General Transaction information",
   "add-new-expense": "Add New Transaction ",
   "entry-added-success": "Expense Added Successfully!",
-  "entry-add-error": "Failed to add expense . Please try again later"
+  "entry-add-error": "Failed to add expense . Please try again later",
+  "update-expense": "Update Expense Information",
+  "update-entry": "Update Expense Form",
+  "failed-to-update-entry": "Failed to update expense. Please try again later.",
+  "update-entry-button": "Update Expense Information",
+  "entry-updated-success": "Expense Updated Successfully!"
 }

@@ -87,5 +87,9 @@
   "general-entry-information": "Allgemeine Transaktionsinformationen",
   "add-new-expense": "Neue Transaktion hinzufügen",
   "entry-added-success": "Ausgabe erfolgreich hinzugefügt!",
-  "entry-add-error": "Fehler beim Hinzufügen der Ausgabe. Bitte versuchen Sie es später erneut."
+  "entry-add-error": "Fehler beim Hinzufügen der Ausgabe. Bitte versuchen Sie es später erneut.",
+  "update-entry": "Ausgabeneintrag aktualisieren",
+  "failed-to-update-entry": "Aktualisierung der Ausgabe fehlgeschlagen. Bitte versuchen Sie es später erneut.",
+  "update-entry-button": "Ausgabeninformationen aktualisieren",
+  "entry-updated-success": "Ausgabe erfolgreich aktualisiert!"
 }
