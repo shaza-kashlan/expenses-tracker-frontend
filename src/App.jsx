@@ -16,8 +16,8 @@ import Dashboard from "./pages/Dashboard";
 import UserProfileUpdateForm from "./components/forms/UserProfileUpdateForm";
 import UpdateExpenseForm from "./components/forms/UpdateExpenseForm";
 import Expenses from "./pages/Expenses.jsx";
-import AddExpenseSource from "./components/forms/AddExpenseSource";
-import UpdateExpenseSource from "./components/forms/UpdateExpenseSource";
+import AddExpenseSourceForm from "./components/forms/AddExpenseSourceForm.jsx";
+import UpdateExpenseSourceForm from "./components/forms/UpdateExpenseSourceForm.jsx";
 
 export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 
@@ -80,7 +80,7 @@ function App() {
             path="/sources/:sourceId"
             element={
               <IsProtected>
-                <UpdateExpenseSource />
+                <UpdateExpenseSourceForm />
               </IsProtected>
             }
           />

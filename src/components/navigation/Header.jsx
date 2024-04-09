@@ -7,20 +7,17 @@ const Header = ({ loggedin }) => {
   const { t } = useTranslation();
 
   return (
-    <header>
+    <header id="main-header">
       <nav>
         <ul>
           <Link to="/">
             <li>🤑</li>
-			 <Sidebar />
           </Link>
         </ul>
         {loggedin ? (
           <ul>
             <li>
-              <button className="button-small" type="button">
-                dashboard
-              </button>
+              <Sidebar />
             </li>
           </ul>
         ) : (

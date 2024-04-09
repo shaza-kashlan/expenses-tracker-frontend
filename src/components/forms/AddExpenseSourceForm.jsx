@@ -15,7 +15,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 import { API_URL } from "../../App";
 
-const AddExpenseSource = () => {
+const AddExpenseSourceForm = () => {
 
   const { t } = useTranslation();
   //state for collapse cards
@@ -401,4 +401,4 @@ const AddExpenseSource = () => {
   );
 };
 
-export default AddExpenseSource;
+export default AddExpenseSourceForm;
