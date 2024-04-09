@@ -14,11 +14,14 @@ import { useEffect } from "react";
 export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 import LandingPage from "./pages/LandingPage";
 import Header from "./components/navigation/Header";
+import Dashboard from "./pages/Dashboard";
 import UserProfileUpdateForm from "./components/forms/UserProfileUpdateForm";
 import UpdateExpenseForm from "./components/forms/UpdateExpenseForm";
 import Expenses from "./pages/Expenses.jsx";
 import AddExpenseSource from "./components/forms/AddExpenseSource";
 import UpdateExpenseSource from "./components/forms/UpdateExpenseSource";
+
+import {myData} from "../demo-data"
 
 function App() {
   //get information from contexts
@@ -32,20 +35,29 @@ function App() {
   return (
     <>
       <Header loggedin={user ? true : false} />
-      <main>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
-          <Route
-            path="/home"
-            element={
-              <IsProtected>
-                <HomePage />
-              </IsProtected>
-            }
-          />
-          <Route path="*" element={<h1> 404 Not found</h1>} />
+
+			<main>
+				<Routes>
+					<Route path="/" element={<LandingPage />} />
+					<Route path="/signup" element={<SignUp />} />
+					<Route path="/login" element={<Login />} />
+					<Route
+						path="/dashboard"
+						element={
+							<IsProtected>
+								<Dashboard data={myData} />
+							</IsProtected>
+						}
+					/>
+					<Route
+						path="/home"
+						element={
+							<IsProtected>
+								<HomePage />
+							</IsProtected>
+						}
+					/>
+					<Route path="*" element={<h1> 404 Not found</h1>} />
 
           <Route path="/translation" element={<ExampleTranslation />} />
           <Route

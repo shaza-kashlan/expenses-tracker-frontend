@@ -6,7 +6,7 @@ const Header = ({ loggedin }) => {
 	const { t } = useTranslation();
 
 	return (
-		<header>
+		<header id="main-header">
 			<nav>
 				<ul>
 					<Link to="/">
@@ -16,7 +16,7 @@ const Header = ({ loggedin }) => {
 				{loggedin ? (
 					<ul>
 						<li>
-							<button className="button-small" type="button">
+							<button className="button-small" type="button" onClick={() => navigate("/dashboard")}>
 								dashboard
 							</button>
 						</li>
