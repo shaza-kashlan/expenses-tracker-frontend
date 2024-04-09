@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useContext } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
@@ -19,9 +20,11 @@ import BarChartRoundedIcon from "@mui/icons-material/BarChartRounded";
 import HomeIcon from "@mui/icons-material/Home";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import LoginIcon from "@mui/icons-material/Login";
+import { AuthContext } from "../../contexts/AuthContext";
 
 export default function TemporaryDrawer() {
   const [open, setOpen] = React.useState(false);
+  const {user} = useContext(AuthContext);
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -45,12 +48,12 @@ export default function TemporaryDrawer() {
       {/* check the token and switch to related sidebar */}
       {localStorage.getItem("accessToken") ? (
         <List>
-          {["Username", "Logout"].map((text, index) => (
+          {[user.userName, "Logout"].map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton
                 component={Link}
                 to={
-                  text === "Username"
+                  text === user.userName
                     ? "/profile"
                     : text === "Logout"
                     ? "/homepage"
