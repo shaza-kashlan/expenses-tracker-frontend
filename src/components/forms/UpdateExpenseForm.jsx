@@ -157,7 +157,7 @@ const UpadteExpenseForm = () => {
             <option value="Repair">{t("Repair")}</option>
             <option value="Pet">{t("Pet")}</option>
             <option value="Health">{t("Health")}</option>
-            <option value="Other">{t("Other")}</option>
+            <option value="660d67ada9de44c5a8b6ca2a">{t("Other")}</option>
           </select>
         </div>
         {/* <small>{t("date")}</small> */}
@@ -220,7 +220,7 @@ const UpadteExpenseForm = () => {
           </select>
         </div>
 
-        <button type="submit">{t("Add new Expense")}</button>
+        <button type="submit">{t("Update Expense")}</button>
       </form>
   );
 };

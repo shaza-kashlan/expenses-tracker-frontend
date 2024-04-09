@@ -1,15 +1,12 @@
 import React from "react";
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import Tooltip from "@mui/material/Tooltip";
 
 const ExpenseForm = () => {
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
-  const nav = useNavigate();
   const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
@@ -81,10 +78,6 @@ const ExpenseForm = () => {
         description: "",
         amount: "",
         category:"",
-        // category: {
-        //   name: "",
-        //   public: true,
-        // },
         date: "",
         payment_method: "",
         expense_type: "",
@@ -132,12 +125,12 @@ const ExpenseForm = () => {
             <option value="Travel">{t("Travel")}</option>
             <option value="Entertainment">{t("Entertainment")}</option>
             <option value="Clothing">{t("Clothing")}</option>
-            <option value="Shoping">{t("Shoping")}</option>
+            <option value="Shopping">{t("Shopping")}</option>
             <option value="Transportation">{t("Transportation")}</option>
             <option value="Repair">{t("Repair")}</option>
             <option value="Pet">{t("Pet")}</option>
             <option value="Health">{t("Health")}</option>
-            <option value="Other">{t("Other")}</option>
+            <option value="660d67ada9de44c5a8b6ca2a">{t("Other")}</option>
           </select>
         </div>
         {/* <small>{t("date")}</small> */}
