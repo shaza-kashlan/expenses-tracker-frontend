@@ -8,11 +8,17 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
-
-import { MdArrowForwardIos } from "react-icons/md";
+import { Link } from "react-router-dom";
+import MenuIcon from "@mui/icons-material/Menu";
+import PersonPinIcon from "@mui/icons-material/PersonPin";
+import LogoutIcon from "@mui/icons-material/Logout";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import PaidRoundedIcon from "@mui/icons-material/PaidRounded";
+import BarChartRoundedIcon from "@mui/icons-material/BarChartRounded";
+import HomeIcon from "@mui/icons-material/Home";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import LoginIcon from "@mui/icons-material/Login";
 
 export default function TemporaryDrawer() {
   const [open, setOpen] = React.useState(false);
@@ -20,84 +26,127 @@ export default function TemporaryDrawer() {
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
-
-  // Define an array of icon components
+  //  arrays of icons
+  const usericonComponents = [
+    <PersonPinIcon sx={{ fontSize: 50 }} />,
+    <LogoutIcon />,
+  ];
   const iconComponents = [
-    <InboxIcon />,
-    <MailIcon />,
-    <MailIcon />,
-    <MailIcon />,
-  ]; // Add more icons as needed
+    <DashboardIcon />,
+    <AddShoppingCartIcon />,
+    <PaidRoundedIcon />,
+    <BarChartRoundedIcon />,
+  ];
+  const iconComponents0 = [<HomeIcon />];
+  const signComponents = [<PersonAddIcon />, <LoginIcon />];
 
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
-
-      <List>
-        {["Username"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton
-              component={Link}
-              to={
-                text === "Username"
-                  ? "/profile"
-                  : `/${text.toLowerCase()}`
-              }
-            >
-              <ListItemIcon>
-                {iconComponents[index % iconComponents.length]}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-
-      <Divider />
-
-      <List>
-        {["Login", "Signup", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton
-              component={Link}
-              to={
-                text === "Login"
-                  ? "/login"
-                  : text === "Signup"
-                  ? "/signup"
-                  : `/${text.toLowerCase()}`
-              }
-            >
-              <ListItemIcon>
-                {iconComponents[index % iconComponents.length]}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
+      {/* check the token and switch to related sidebar */}
+      {localStorage.getItem("accessToken") ? (
+        <List>
+          {["Username", "Logout"].map((text, index) => (
+            <ListItem key={text} disablePadding>
+              <ListItemButton
+                component={Link}
+                to={
+                  text === "Username"
+                    ? "/profile"
+                    : text === "Logout"
+                    ? "/homepage"
+                    : `/${text.toLowerCase()}`
+                }
+              >
+                <ListItemIcon>
+                  {usericonComponents[index % usericonComponents.length]}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      ) : (
+        <List>
+          {["Homepage"].map((text, index) => (
+            <ListItem key={text} disablePadding>
+              <ListItemButton
+                component={Link}
+                to={
+                  text === "Homepage" ? "/homepage" : `/${text.toLowerCase()}`
+                }
+              >
+                <ListItemIcon>
+                  {iconComponents0[index % iconComponents0.length]}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      )}
 
       <Divider />
+      {/* check the token and switch to related sidebar */}
+      {localStorage.getItem("accessToken") ? (
+        <List>
+          {["Dashboard", "Add Expense", "Add Source", "Report"].map(
+            (text, index) => (
+              <ListItem key={text} disablePadding>
+                <ListItemButton
+                  component={Link}
+                  to={
+                    text === "Dashboard"
+                      ? "/dashboard"
+                      : text === "Add Expense"
+                      ? "/expenses"
+                      : text === "Add Source"
+                      ? "/sources"
+                      : text === "Report"
+                      ? "/report"
+                      : `/${text.toLowerCase()}`
+                  }
+                >
+                  <ListItemIcon>
+                    {iconComponents[index % iconComponents.length]}
+                  </ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItemButton>
+              </ListItem>
+            )
+          )}
+        </List>
+      ) : (
+        <List>
+          {["Signup", "Login"].map((text, index) => (
+            <ListItem key={text} disablePadding>
+              <ListItemButton
+                component={Link}
+                to={
+                  text === "Signup"
+                    ? "/signup"
+                    : text === "Login"
+                    ? "/login"
+                    : `/${text.toLowerCase()}`
+                }
+              >
+                <ListItemIcon>
+                  {signComponents[index % signComponents.length]}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      )}
 
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton component={Link} to={`/${text.toLowerCase()}`}>
-              {/* Use Link for navigation */}
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
+      <Divider />
     </Box>
   );
 
   return (
     <div>
       <Button onClick={toggleDrawer(true)}>
-        <MdArrowForwardIos />
+        <MenuIcon />
       </Button>
       <Drawer open={open} onClose={toggleDrawer(false)}>
         {DrawerList}

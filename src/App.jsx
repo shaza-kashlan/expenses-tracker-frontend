@@ -30,7 +30,8 @@ function App() {
 
   return (
     <>
-      <Header loggedin={user ? true : false} />
+      {/* <Header loggedin={user ? true : false} /> */}
+      <Header />
       
       <main>
         <Routes>
