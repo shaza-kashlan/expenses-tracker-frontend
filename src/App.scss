@@ -16,20 +16,20 @@ body {
 }
 
 .rag-green {
-  color: green
+  color: green;
 }
 .rag-red {
-  color: red
+  color: red;
 }
 
 .button-more-info {
-    background-color: #00ffff00;
-    padding: 0;
-    width: 1.5rem;
-    height: 1.5rem;
-    border: none;
-    position: relative;
-    top: 3px;
+  background-color: #00ffff00;
+  padding: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: none;
+  position: relative;
+  top: 3px;
 }
 
 #root {
@@ -125,15 +125,12 @@ main {
   }
 }
 
-
 .expense-table {
-
-    border: none;
+  border: none;
 
   tr {
     display: flex;
     width: fit-content;
-  
 
     th {
       position: relative;
@@ -264,4 +261,3 @@ main {
     font-size: 18px; /* Set the desired font size */
   }
 }
-

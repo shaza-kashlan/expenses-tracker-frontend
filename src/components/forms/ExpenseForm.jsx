@@ -1,56 +1,92 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Tooltip from "@mui/material/Tooltip";
+import {
+  Card,
+  CardHeader,
+  IconButton,
+  Collapse,
+  Snackbar,
+  Alert,
+  Tabs,
+  Tab,
+  Box,
+} from "@mui/material";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 const ExpenseForm = () => {
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
   const { t } = useTranslation();
+  //state for snackbar alert
+  const [openSnackBar, setOpenSnackBar] = React.useState({
+    open: false,
+    vertical: "top",
+    horizontal: "center",
+  });
+
+  const { vertical, horizontal, open } = openSnackBar;
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenSnackBar({ ...openSnackBar, open: false });
+  };
 
   const [formData, setFormData] = useState({
     description: "",
-    amount: "",
-    category:"",
+    amount: 0,
+    category: "",
     date: "",
     payment_method: "",
-    expense_type: "",
+    expense_type: "expense", // Default to expense
     notes: "",
-    tags:"",
+    tags: "",
   });
 
+  const [generalSectionOpen, setGeneralSectionOpen] = useState(true);
+  const [tabValue, setTabValue] = useState(0); // 0: Expense, 1: Income
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-
-    const newValue = type === "checkbox" ? checked : value;
-
-    // Split the name into nested levels based on dots (.)
-    const [fieldName, nestedKey] = name.split(".");
+    const { name, value } = e.target;
 
     setFormData((prevData) => {
-      // If the field name corresponds to a nested property like "mapping.date"
-      if (nestedKey && prevData[fieldName]) {
+      if (name === "amount") {
+        const updatedAmount =
+          tabValue === 0 ? -Math.abs(value) : Math.abs(value);
+
         return {
           ...prevData,
-          [fieldName]: {
-            ...prevData[fieldName],
-            [nestedKey]: newValue,
-          },
+          [name]: updatedAmount,
         };
       }
 
-      // Otherwise, update the top-level field directly
+      // For other fields, keep the existing values unchanged
       return {
         ...prevData,
-        [name]: newValue,
+        [name]: value,
       };
     });
   };
 
-  // *********** create new expense *************
-  const handleExpense = async (event) => {
-    event.preventDefault();
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
+    setFormData({
+      ...formData,
+      expense_type: newValue === 0 ? "expense" : "income",
+      description: "",
+      amount: "",
+      category: "",
+      date: "",
+      payment_method: "",
+      notes: "",
+      tags: "",
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
     // Retrieve token from local storage
     const token = localStorage.getItem("accessToken");
@@ -72,129 +108,171 @@ const ExpenseForm = () => {
       const response = await axios.post(`${API_URL}/expenses`, formData, {
         headers,
       });
-      console.log("Expense added successfully:", response.data);
+      console.log("Entry added successfully:", response.data);
+
+      // Show success Snackbar
+      setOpenSnackBar({
+        ...openSnackBar,
+        open: true,
+        severity: "success",
+        message: t("entry-added-success"),
+      });
+
       // Reset form data
       setFormData({
         description: "",
-        amount: "",
-        category:"",
-        date: "",
+        amount: 0,
+        category: "",
+        date: null,
         payment_method: "",
-        expense_type: "",
+        expense_type: tabValue === 0 ? "expense" : "income",
         notes: "",
-        tags:""
+        tags: "",
       });
     } catch (error) {
-      console.error("There was a problem adding the expense:", error);
+      console.error("There was a problem adding the entry:", error);
+
+      // Show error Snackbar
+      setOpenSnackBar({
+        ...openSnackBar,
+        open: true,
+        severity: "error",
+        message: t("entry-add-error"),
+      });
     }
   };
 
   return (
-      <form onSubmit={handleExpense}>
-        <h3>Add New Expense</h3>
-        <div>
-          <input
-            type="text"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            required
-            placeholder={t("Description")}
-          />
-        </div>
-        <div>
-          <input
-            type="text"
-            name="amount"
-            value={formData.amount}
-            onChange={handleChange}
-            required
-            placeholder={t("Amount")}
-          />
-        </div>
-        <div>
-          <select
-            name="category"
-            required
-            value={formData.category}
-            onChange={handleChange}
+    <form onSubmit={handleSubmit} id="add-expense-form">
+      <Card>
+        <CardHeader
+          title={t("general-entry-information")}
+          action={
+            <IconButton
+              onClick={() => setGeneralSectionOpen(!generalSectionOpen)}
+              aria-label="expand"
+              size="small"
+            >
+              {generalSectionOpen ? (
+                <KeyboardArrowUpIcon />
+              ) : (
+                <KeyboardArrowDownIcon />
+              )}
+            </IconButton>
+          }
+        />
+        <Collapse in={generalSectionOpen} timeout="auto" unmountOnExit>
+          <Tabs
+            value={tabValue}
+            onChange={handleTabChange}
+            variant="fullWidth"
+            textColor="primary"
+            indicatorColor="primary"
           >
-            <option value="">{t("select-catagory of expense")}</option>
-            <option value="Home">{t("Home")}</option>
-            <option value="Food">{t("Food")}</option>
-            <option value="Travel">{t("Travel")}</option>
-            <option value="Entertainment">{t("Entertainment")}</option>
-            <option value="Clothing">{t("Clothing")}</option>
-            <option value="Shopping">{t("Shopping")}</option>
-            <option value="Transportation">{t("Transportation")}</option>
-            <option value="Repair">{t("Repair")}</option>
-            <option value="Pet">{t("Pet")}</option>
-            <option value="Health">{t("Health")}</option>
-            <option value="660d67ada9de44c5a8b6ca2a">{t("Other")}</option>
-          </select>
-        </div>
-        {/* <small>{t("date")}</small> */}
-        <Tooltip title={t("date-tooltip")} placement="top-start">
-          <div className="form-group">
+            <Tab label={t("Expense")} />
+            <Tab label={t("Income")} />
+          </Tabs>
+          <div className="muiCardContent-root">
             <input
               type="text"
-              className="form-control"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              placeholder={t("Description")}
+              required
+            />
+            <input
+              type="number"
+              name="amount"
+              id="amount"
+              value={formData.amount}
+              onChange={handleChange}
+              placeholder={t("Amount")}
+              required
+            />
+            <input
+              type="datetime-local"
               name="date"
-              value={formData.date}
+              value={formData.date || ""}
               onChange={handleChange}
               placeholder={t("date")}
-              onTouchStart={(e) => e.stopPropagation()}
+              required
+            />
+
+            <select
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              required
+            >
+              <option value="">{t("select-catagory of expense")}</option>
+              <option value="Home">{t("Home")}</option>
+              <option value="Food">{t("Food")}</option>
+              <option value="Travel">{t("Travel")}</option>
+              <option value="Entertainment">{t("Entertainment")}</option>
+              <option value="Clothing">{t("Clothing")}</option>
+              <option value="Shopping">{t("Shopping")}</option>
+              <option value="Transportation">{t("Transportation")}</option>
+              <option value="Repair">{t("Repair")}</option>
+              <option value="Pet">{t("Pet")}</option>
+              <option value="Health">{t("Health")}</option>
+              <option value="660d67ada9de44c5a8b6ca2a">{t("Other")}</option>
+            </select>
+            <select
+              name="payment_method"
+              value={formData.payment_method}
+              onChange={handleChange}
+              required
+            >
+              <option value="">{t("select-payment-method")}</option>
+              <option value="cash">{t("Cash")}</option>
+              <option value="creditCard">{t("Credit Card")}</option>
+            </select>
+            <select
+              name="expense_type"
+              value={formData.expense_type}
+              onChange={handleChange}
+              required
+            >
+              <option value="expense">{t("Expense")}</option>
+              <option value="income">{t("Income")}</option>
+            </select>
+            <input
+              type="text"
+              name="notes"
+              value={formData.notes}
+              onChange={handleChange}
+              placeholder={t("Notes")}
+            />
+            <input
+              type="text"
+              name="tags"
+              value={formData.tags}
+              onChange={handleChange}
+              placeholder={t("Tags")}
             />
           </div>
-        </Tooltip>
-        <div>
-          <select
-            name="payment_method"
-            value={formData.payment_method}
-            onChange={handleChange}
-            required
-          >
-            <option value="">{t("select-Payment method")}</option>
-            <option value="cash">{t("Cash")}</option>
-            <option value="creditCard">{t("Credit Card")}</option>
-            <option value="onlineTransfer">{t("Online Transfer")}</option>
-          </select>
-        </div>
-        <div>
-          <select
-            name="expense_type"
-            value={formData.expense_type}
-            onChange={handleChange}
-          >
-            <option value="">{t("select-Expense type")}</option>
-            <option value="one-time">{t("one-time")}</option>
-            <option value="recurring">{t("recurring")}</option>
-            <option value="reimbursable">{t("reimbursable")}</option>
-          </select>
-        </div>
-        <div>
-          <input
-            type="text"
-            name="notes"
-            value={formData.notes}
-            onChange={handleChange}
-            placeholder={t("Notes")}
-          />
-        </div>
-        <div>
-          <select
-            name="tags"
-            value={formData.tags}
-            onChange={handleChange}
-          >
-            <option value="">{t("select-Expense label")}</option>
-            <option value="Personal">{t("Personal")}</option>
-            <option value="Business">{t("Business")}</option>
-          </select>
-        </div>
+        </Collapse>
+      </Card>
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        key={vertical + horizontal}
+      >
+        <Alert
+          onClose={handleClose}
+          severity={openSnackBar.severity || "info"}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {openSnackBar.message || t("expense-source-added")}
+        </Alert>
+      </Snackbar>
 
-        <button type="submit">{t("Add new Expense")}</button>
-      </form>
+      <button type="submit">{t("Add new Entry")}</button>
+    </form>
   );
 };
 
