@@ -12,7 +12,8 @@ const WalletSummaryCard = ({data, wallet}) => {
 
   const navigate = useNavigate()
 
-  console.log('got this data',data)
+  //console.log('got this data',data)
+  
   return (
     <article className="wallet-summary-card">
       <header>
