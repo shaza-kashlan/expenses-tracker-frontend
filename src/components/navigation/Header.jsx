@@ -1,5 +1,6 @@
 import { useNavigate, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import Sidebar from "./Sidebar";
 
 const Header = ({ loggedin }) => {
 	const navigate = useNavigate();
@@ -11,6 +12,7 @@ const Header = ({ loggedin }) => {
 				<ul>
 					<Link to="/">
 						<li>🤑</li>
+				<Sidebar />
 					</Link>
 				</ul>
 				{loggedin ? (
