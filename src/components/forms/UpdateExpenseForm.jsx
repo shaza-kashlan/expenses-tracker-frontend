@@ -16,11 +16,11 @@ import {
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { API_URL } from "../../App";
 
 const UpdateExpenseForm = () => {
   const { expenseId } = useParams();
 
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
   const nav = useNavigate();
   const { t } = useTranslation();
   //state for snackbar alert
@@ -181,7 +181,7 @@ const UpdateExpenseForm = () => {
   };
 
   return (
-    <form onSubmit={handleUpdateExpense} id="update-expense-form">
+    <form onSubmit={handleUpdateExpense} id="update-expense-form" className="collapsible-form ">
       <Card>
         <CardHeader
           title={t("general-entry-information")}

@@ -11,7 +11,6 @@ import ExpenseForm from "./components/forms/ExpenseForm";
 import ExampleTranslation from "./components/ExampleTranslation";
 import i18n from "../i18n";
 import { useEffect } from "react";
-export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 import LandingPage from "./pages/LandingPage";
 import Header from "./components/navigation/Header";
 import Dashboard from "./pages/Dashboard";
@@ -20,6 +19,8 @@ import UpdateExpenseForm from "./components/forms/UpdateExpenseForm";
 import Expenses from "./pages/Expenses.jsx";
 import AddExpenseSource from "./components/forms/AddExpenseSource";
 import UpdateExpenseSource from "./components/forms/UpdateExpenseSource";
+
+export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 
 import {myData} from "../demo-data"
 
@@ -64,7 +65,7 @@ function App() {
             path="/profile"
             element={
               <IsProtected>
-                <HomePage />
+                <UserProfileUpdateForm />
               </IsProtected>
             }
           />

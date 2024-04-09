@@ -176,8 +176,7 @@ main {
   opacity: 1;
 }
 
-#add-expense-form,
-#update-expense-form {
+.collapsible-form {
   padding: 0rem 3rem 3rem 3rem;
   margin: 0;
 
@@ -261,11 +260,15 @@ main {
   .MuiCardHeader-title {
     font-size: 18px; /* Set the desired font size */
   }
+}
 
+#add-expense-form,
+#update-expense-form {
   .MuiCardHeader-action {
     visibility: hidden;
   }
 }
+
 
 // utilities
 

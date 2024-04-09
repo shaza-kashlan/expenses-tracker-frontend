@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import profileImage from "../../assets/images/ProfileIcon.png";
+import { API_URL } from "../../App";
 
 const UserProfileUpdateForm = () => {
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
+
   const { t } = useTranslation();
 
   const [formData, setFormData] = useState({

@@ -13,8 +13,10 @@ import {
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
+import { API_URL } from "../../App";
+
 const AddExpenseSource = () => {
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
+
   const { t } = useTranslation();
   //state for collapse cards
   const [gerneralSectionOpen, setGeneralSectionOpen] = useState(false);
@@ -159,7 +161,7 @@ const AddExpenseSource = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} id="add-expense-form">
+    <form onSubmit={handleSubmit} id="add-expense-source-form" className="collapsible-form ">
       <Card className="muiCard-root">
         <CardHeader
           className="muiCardHeader-root"
