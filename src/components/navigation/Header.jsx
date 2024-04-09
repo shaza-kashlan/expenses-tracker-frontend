@@ -10,9 +10,16 @@ const Header = ({ loggedin }) => {
     <header id="main-header">
       <nav>
         <ul>
-          <Link to="/">
-            <li>🤑</li>
-          </Link>
+          {/* Render the correct link based on login status */}
+          {loggedin ? (
+            <Link to="/dashboard">
+              <li>🤑</li>
+            </Link>
+          ) : (
+            <Link to="/">
+              <li>🤑</li>
+            </Link>
+          )}
         </ul>
         {loggedin ? (
           <ul>
@@ -35,4 +42,5 @@ const Header = ({ loggedin }) => {
     </header>
   );
 };
+
 export default Header;
