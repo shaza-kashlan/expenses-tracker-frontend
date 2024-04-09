@@ -32,11 +32,9 @@ const Dashboard = ({data}) => {
 
   const getExpenseCountPerWallet = (data) => {
     const counts = data.reduce((acc,item) => {
-      console.log(item)
-      console.log(acc)
       return {...acc, [item.wallet]: acc[item?.wallet] + 1 || 1 }
     },{})
-    console.log('counts',counts)
+    //console.log('counts',counts)
     const countsArr = Object.keys(counts).map((element,index) => ({id: index, value: counts[element], label: element[0].toUpperCase() + element.slice(1) }))
     return countsArr
   }
@@ -88,17 +86,29 @@ const Dashboard = ({data}) => {
             </SplideSlide>)}
         </Splide>
         <hr />
-        <BarChart
-          dataset={expenseByTypeAndWallet}
-          xAxis={[{ scaleType: 'band', dataKey: "wallet" }]}
-          series={[{dataKey: "totalExpense", label: "Expense"}, {dataKey: "totalIncome", label: "Income"}]}
-        />
+        <h2>Income vs Expense</h2>
+        <div style={{minHeight: "600px", minWidth:"100%"}}>
+          <BarChart
+            dataset={expenseByTypeAndWallet}
+            xAxis={[{ scaleType: 'band', dataKey: "wallet" }]}
+            series={[{dataKey: "totalExpense", label: "Expense"}, {dataKey: "totalIncome", label: "Income"}]}
+          />
+        </div>
 
         <hr />
-        <PieChart 
-          series={[{data: expenseCountByWallet}]}
-          
-        />
+        <h2>Total tracked expenses</h2>
+        <div style={{minHeight: "400px", minWidth:"100%"}}>
+          <PieChart 
+            series={[{data: expenseCountByWallet}]}
+            slotProps={{
+              legend: {
+                direction: 'row',
+                position: { vertical: 'bottom', horizontal: 'right' },
+                padding: 50,
+              },
+            }}
+          />
+        </div>
     </>
   )
 }
