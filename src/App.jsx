@@ -15,13 +15,14 @@ import Header from "./components/navigation/Header";
 import Dashboard from "./pages/Dashboard";
 import UserProfileUpdateForm from "./components/forms/UserProfileUpdateForm";
 import UpdateExpenseForm from "./components/forms/UpdateExpenseForm";
-import Expenses from "./pages/Expenses.jsx";
 import AddExpenseSourceForm from "./components/forms/AddExpenseSourceForm.jsx";
 import UpdateExpenseSourceForm from "./components/forms/UpdateExpenseSourceForm.jsx";
+import ListExpenses from "./pages/ListExpenses.jsx";
 
 export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 
 import {myData} from "../demo-data"
+
 
 function App() {
   //get information from contexts
@@ -97,6 +98,14 @@ function App() {
             element={
               <IsProtected>
                 <UpdateExpenseForm />
+              </IsProtected>
+            }
+          />
+          <Route
+            path="/my-expenses"
+            element={
+              <IsProtected>
+                <ListExpenses />
               </IsProtected>
             }
           />
