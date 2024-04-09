@@ -94,5 +94,15 @@
   "update-entry": "Update Expense Form",
   "failed-to-update-entry": "Failed to update expense. Please try again later.",
   "update-entry-button": "Update Expense Information",
-  "entry-updated-success": "Expense Updated Successfully!"
+  "entry-updated-success": "Expense Updated Successfully!",
+  "address": "Address Details",
+  "user-updated-success": "User Information updated Successfully",
+  "failed-to-update-user": "Failed to update user. Please try again later.",
+  "country": "Country",
+  "city": "City",
+  "postcode": "Postcode",
+  "street-number": "Street Number",
+  "street": "Street",
+  "mobile-number": "Mobile Number",
+  "full-name": "Full Name"
 }
