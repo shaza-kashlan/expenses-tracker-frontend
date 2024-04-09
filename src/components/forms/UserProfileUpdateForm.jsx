@@ -5,7 +5,6 @@ import profileImage from "../../assets/images/ProfileIcon.png";
 import { API_URL } from "../../App";
 
 const UserProfileUpdateForm = () => {
-
   const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
@@ -141,6 +140,8 @@ const UserProfileUpdateForm = () => {
       });
 
       console.log("User profile updated successfully:", response.data);
+
+      localStorage.setItem("imageUrl", thumbnail);
     } catch (error) {
       console.error("Error updating user profile:", error.message);
     }
