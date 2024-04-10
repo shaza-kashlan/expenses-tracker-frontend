@@ -22,10 +22,12 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import LoginIcon from "@mui/icons-material/Login";
 import { AuthContext } from "../../contexts/AuthContext";
 
-export default function TemporaryDrawer() {
+
+const Sidebar = ({ loggedin }) =>{
+// export default function TemporaryDrawer({ loggedin }) {
   const [open, setOpen] = React.useState(false);
   const {user} = useContext(AuthContext);
-
+  console.log("loggedin", loggedin)
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
@@ -46,7 +48,9 @@ export default function TemporaryDrawer() {
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       {/* check the token and switch to related sidebar */}
-      {localStorage.getItem("accessToken") ? (
+      {/* {localStorage.getItem("accessToken") ? ( */}
+      {loggedin ? (
+
         <List>
           {[user.userName, "Logout"].map((text, index) => (
             <ListItem key={text} disablePadding>
@@ -90,7 +94,7 @@ export default function TemporaryDrawer() {
 
       <Divider />
       {/* check the token and switch to related sidebar */}
-      {localStorage.getItem("accessToken") ? (
+      {loggedin ? (
         <List>
           {["Dashboard", "Add Expense", "Add Source", "Report"].map(
             (text, index) => (
@@ -157,3 +161,6 @@ export default function TemporaryDrawer() {
     </div>
   );
 }
+
+export default Sidebar;
+

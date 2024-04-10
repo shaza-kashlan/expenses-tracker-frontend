@@ -1,11 +1,15 @@
 import { useNavigate, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sidebar from "./Sidebar";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
+
 
 const Header = ({ loggedin }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-
+  const { user, setUser } = useContext(AuthContext);
+  console.log("loggedinnnnn", loggedin)
   return (
     <header id="main-header">
       <nav>
@@ -13,11 +17,11 @@ const Header = ({ loggedin }) => {
           <Link to="/">
             <li>🤑</li>
           </Link>
-        </ul>
-        {loggedin ? (
+        </ul> 
+        {/* {loggedin ? (
           <ul>
             <li>
-              <Sidebar />
+              <Sidebar loggedin={user ? true : false}/>
             </li>
           </ul>
         ) : (
@@ -30,7 +34,22 @@ const Header = ({ loggedin }) => {
               {t("login")}
             </button>
           </ul>
-        )}
+        )}   */}
+          <ul>
+            <li>
+              <Sidebar loggedin={user ? true : false}/>
+            </li>
+          </ul>
+      
+          <ul>
+            <button
+              type="button"
+              className="button-small"
+              onClick={() => navigate("/login")}
+            >
+              {t("login")}
+            </button>
+          </ul>
       </nav>
     </header>
   );
