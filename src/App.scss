@@ -25,20 +25,29 @@
 }
 
 :root {
-  --expense-primary-background: linear-gradient(to right, #e33c3c, #23203f);
+  --my-gradient-one: linear-gradient(to right, #e33c3c, #23203f);
+  --my-gradient-two:linear-gradient(99.61deg, #E3823C 14.81%, #E33C3C 89.9%);
+}
+
+[data-theme=light],
+:root:not([data-theme=dark]) {
+  --expense-background-color: var(--my-gradient-one);
   --expense-font-sans: "DMSans";
   --expense-text-primary-color: #ffffff;
   --expense-text-secondary-color: #e3b53c;
-  --expense-button-primary-color: linear-gradient(to right, #ecbb3b, #e33c3c);
+  --expense-primary-background: #e3823c;
   --expense-font-sans-bold: "DMSansBold";
   --expense-nav-bar-color: #1b1830;
-  --expense-button-color: #e3823c;
+  --expense-button-color: ;
 }
 
 html,
 body {
   font-family: "DMSans", sans-serif;
 }
+
+
+
 
 .rag-green {
   color: green;
@@ -62,13 +71,13 @@ body {
   margin: 0 auto;
   min-height: 100dvh;
   text-align: center;
-  background: var(--expense-primary-background);
+  background: var(--expense-background-color);
   display: grid;
   grid-template-rows: 75px 1fr;
 }
 
 header#main-header {
-  background-color: var(--expense-nav-bar-color);
+  //background-color: var(--expense-nav-bar-color);
   max-width: 100% !important;
   height: 75px;
   justify-content: center;
@@ -108,9 +117,9 @@ main {
   padding: var(--pico-block-spacing-vertical) 0 !important;
   p {
     a {
-      color: var(--expense-text-secondary-color);
+     // color: var(--expense-text-secondary-color);
     }
-    color: var(--expense-text-primary-color);
+    //color: var(--expense-text-primary-color);
   }
 }
 
@@ -123,10 +132,10 @@ main {
     padding: 0rem 2rem 3rem 2rem;
   }
   button {
-    background-color: var(--expense-button-color);
+    //background-color: var(--expense-button-color);
   }
   h4 {
-    color: var(--expense-text-secondary-color);
+    //color: var(--expense-text-secondary-color);
     font-family: var(--expense-font-sans-bold);
   }
 }
