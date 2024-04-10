@@ -22,15 +22,13 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import LoginIcon from "@mui/icons-material/Login";
 import { AuthContext } from "../../contexts/AuthContext";
 
-
-const Sidebar = ({ loggedin }) =>{
-// export default function TemporaryDrawer({ loggedin }) {
+const Sidebar = () =>{
   const [open, setOpen] = React.useState(false);
-  const {user} = useContext(AuthContext);
-  console.log("loggedin", loggedin)
+  const { user, handleLogout } = useContext(AuthContext);
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
+
   //  arrays of icons
   const usericonComponents = [
     <PersonPinIcon sx={{ fontSize: 50 }} />,
@@ -47,10 +45,8 @@ const Sidebar = ({ loggedin }) =>{
 
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
-      {/* check the token and switch to related sidebar */}
-      {/* {localStorage.getItem("accessToken") ? ( */}
-      {loggedin ? (
-
+      {/* check if user is login switch to related sidebar */}
+      {user ? (
         <List>
           {[user.userName, "Logout"].map((text, index) => (
             <ListItem key={text} disablePadding>
@@ -60,12 +56,14 @@ const Sidebar = ({ loggedin }) =>{
                   text === user.userName
                     ? "/profile"
                     : text === "Logout"
-                    ? "/homepage"
+                    ? "/loggedout"
                     : `/${text.toLowerCase()}`
                 }
+                onClick={text === "Logout" ? ()=>{handleLogout()} : undefined}
               >
                 <ListItemIcon>
-                  {usericonComponents[index % usericonComponents.length]}
+                  {/* {usericonComponents[index % usericonComponents.length]} */}
+                  {text === user.userName ? usericonComponents[0] : usericonComponents[1]}
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
@@ -79,7 +77,7 @@ const Sidebar = ({ loggedin }) =>{
               <ListItemButton
                 component={Link}
                 to={
-                  text === "Homepage" ? "/homepage" : `/${text.toLowerCase()}`
+                  text === "Homepage" ? "/" : `/${text.toLowerCase()}`
                 }
               >
                 <ListItemIcon>
@@ -93,8 +91,8 @@ const Sidebar = ({ loggedin }) =>{
       )}
 
       <Divider />
-      {/* check the token and switch to related sidebar */}
-      {loggedin ? (
+      {/* check if user is login switch to related sidebar */}
+      {user ? (
         <List>
           {["Dashboard", "Add Expense", "Add Source", "Report"].map(
             (text, index) => (

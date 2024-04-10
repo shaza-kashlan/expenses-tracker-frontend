@@ -5,11 +5,10 @@ import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 
 
-const Header = ({ loggedin }) => {
+const Header = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { user, setUser } = useContext(AuthContext);
-  console.log("loggedinnnnn", loggedin)
   return (
     <header id="main-header">
       <nav>
