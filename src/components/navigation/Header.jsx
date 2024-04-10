@@ -1,6 +1,7 @@
 import { useNavigate, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sidebar from "./Sidebar";
+import logo from "../../assets/logo.png";
 
 const Header = ({ loggedin }) => {
   const navigate = useNavigate();

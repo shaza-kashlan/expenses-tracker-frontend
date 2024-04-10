@@ -25,6 +25,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 export default function TemporaryDrawer() {
   const [open, setOpen] = React.useState(false);
   const {user} = useContext(AuthContext);
+  console.log('user from context',user)
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);

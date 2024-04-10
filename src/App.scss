@@ -1,4 +1,6 @@
 @use "@picocss/pico/scss/pico" with (
+  $css-var-prefix: "--expense-",
+  // Must start with "--"
   // Theme color
   // amber, azure, blue, cyan, fuchsia, green, grey, indigo, jade, lime, orange, pink, pumpkin, purple, red, sand, slate, violet, yellow, zinc
   $theme-color: "zinc",
@@ -11,12 +13,58 @@
   $enable-semantic-container: true
 );
 
-:root {
-  --pico-primary-background: #d24317;
-}
 
 body {
   min-height: 100dvh;
+}
+@font-face {
+  font-family: "DMSans";
+  src: url("./assets/fonts/DMSans-Regular-BF64376d323f095.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "DMSans";
+  src: url("./assets/fonts/DMSans-Bold-BF64376d32191f2.ttf") format("truetype");
+  font-weight: 600;
+}
+
+:root {
+  --my-gradient-one: linear-gradient(to right, #e33c3c, #23203f);
+  --my-gradient-two:linear-gradient(99.61deg, #E3823C 14.81%, #E33C3C 89.9%);
+}
+
+[data-theme=light],
+:root:not([data-theme=dark]) {
+  --expense-background-color: var(--my-gradient-one);
+  --expense-font-family: "DMSans";
+  --expense-font-sans: "DMSans";
+  --expense-color: #ffffff;
+  --expense-h1-color: #fff;
+  --expense-h2-color: #fff;
+  --expense-text-secondary-color: #e3b53c;
+  --expense-primary-background: #e3823c;
+  --expense-font-sans-bold: "DMSansBold";
+  --expense-nav-bar-color: #1b1830;
+  --expense-card-sectioning-background-color: #19173D;
+  --expense-card-background-color:#1C173D;
+  --expense-form-background-color: #25223fe9;
+  --expense-form-header-color: #25223f;
+  --expense-muted-color: #cac9c9;
+}
+
+html,
+body {
+  font-family: "DMSans", sans-serif;
+}
+
+
+.MuiSvgIcon-root {
+  color: var(--expense-color);
+}
+
+.MuiDrawer-root .MuiPaper-root {
+  background-color: var(--expense-card-background-color) !important;
 }
 
 .rag-green {
@@ -27,7 +75,8 @@ body {
 }
 
 .button-more-info {
-  background-color: #00ffff00;
+  // background-color: var(--expense-button-primary-color);
+
   padding: 0;
   width: 1.5rem;
   height: 1.5rem;
@@ -40,20 +89,19 @@ body {
   margin: 0 auto;
   min-height: 100dvh;
   text-align: center;
-  //background-color: azure;
+  background: var(--expense-background-color);
   display: grid;
   grid-template-rows: 75px 1fr;
 }
 
 header#main-header {
-  background-color: bisque;
+  //background-color: var(--expense-nav-bar-color);
   max-width: 100% !important;
   height: 75px;
   justify-content: center;
   align-content: center;
 
   > nav {
-    background-color: burlywood;
     margin: 0 auto;
     padding: 0 1rem;
     @media screen and (min > 576px) {
@@ -85,6 +133,12 @@ main {
   flex-direction: column;
   align-items: center;
   padding: var(--pico-block-spacing-vertical) 0 !important;
+  p {
+    a {
+     // color: var(--expense-text-secondary-color);
+    }
+    //color: var(--expense-text-primary-color);
+  }
 }
 
 #login-form,
@@ -94,6 +148,13 @@ main {
 
   @media screen and (width > 576px) {
     padding: 0rem 2rem 3rem 2rem;
+  }
+  button {
+    //background-color: var(--expense-button-color);
+  }
+  h4 {
+    //color: var(--expense-text-secondary-color);
+    font-family: var(--expense-font-sans-bold);
   }
 }
 
@@ -253,12 +314,13 @@ main {
     box-shadow: 0 2px 4px rgba(235, 2, 2, 0.1); /* Shadow effect for cards */
   }
   .muiCardHeader-root {
-    background-color: #f0f0f0; /* Background color for card header */
+    background-color: var(--expense-form-header-color); /* Background color for card header */
+    color: var(--expense-primary-inverse);
     padding: 12px 16px; /* Padding for card header */
     border-bottom: 1px solid #ccc; /* Bottom border for card header */
   }
   .muiCardContent-root {
-    background-color: #ccc; /* Background color for card content */
+    background-color: var(--expense-form-background-color); /* Background color for card content */
     padding: 16px; /* Padding inside card content */
   }
   .MuiCardHeader-title {
@@ -341,5 +403,5 @@ main {
   margin-bottom: 10px;
   font-size: 16px;
   font-style: Bold;
-  color: #928d8d;
+
 }
