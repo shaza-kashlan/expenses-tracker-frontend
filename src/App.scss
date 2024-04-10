@@ -13,7 +13,6 @@
   $enable-semantic-container: true
 );
 
-
 body {
   min-height: 100dvh;
 }
@@ -31,11 +30,11 @@ body {
 
 :root {
   --my-gradient-one: linear-gradient(to right, #e33c3c, #23203f);
-  --my-gradient-two:linear-gradient(99.61deg, #E3823C 14.81%, #E33C3C 89.9%);
+  --my-gradient-two: linear-gradient(99.61deg, #e3823c 14.81%, #e33c3c 89.9%);
 }
 
-[data-theme=light],
-:root:not([data-theme=dark]) {
+[data-theme="light"],
+:root:not([data-theme="dark"]) {
   --expense-background-color: var(--my-gradient-one);
   --expense-font-family: "DMSans";
   --expense-font-sans: "DMSans";
@@ -45,9 +44,9 @@ body {
   --expense-text-secondary-color: #e3b53c;
   --expense-primary-background: #e3823c;
   --expense-font-sans-bold: "DMSansBold";
-  --expense-nav-bar-color: #1b1830;
-  --expense-card-sectioning-background-color: #19173D;
-  --expense-card-background-color:#1C173D;
+  --expense-nav-bar-color: #23203f;
+  --expense-card-sectioning-background-color: #19173d;
+  --expense-card-background-color: #1c173d;
   --expense-form-background-color: #25223fe9;
   --expense-form-header-color: #25223f;
   --expense-muted-color: #cac9c9;
@@ -57,7 +56,6 @@ html,
 body {
   font-family: "DMSans", sans-serif;
 }
-
 
 .MuiSvgIcon-root {
   color: var(--expense-color);
@@ -95,7 +93,7 @@ body {
 }
 
 header#main-header {
-  //background-color: var(--expense-nav-bar-color);
+  background-color: var(--expense-nav-bar-color);
   max-width: 100% !important;
   height: 75px;
   justify-content: center;
@@ -135,7 +133,7 @@ main {
   padding: var(--pico-block-spacing-vertical) 0 !important;
   p {
     a {
-     // color: var(--expense-text-secondary-color);
+      // color: var(--expense-text-secondary-color);
     }
     //color: var(--expense-text-primary-color);
   }
@@ -188,48 +186,47 @@ main {
 }
 
 div.expense-table-wrapper {
-    display: grid;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-    overflow: auto;
-    //white-space: nowrap;
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  overflow: auto;
+  //white-space: nowrap;
 
-    table.expense-table {
-      border: none;
-      background-color: var(--expense-card-background-color);
-      
-  
-      tr {
+  table.expense-table {
+    border: none;
+    background-color: var(--expense-card-background-color);
+
+    tr {
+      display: flex;
+      width: fit-content;
+
+      th {
+        position: relative;
         display: flex;
-        width: fit-content;
-    
-        th {
-          position: relative;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          color: gray.400;
-          padding: 0.5rem;
-          font-weight: bold;
-          font-size: xs;
-          text-transform: uppercase;
-          text-align: center;
-        }
-        td {
-            color: var(--expense-muted-color);
-            > input {
-            margin: 1;
-            padding: 0.2rem;
-            background-color: transparent;
-            max-width: 100%;
-          }
-        }
-        .date-wrapper {
-          display: flex;
-          align-items: center;
-          width: 100%;
-          height: 100%;
+        justify-content: center;
+        align-items: center;
+        color: gray.400;
+        padding: 0.5rem;
+        font-weight: bold;
+        font-size: xs;
+        text-transform: uppercase;
+        text-align: center;
+      }
+      td {
+        color: var(--expense-muted-color);
+        > input {
+          margin: 1;
+          padding: 0.2rem;
+          background-color: transparent;
+          max-width: 100%;
         }
       }
+      .date-wrapper {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+      }
+    }
   }
   .resizer {
     position: absolute;
@@ -326,13 +323,17 @@ div.expense-table-wrapper {
     box-shadow: 0 2px 4px rgba(235, 2, 2, 0.1); /* Shadow effect for cards */
   }
   .muiCardHeader-root {
-    background-color: var(--expense-form-header-color); /* Background color for card header */
+    background-color: var(
+      --expense-form-header-color
+    ); /* Background color for card header */
     color: var(--expense-primary-inverse);
     padding: 12px 16px; /* Padding for card header */
     border-bottom: 1px solid #ccc; /* Bottom border for card header */
   }
   .muiCardContent-root {
-    background-color: var(--expense-form-background-color); /* Background color for card content */
+    background-color: var(
+      --expense-form-background-color
+    ); /* Background color for card content */
     padding: 16px; /* Padding inside card content */
   }
   .MuiCardHeader-title {
@@ -415,5 +416,4 @@ div.expense-table-wrapper {
   margin-bottom: 10px;
   font-size: 16px;
   font-style: Bold;
-
 }
