@@ -40,6 +40,8 @@ const Sidebar = () => {
 
   const [open, setOpen] = React.useState(false);
   const { user, handleLogout } = useContext(AuthContext);
+  console.log('user from context',user)
+
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };

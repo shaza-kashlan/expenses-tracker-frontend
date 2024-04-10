@@ -203,11 +203,11 @@ const AddExpenseSourceForm = () => {
             required
           >
             <option value="">{t("select-type")}</option>
-            <option value="bank_statement">{t("bank_statement")}</option>
-            <option value="credit_card_statement">
+            <option value="bank">{t("bank_statement")}</option>
+            <option value="credit_card">
               {t("credit_card_statement")}
             </option>
-            <option value="invoice">{t("invoice")}</option>
+            <option value="cash_invoice">{t("invoice")}</option>
           </select>
           <select
             name="format"
