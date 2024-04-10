@@ -18,6 +18,7 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import PaidRoundedIcon from "@mui/icons-material/PaidRounded";
 import BarChartRoundedIcon from "@mui/icons-material/BarChartRounded";
 import { AuthContext } from "../../contexts/AuthContext";
+import ListIcon from '@mui/icons-material/List';
 // import Switch from '@mui/material/Switch';
 
 const Sidebar = () => {
@@ -50,6 +51,7 @@ const Sidebar = () => {
   ];
   const iconComponents = [
     <DashboardIcon />,
+    <ListIcon />,
     <AddShoppingCartIcon />,
     <PaidRoundedIcon />,
     <BarChartRoundedIcon />,
@@ -118,7 +120,7 @@ const Sidebar = () => {
 
       <Divider />
       <List>
-        {["Dashboard", "Add Expense", "Add Source", "Report"].map(
+        {["Dashboard", "List of Expenses", "Add Expense", "Add Source", "Report"].map(
           (text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton
@@ -126,6 +128,8 @@ const Sidebar = () => {
                 to={
                   text === "Dashboard"
                     ? "/dashboard"
+                    : text === "List of Expenses"
+                    ? "/my-expenses"
                     : text === "Add Expense"
                     ? "/expenses"
                     : text === "Add Source"
