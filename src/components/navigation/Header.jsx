@@ -7,7 +7,6 @@ import { AuthContext } from "../../contexts/AuthContext";
 import logo from "../../assets/logo.png";
 
 const Header = ({ loggedin }) => {
-
   const navigate = useNavigate();
 
   const { t, i18n } = useTranslation();
@@ -19,25 +18,25 @@ const Header = ({ loggedin }) => {
   const { user, setUser } = useContext(AuthContext);
 
   return (
-       <header id="main-header"> 
-       {/* <article data-theme={isDarkMode ? "dark" : "light"}> */}
+    <header id="main-header">
       <nav>
         <ul>
-          {/* Render the correct link based on login status */}
           {loggedin ? (
             <Link to="/dashboard">
-              <li>🤑</li>
+              <li>
+                <img src={logo} />
+              </li>
             </Link>
           ) : (
             <Link to="/">
-              <li>🤑</li>
+              <img src={logo} />
             </Link>
           )}
         </ul>
         {loggedin ? (
           <ul>
             <li>
-              <Sidebar loggedin={user ? true : false}/>
+              <Sidebar loggedin={user ? true : false} />
             </li>
             <li>
               <select
@@ -68,7 +67,7 @@ const Header = ({ loggedin }) => {
               </select>
             </li>
           </ul>
-        )}  
+        )}
       </nav>
       {/* </article> */}
     </header>
