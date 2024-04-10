@@ -43,15 +43,6 @@ const Header = ({ loggedin }) => {
             </button>
           </ul>
         )}  
-          <ul>
-            <button
-              type="button"
-              className="button-small"
-              onClick={() => navigate("/login")}
-            >
-              {t("login")}
-            </button>
-          </ul>
       </nav>
       {/* </article> */}
     </header>
