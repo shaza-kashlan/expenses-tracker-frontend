@@ -1,23 +1,24 @@
 import { useNavigate, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sidebar from "./Sidebar";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 
+const Header = ({ loggedin }) => {
 
-const Header = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { user, setUser } = useContext(AuthContext);
   return (
-    <header id="main-header">
+       <header id="main-header"> 
+       {/* <article data-theme={isDarkMode ? "dark" : "light"}> */}
       <nav>
         <ul>
           <Link to="/">
             <li>🤑</li>
           </Link>
         </ul> 
-        {/* {loggedin ? (
+        {loggedin ? (
           <ul>
             <li>
               <Sidebar loggedin={user ? true : false}/>
@@ -33,13 +34,7 @@ const Header = () => {
               {t("login")}
             </button>
           </ul>
-        )}   */}
-          <ul>
-            <li>
-              <Sidebar loggedin={user ? true : false}/>
-            </li>
-          </ul>
-      
+        )}  
           <ul>
             <button
               type="button"
@@ -50,6 +45,7 @@ const Header = () => {
             </button>
           </ul>
       </nav>
+      {/* </article> */}
     </header>
   );
 };
