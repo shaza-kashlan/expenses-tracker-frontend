@@ -50,6 +50,12 @@ body {
   --expense-form-background-color: #25223fe9;
   --expense-form-header-color: #25223f;
   --expense-muted-color: #cac9c9;
+  --expense-fill-color: #e3b53c;
+  --expense-chart-fill-color: #3e198c;
+  --expense-fill-cash-color: #8efdad;
+  --expense-fill-one-color: #a858ee;
+  --expense-fill-credit-color: #ff5b1e;
+  --expense-fill-bank-color: #e84040;
 }
 
 html,
@@ -115,10 +121,6 @@ header#main-header {
     > ul > a > li {
       font-size: xx-large;
       padding: 0;
-      img {
-        width: 80px;
-        height: auto;
-      }
     }
 
     button[type="button"] {
@@ -420,6 +422,73 @@ div.expense-table-wrapper {
   margin-bottom: 10px;
   font-size: 16px;
   font-style: Bold;
+}
+
+//dashboard
+.css-1vuxth3-MuiBarElement-root {
+  fill: var(
+    --expense-fill-color
+  ) !important; /* Override fill color for expense bars */
+}
+.css-6kig8r-MuiBarElement-root {
+  fill: var(
+    --expense-chart-fill-color
+  ) !important; /* Override fill color for expense bars */
+}
+.MuiChartsLegend-root .MuiChartsLegend-series rect.MuiChartsLegend-mark {
+  fill: var(--expense-fill-color);
+}
+
+.MuiChartsLegend-root
+  .MuiChartsLegend-series:nth-child(2)
+  rect.MuiChartsLegend-mark {
+  fill: var(--expense-chart-fill-color);
+}
+.css-1k2u9zb-MuiChartsAxis-root .MuiChartsAxis-tickLabel {
+  fill: var(--expense-color) !important;
+  font-style: italic;
+}
+
+.MuiChartsLegend-root text {
+  fill: #fff6f6 !important;
+}
+//pie chart
+
+.MuiPieArc-root:nth-child(1) {
+  fill: #02b2af; /* Color for the first slice */
+}
+
+.MuiPieArc-root:nth-child(2) {
+  fill: #2e96ff; /* Color for the second slice */
+}
+
+.MuiPieArc-root:nth-child(3) {
+  fill: #b800d8; /* Color for the third slice */
+}
+
+.MuiPieArc-root:nth-child(4) {
+  fill: #60009b; /* Color for the fourth slice */
+}
+
+// .MuiChartsLegend-series:nth-child(1) rect {
+//   fill: #02b2af !important; /* Match text color with first slice color */
+// }
+
+// .MuiChartsLegend-series:nth-child(2) rect {
+//   fill: #2e96ff !important; /* Match text color with second slice color */
+// }
+
+// .MuiChartsLegend-series:nth-child(3) rect {
+//   fill: #b800d8 !important; /* Match text color with third slice color */
+// }
+
+// .MuiChartsLegend-series:nth-child(4) rect {
+//   fill: #60009b !important; /* Match text color with fourth slice color */
+// }
+
+.css-1mhcdve-MuiPieArc-root {
+  stroke: var(--expense-card-background-color) !important;
+  stroke-width: 1.5;
 }
 
 #language-dropdown > summary::after {

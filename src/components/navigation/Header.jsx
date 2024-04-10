@@ -26,12 +26,20 @@ const Header = ({ loggedin }) => {
           {loggedin ? (
             <Link to="/dashboard">
               <li>
-                <img src={logo} />
+                <img
+                  src={logo}
+                  style={{ width: "80px", height: "auto" }}
+                  alt="Logo"
+                />
               </li>
             </Link>
           ) : (
             <Link to="/">
-              <img src={logo} />
+              <img
+                src={logo}
+                style={{ width: "80px", height: "auto" }}
+                alt="Logo"
+              />
             </Link>
           )}
         </ul>
