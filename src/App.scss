@@ -24,8 +24,9 @@ body {
 }
 
 @font-face {
-  font-family: "DMSansBold";
+  font-family: "DMSans";
   src: url("./assets/fonts/DMSans-Bold-BF64376d32191f2.ttf") format("truetype");
+  font-weight: 600;
 }
 
 :root {
@@ -36,13 +37,20 @@ body {
 [data-theme=light],
 :root:not([data-theme=dark]) {
   --expense-background-color: var(--my-gradient-one);
+  --expense-font-family: "DMSans";
   --expense-font-sans: "DMSans";
-  --expense-text-primary-color: #ffffff;
+  --expense-color: #ffffff;
+  --expense-h1-color: #fff;
+  --expense-h2-color: #fff;
   --expense-text-secondary-color: #e3b53c;
   --expense-primary-background: #e3823c;
   --expense-font-sans-bold: "DMSansBold";
   --expense-nav-bar-color: #1b1830;
-  --expense-button-color: ;
+  --expense-card-sectioning-background-color: #19173D;
+  --expense-card-background-color:#1C173D;
+  --expense-form-background-color: #25223fe9;
+  --expense-form-header-color: #25223f;
+  --expense-muted-color: #cac9c9;
 }
 
 html,
@@ -51,7 +59,13 @@ body {
 }
 
 
+.MuiSvgIcon-root {
+  color: var(--expense-color);
+}
 
+.MuiDrawer-root .MuiPaper-root {
+  background-color: var(--expense-card-background-color) !important;
+}
 
 .rag-green {
   color: green;
@@ -300,12 +314,13 @@ main {
     box-shadow: 0 2px 4px rgba(235, 2, 2, 0.1); /* Shadow effect for cards */
   }
   .muiCardHeader-root {
-    background-color: #f0f0f0; /* Background color for card header */
+    background-color: var(--expense-form-header-color); /* Background color for card header */
+    color: var(--expense-primary-inverse);
     padding: 12px 16px; /* Padding for card header */
     border-bottom: 1px solid #ccc; /* Bottom border for card header */
   }
   .muiCardContent-root {
-    background-color: #ccc; /* Background color for card content */
+    background-color: var(--expense-form-background-color); /* Background color for card content */
     padding: 16px; /* Padding inside card content */
   }
   .MuiCardHeader-title {
@@ -388,5 +403,5 @@ main {
   margin-bottom: 10px;
   font-size: 16px;
   font-style: Bold;
-  color: #928d8d;
+
 }
