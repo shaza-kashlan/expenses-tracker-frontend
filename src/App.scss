@@ -187,58 +187,70 @@ main {
   }
 }
 
-.expense-table {
-  border: none;
+div.expense-table-wrapper {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    overflow: auto;
+    //white-space: nowrap;
 
-  tr {
-    display: flex;
-    width: fit-content;
-
-    th {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: gray.400;
-      padding: 0.5rem;
-      font-weight: bold;
-      font-size: xs;
-      text-transform: uppercase;
-      text-align: center;
-    }
-    td > input {
-      margin: 1;
-      padding: 0.2rem;
-      background-color: transparent;
-      max-width: 100%;
-    }
-    .date-wrapper {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-    }
+    table.expense-table {
+      border: none;
+      background-color: var(--expense-card-background-color);
+      
+  
+      tr {
+        display: flex;
+        width: fit-content;
+    
+        th {
+          position: relative;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: gray.400;
+          padding: 0.5rem;
+          font-weight: bold;
+          font-size: xs;
+          text-transform: uppercase;
+          text-align: center;
+        }
+        td {
+            color: var(--expense-muted-color);
+            > input {
+            margin: 1;
+            padding: 0.2rem;
+            background-color: transparent;
+            max-width: 100%;
+          }
+        }
+        .date-wrapper {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+        }
+      }
   }
-}
-.resizer {
-  position: absolute;
-  opacity: 0;
-  top: 0;
-  right: 0;
-  height: 100%;
-  width: 5px;
-  background-color: #27bbff;
-  cursor: col-resize;
-  user-select: none;
-  touch-action: none;
-  border-radius: 6px;
-}
-.resizer.isResizing {
-  background-color: #2eff31;
-  opacity: 1;
-}
-*:hover > .resizer {
-  opacity: 1;
+  .resizer {
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 5px;
+    background-color: #27bbff;
+    cursor: col-resize;
+    user-select: none;
+    touch-action: none;
+    border-radius: 6px;
+  }
+  .resizer.isResizing {
+    background-color: #2eff31;
+    opacity: 1;
+  }
+  *:hover > .resizer {
+    opacity: 1;
+  }
 }
 
 .collapsible-form {

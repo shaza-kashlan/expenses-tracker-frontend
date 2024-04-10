@@ -9,6 +9,7 @@ const AuthWrapper = ({ children }) => {
 	const [user, setUser] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [expenses, setExpenses] = useState({count: 0, expenses: []})
 
 	const authenticateUser = () => {
 		const accessToken = localStorage.getItem("accessToken");
@@ -91,6 +92,29 @@ const AuthWrapper = ({ children }) => {
 		authenticateUser();
 	}, []);
 
+	const getExpenses = async () => {
+		if (isLoggedIn && user._id) {
+			try {
+				const token = localStorage.getItem("accessToken");
+				const expensesResponse = await axios.get(`${API_URL}/expenses`, {
+					headers: {
+						authorization: `Bearer ${token}`,
+					},
+				})
+				//console.log(expensesResponse)
+				const expensesArray = expensesResponse.data
+				console.log(`got ${expensesArray.length} expenses`, expensesArray)
+				setExpenses({count:expensesArray.length, expenses: expensesArray})
+			}
+			catch(err) {
+				console.error("error getting users's list of expenses",err)
+			}
+		}
+	}
+	useEffect(() => {
+		getExpenses();
+	}, [isLoggedIn]);
+
 	//logout function
 	const handleLogout = async () => {
 		console.log("handle log ot \n \n");
@@ -98,7 +122,7 @@ const AuthWrapper = ({ children }) => {
 		await authenticateUser();
 	};
 	return (
-		//the value is basically the frig, where all the food is stored
+		//the value is basically the fridge, where all the food is stored
 		<AuthContext.Provider
 			value={{
 				user,
@@ -107,6 +131,8 @@ const AuthWrapper = ({ children }) => {
 				isLoggedIn,
 				authenticateUser,
 				handleLogout,
+				expenses,
+				setExpenses
 			}}
 		>
 			{children}
