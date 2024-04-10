@@ -1,14 +1,18 @@
 import { useNavigate, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sidebar from "./Sidebar";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 import logo from "../../assets/logo.png";
 
 const Header = ({ loggedin }) => {
+
   const navigate = useNavigate();
   const { t } = useTranslation();
-
+  const { user, setUser } = useContext(AuthContext);
   return (
-    <header id="main-header">
+       <header id="main-header"> 
+       {/* <article data-theme={isDarkMode ? "dark" : "light"}> */}
       <nav>
         <ul>
           {/* Render the correct link based on login status */}
@@ -25,7 +29,7 @@ const Header = ({ loggedin }) => {
         {loggedin ? (
           <ul>
             <li>
-              <Sidebar />
+              <Sidebar loggedin={user ? true : false}/>
             </li>
           </ul>
         ) : (
@@ -38,8 +42,9 @@ const Header = ({ loggedin }) => {
               {t("login")}
             </button>
           </ul>
-        )}
+        )}  
       </nav>
+      {/* </article> */}
     </header>
   );
 };

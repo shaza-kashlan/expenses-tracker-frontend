@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
@@ -17,19 +17,33 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import PaidRoundedIcon from "@mui/icons-material/PaidRounded";
 import BarChartRoundedIcon from "@mui/icons-material/BarChartRounded";
-import HomeIcon from "@mui/icons-material/Home";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import LoginIcon from "@mui/icons-material/Login";
 import { AuthContext } from "../../contexts/AuthContext";
+import ListIcon from '@mui/icons-material/List';
+// import Switch from '@mui/material/Switch';
 
-export default function TemporaryDrawer() {
+const Sidebar = () => {
+
+
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+
+    // Retrieve theme preference from local storage
+    const savedTheme = localStorage.getItem("theme");
+    return savedTheme ? JSON.parse(savedTheme) : true; // Default to dark mode if not found
+  });
+  // function to set the theme
+  const toggleTheme = () => {
+    const newMode = !isDarkMode;
+    setIsDarkMode(newMode);
+    // Save theme preference to local storage
+    localStorage.setItem("theme", JSON.stringify(newMode));
+  };
+
   const [open, setOpen] = React.useState(false);
-  const {user} = useContext(AuthContext);
-  console.log('user from context',user)
-
+  const { user, handleLogout } = useContext(AuthContext);
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
+
   //  arrays of icons
   const usericonComponents = [
     <PersonPinIcon sx={{ fontSize: 50 }} />,
@@ -37,112 +51,103 @@ export default function TemporaryDrawer() {
   ];
   const iconComponents = [
     <DashboardIcon />,
+    <ListIcon />,
     <AddShoppingCartIcon />,
     <PaidRoundedIcon />,
     <BarChartRoundedIcon />,
   ];
-  const iconComponents0 = [<HomeIcon />];
-  const signComponents = [<PersonAddIcon />, <LoginIcon />];
 
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
-      {/* check the token and switch to related sidebar */}
-      {localStorage.getItem("accessToken") ? (
-        <List>
-          {[user.userName, "Logout"].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton
-                component={Link}
-                to={
-                  text === user.userName
-                    ? "/profile"
-                    : text === "Logout"
-                    ? "/homepage"
-                    : `/${text.toLowerCase()}`
-                }
-              >
-                <ListItemIcon>
-                  {usericonComponents[index % usericonComponents.length]}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      ) : (
-        <List>
-          {["Homepage"].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton
-                component={Link}
-                to={
-                  text === "Homepage" ? "/homepage" : `/${text.toLowerCase()}`
-                }
-              >
-                <ListItemIcon>
-                  {iconComponents0[index % iconComponents0.length]}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      )}
+      <List>
+        {[user.userName, "Logout"].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton
+              component={Link}
+              to={
+                text === user.userName
+                  ? "/profile"
+                  : text === "Logout"
+                  ? "/loggedout"
+                  : `/${text.toLowerCase()}`
+              }
+              onClick={
+                text === "Logout"
+                  ? () => {
+                      handleLogout();
+                    }
+                  : undefined
+              }
+            >
+              <ListItemIcon>
+                {/* {usericonComponents[index % usericonComponents.length]} */}
+                {text === user.userName && user.imageUrl ? (
+                  <div
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      borderRadius: "40%",
+                      overflow: "hidden",
+                      display: "inline-block",
+                      position: "relative",
+                    }}
+                  >
+                    <img
+                      src={user.imageUrl}
+                      alt="Thumbnail"
+                      style={{
+                        padding: "20px",
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  </div>
+                ) : text === user.userName && !user.imageUrl ? (
+                  usericonComponents[0]
+                ) : text === "Logout" ? (
+                  usericonComponents[1]
+                ) : (
+                  usericonComponents[0]
+                )}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
 
       <Divider />
-      {/* check the token and switch to related sidebar */}
-      {localStorage.getItem("accessToken") ? (
-        <List>
-          {["Dashboard", "Add Expense", "Add Source", "Report"].map(
-            (text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton
-                  component={Link}
-                  to={
-                    text === "Dashboard"
-                      ? "/dashboard"
-                      : text === "Add Expense"
-                      ? "/expenses"
-                      : text === "Add Source"
-                      ? "/sources"
-                      : text === "Report"
-                      ? "/report"
-                      : `/${text.toLowerCase()}`
-                  }
-                >
-                  <ListItemIcon>
-                    {iconComponents[index % iconComponents.length]}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            )
-          )}
-        </List>
-      ) : (
-        <List>
-          {["Signup", "Login"].map((text, index) => (
+      <List>
+        {["Dashboard", "List of Expenses", "Add Expense", "Add Source", "Report"].map(
+          (text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton
                 component={Link}
                 to={
-                  text === "Signup"
-                    ? "/signup"
-                    : text === "Login"
-                    ? "/login"
+                  text === "Dashboard"
+                    ? "/dashboard"
+                    : text === "List of Expenses"
+                    ? "/my-expenses"
+                    : text === "Add Expense"
+                    ? "/expenses"
+                    : text === "Add Source"
+                    ? "/sources"
+                    : text === "Report"
+                    ? "/report"
                     : `/${text.toLowerCase()}`
                 }
               >
                 <ListItemIcon>
-                  {signComponents[index % signComponents.length]}
+                  {iconComponents[index % iconComponents.length]}
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
             </ListItem>
-          ))}
-        </List>
-      )}
-
+          )
+        )}
+      </List>
       <Divider />
     </Box>
   );
@@ -153,8 +158,19 @@ export default function TemporaryDrawer() {
         <MenuIcon />
       </Button>
       <Drawer open={open} onClose={toggleDrawer(false)}>
-        {DrawerList}
+      <article data-theme={isDarkMode ? "dark" : "light"}>
+        
+          {DrawerList}
+        
+
+        <label>
+          <input type="checkbox" checked={isDarkMode} onChange={toggleTheme} />
+          Dark Mode
+        </label>
+        </article>
       </Drawer>
     </div>
   );
-}
+};
+
+export default Sidebar;

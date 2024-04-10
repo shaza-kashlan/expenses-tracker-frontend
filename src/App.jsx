@@ -18,6 +18,7 @@ import UpdateExpenseForm from "./components/forms/UpdateExpenseForm";
 import AddExpenseSourceForm from "./components/forms/AddExpenseSourceForm.jsx";
 import UpdateExpenseSourceForm from "./components/forms/UpdateExpenseSourceForm.jsx";
 import ListExpenses from "./pages/ListExpenses.jsx";
+import LoggedOutPage from "./pages/LoggedOutPage.jsx";
 
 export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 
@@ -42,6 +43,7 @@ function App() {
 					<Route path="/" element={<LandingPage />} />
 					<Route path="/signup" element={<SignUp />} />
 					<Route path="/login" element={<Login />} />
+          <Route path="/loggedout" element={<LoggedOutPage />} />
 					<Route
 						path="/dashboard"
 						element={
