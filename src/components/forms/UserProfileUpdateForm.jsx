@@ -1,12 +1,50 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import profileImage from "../../assets/images/ProfileIcon.png";
+import {
+  TextField,
+  Grid,
+  Avatar,
+  IconButton,
+  Snackbar,
+  Alert,
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { API_URL } from "../../App";
+import { FaEdit } from "react-icons/fa";
+import profileImage from "../../assets/images/ProfileIcon.png";
+
+const AvatarContainer = styled("div")({
+  textAlign: "center",
+  marginBottom: (theme) => theme.spacing(2),
+});
+
+const AvatarStyled = styled(Avatar)(({ theme }) => ({
+  width: theme.spacing(16),
+  height: theme.spacing(16),
+  borderRadius: "50%",
+  objectFit: "cover",
+  margin: "auto",
+}));
 
 const UserProfileUpdateForm = () => {
-
   const { t } = useTranslation();
+  const [openSnackBar, setOpenSnackBar] = React.useState({
+    open: false,
+    vertical: "top",
+    horizontal: "center",
+  });
+
+  const { vertical, horizontal, open } = openSnackBar;
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenSnackBar({ ...openSnackBar, open: false });
+  };
 
   const [formData, setFormData] = useState({
     emailAddress: "",
@@ -22,42 +60,41 @@ const UserProfileUpdateForm = () => {
     imageUrl: null,
     mobileNumber: "",
   });
+  const nav = useNavigate();
 
   const [thumbnail, setThumbnail] = useState(profileImage);
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    if (!token) {
-      console.error("Access token not found in local storage");
-      return;
-    }
-
     const fetchUserData = async () => {
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        console.error("Access token not found in local storage");
+        return;
+      }
 
       try {
-        const response = await axios.get(`${API_URL}/users`, { headers });
+        const response = await axios.get(`${API_URL}/users`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const userData = response.data;
-        console.log("response", userData);
-        setFormData((prevFormData) => ({
-          ...prevFormData,
+        setFormData({
           emailAddress: userData.emailAddress || "",
           userName: userData.userName || "",
           fullName: userData.fullName || "",
           address: {
-            ...prevFormData.address,
             street: userData.address?.street || "",
             number: userData.address?.number || "",
             city: userData.address?.city || "",
             postcode: userData.address?.postcode || "",
             country: userData.address?.country || "",
           },
+          imageUrl: userData.imageUrl || null,
           mobileNumber: userData.mobileNumber || "",
-          imageUrl: userData.imageUrl || "",
-        }));
+        });
 
+        console.log("respons update", userData);
         if (userData.imageUrl) {
           setThumbnail(userData.imageUrl);
         }
@@ -72,14 +109,21 @@ const UserProfileUpdateForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-      address: {
-        ...prevFormData.address,
+    if (name.includes(".")) {
+      const [fieldName, nestedField] = name.split(".");
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [fieldName]: {
+          ...prevFormData[fieldName],
+          [nestedField]: value,
+        },
+      }));
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
         [name]: value,
-      },
-    }));
+      }));
+    }
   };
 
   const handleImageChange = async (e) => {
@@ -93,23 +137,16 @@ const UserProfileUpdateForm = () => {
       return;
     }
 
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "multipart/form-data",
-    };
-
     try {
       const response = await axios.post(`${API_URL}/users/upload`, formData, {
-        headers,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
       });
 
-      // Assuming the response from Cloudinary contains the image URL
       const imageUrl = response.data.imageUrl;
-
-      // Update thumbnail with the Cloudinary URL
       setThumbnail(imageUrl);
-
-      console.log("Response from upload:", response.data);
     } catch (error) {
       console.error("Error uploading image:", error);
     }
@@ -125,170 +162,142 @@ const UserProfileUpdateForm = () => {
     }
 
     try {
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
-
-      // Update formData with imageUrl from thumbnail (Cloudinary URL)
-      const updatedFormData = {
-        ...formData,
-        imageUrl: thumbnail, // Assuming thumbnail is the Cloudinary URL
-      };
-
-      console.log("\n \n useform to send", updatedFormData);
-      const response = await axios.put(`${API_URL}/users`, updatedFormData, {
-        headers,
+      const response = await axios.put(`${API_URL}/users`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       console.log("User profile updated successfully:", response.data);
+      setOpenSnackBar({
+        ...openSnackBar,
+        open: true,
+        severity: "success",
+        message: t("user-updated-success"),
+      });
     } catch (error) {
       console.error("Error updating user profile:", error.message);
+      setOpenSnackBar({
+        ...openSnackBar,
+        open: true,
+        severity: "error",
+        message: t("failed-to-update-user"),
+      });
     }
   };
 
   return (
     <div>
-      <h2>Update Profile</h2>
-      <form onSubmit={handleSubmit}>
-        {/* Profile Image */}
-        <div style={{ textAlign: "center", marginBottom: "20px" }}>
-          <label
-            htmlFor="fileInput"
-            style={{ cursor: "pointer", display: "block" }}
-          >
-            Profile Image
+      <h3> </h3>
+      <form onSubmit={handleSubmit} id="user-form">
+        <AvatarContainer>
+          <label htmlFor="fileInput">
+            <AvatarStyled alt="Profile" src={thumbnail} variant="rounded" />
+            <input
+              type="file"
+              id="fileInput"
+              name="thumbnail"
+              onChange={handleImageChange}
+              accept="image/*"
+              style={{ display: "none" }}
+            />
+            <IconButton component="span">
+              <FaEdit />
+            </IconButton>
           </label>
-          {thumbnail && (
-            <div
-              style={{
-                width: "100px",
-                height: "100px",
-                borderRadius: "40%",
-                overflow: "hidden",
-                display: "inline-block",
-                position: "relative",
-              }}
-            >
-              <img
-                src={thumbnail}
-                alt="Thumbnail"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  borderRadius: "50%",
-                }}
-              />
-            </div>
-          )}
-          <input
-            type="file"
-            id="fileInput"
-            name="thumbnail"
-            onChange={handleImageChange}
-            accept="image/*"
-            style={{ display: "none" }}
-          />
-        </div>
+        </AvatarContainer>
 
-        {/* Email Address */}
-        <div className="form-field">
-          <label>Email Address:</label>
-          <input
-            type="email"
-            name="emailAddress"
-            value={formData.emailAddress}
-            onChange={handleChange}
-            required
-            readOnly
-          />
-        </div>
-        {/* Username */}
-        <div className="form-field">
-          <label>Username:</label>
-          <input
-            type="text"
-            name="userName"
-            value={formData.userName}
-            onChange={handleChange}
-            required
-            readOnly
-          />
-        </div>
+        <small className="small">{t("email")}</small>
+        <input
+          label="Email Address"
+          variant="outlined"
+          value={formData.emailAddress}
+          disabled
+        />
 
-        {/* Full Name */}
-        <div className="form-field">
-          <label>Full Name:</label>
-          <input
-            type="text"
-            name="fullName"
-            value={formData.fullName}
-            onChange={handleChange}
-          />
-        </div>
+        <small className="small">{t("user-name")}</small>
+        <input
+          size="small"
+          label="Username"
+          value={formData.userName}
+          disabled
+        />
 
-        {/* Mobile Number */}
-        <div className="form-field">
-          <label>Mobile Number:</label>
-          <input
-            type="tel"
-            name="mobileNumber"
-            value={formData.mobileNumber}
-            onChange={handleChange}
-            pattern="^\+\d{10,15}$"
-            title="Please use format: '+1234567890'"
-          />
-        </div>
+        <small className="small">{t("full-name")}</small>
+        <input
+          label="Full Name"
+          value={formData.fullName}
+          name="fullName"
+          onChange={(e) => handleChange(e)}
+        />
 
-        {/* Address Fields */}
-        <div className="form-field">
-          <label>Street:</label>
-          <input
-            type="text"
-            name="street"
-            value={formData.address.street}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-field">
-          <label>Number:</label>
-          <input
-            type="text"
-            name="number"
-            value={formData.address.number}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-field">
-          <label>City:</label>
-          <input
-            type="text"
-            name="city"
-            value={formData.address.city}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-field">
-          <label>Postcode:</label>
-          <input
-            type="text"
-            name="postcode"
-            value={formData.address.postcode}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-field">
-          <label>Country:</label>
-          <input
-            type="text"
-            name="country"
-            value={formData.address.country}
-            onChange={handleChange}
-          />
-        </div>
+        <small className="small">{t("mobile-number")}</small>
+        <input
+          label="Mobile Number"
+          value={formData.mobileNumber}
+          name="mobileNumber" // Corrected name attribute
+          onChange={handleChange}
+        />
 
-        {/* Submit Button */}
-        <button type="submit">Update Profile</button>
+        <small className="small">{t("address")}</small>
+        <small className="small">{t("street")}</small>
+        <input
+          label="Street"
+          value={formData.address.street}
+          name="address.street"
+          onChange={handleChange}
+        />
+
+        <small className="small">{t("street-number")}</small>
+        <input
+          label="Street Number"
+          name="address.number"
+          value={formData.address.number}
+          onChange={handleChange}
+        />
+
+        <small className="small">{t("city")}</small>
+        <input
+          label="City"
+          value={formData.address.city}
+          name="address.city"
+          onChange={handleChange}
+        />
+
+        <small className="small">{t("postcode")}</small>
+        <input
+          label="PostCode"
+          name="address.postcode"
+          value={formData.address.postcode}
+          onChange={handleChange}
+        />
+
+        <small className="small">{t("country")}</small>
+        <input
+          label="Country"
+          name="address.country"
+          value={formData.address.country}
+          onChange={handleChange}
+        />
+
+        <button type="submit" variant="contained" color="primary">
+          {t("updateProfile")}
+        </button>
+
+        <Snackbar
+          anchorOrigin={{ vertical, horizontal }}
+          open={openSnackBar.open}
+          autoHideDuration={6000}
+          onClose={handleClose}
+        >
+          <Alert
+            onClose={handleClose}
+            severity={openSnackBar.severity}
+            sx={{ width: "100%" }}
+          >
+            {openSnackBar.message}
+          </Alert>
+        </Snackbar>
       </form>
     </div>
   );
