@@ -133,7 +133,7 @@ const Sidebar = () => {
                 to={
                   text === "Dashboard"
                     ? "/dashboard"
-                    : text === "my-expenses"
+                    : text === "List of Expenses"
                     ? "/my-expenses"
                     : text === "Add Expense"
                     ? "/expenses"

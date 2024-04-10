@@ -5,7 +5,7 @@ import {
     getFilteredRowModel, 
     getSortedRowModel, 
     getPaginationRowModel } from "@tanstack/react-table"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from 'react-router-dom'
 import FilterDescription from "./FilterDescription";
 import FilterType, {typeFilter} from "./FilterType";
@@ -21,6 +21,12 @@ const ExpenseTable = ({data = [], account}) => {
     const [globalFilter, setGlobalFilter] = useState('');
     const [totalSpend, setTotalSpend] = useState(null)
     const navigate = useNavigate()
+
+    useEffect(() => {
+      const total = table.getFilteredRowModel().rows.reduce((total,row) => total + +row.getValue("amount"),0)
+      console.log('got a different amount in use effect',total)
+      setTotalSpend(total.toFixed(2))
+    },[columnFilters])
 
     const columns = [
         {
@@ -61,11 +67,6 @@ const ExpenseTable = ({data = [], account}) => {
             },
             sortingFn: 'basic',
             filterFn: typeFilter,
-            footer: ({table}) => {
-                const total = table.getFilteredRowModel().rows.reduce((total,row) => total + +row.getValue("amount"),0)
-                setTotalSpend(total.toFixed(2))
-                return total.toFixed(2) + ' €'
-            },
         },
         {
             accessorKey: "payment_method",
@@ -188,22 +189,6 @@ const ExpenseTable = ({data = [], account}) => {
             )
           })}
         </tbody>
-        <tfoot style={{visibility: "hidden"}}>
-          {table.getFooterGroups().map(footerGroup => (
-            <tr key={footerGroup.id}>
-              {footerGroup.headers.map(header => (
-                <th key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.footer,
-                        header.getContext()
-                      )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </tfoot>
     </table>
     </div>
     <p>
