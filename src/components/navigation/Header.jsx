@@ -2,9 +2,11 @@ import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sidebar from "./Sidebar";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import logo from "../../assets/logo.png";
+import LanguageIcon from '@mui/icons-material/Language';
+import ToggleLanguage from "../ToggleLanguage";
 
 const Header = ({ loggedin }) => {
   const navigate = useNavigate();
@@ -38,18 +40,12 @@ const Header = ({ loggedin }) => {
             <li>
               <Sidebar loggedin={user ? true : false} />
             </li>
-            <li>
-              <select
-                value={i18n.language}
-                onChange={(e) => changeLanguage(e.target.value)}
-              >
-                <option value="en">En</option>
-                <option value="de">DE</option>
-              </select>
-            </li>
           </ul>
         ) : (
           <ul>
+            <li>
+              <ToggleLanguage />
+            </li>
             <button
               type="button"
               className="button-small"
@@ -57,15 +53,7 @@ const Header = ({ loggedin }) => {
             >
               {t("login")}
             </button>
-            <li>
-              <select
-                value={i18n.language}
-                onChange={(e) => changeLanguage(e.target.value)}
-              >
-                <option value="en">En</option>
-                <option value="de">DE</option>
-              </select>
-            </li>
+
           </ul>
         )}
       </nav>

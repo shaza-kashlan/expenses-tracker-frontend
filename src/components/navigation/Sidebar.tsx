@@ -19,27 +19,33 @@ import PaidRoundedIcon from "@mui/icons-material/PaidRounded";
 import BarChartRoundedIcon from "@mui/icons-material/BarChartRounded";
 import { AuthContext } from "../../contexts/AuthContext";
 import ListIcon from '@mui/icons-material/List';
-// import Switch from '@mui/material/Switch';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import ToggleLanguage from "../ToggleLanguage";
+import { useTranslation } from "react-i18next";
 
 const Sidebar = () => {
 
-
-  const [isDarkMode, setIsDarkMode] = useState(() => {
+  const { t, i18n } = useTranslation();
+  const [theme, setTheme] = useState(() => {
 
     // Retrieve theme preference from local storage
-    const savedTheme = localStorage.getItem("theme");
-    return savedTheme ? JSON.parse(savedTheme) : true; // Default to dark mode if not found
+    const savedTheme = localStorage.getItem("theme") ?? "light"; // Default to light mode if not found as that has our defined style
+    document.documentElement.setAttribute("data-theme",savedTheme)
+    return savedTheme 
   });
   // function to set the theme
   const toggleTheme = () => {
-    const newMode = !isDarkMode;
-    setIsDarkMode(newMode);
+    const newMode = theme === "dark" ? "light" : "dark";
+    setTheme(newMode);
     // Save theme preference to local storage
-    localStorage.setItem("theme", JSON.stringify(newMode));
+    document.documentElement.setAttribute("data-theme",newMode)
+    localStorage.setItem("theme", newMode);
   };
 
   const [open, setOpen] = React.useState(false);
   const { user, handleLogout } = useContext(AuthContext);
+
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
@@ -120,29 +126,29 @@ const Sidebar = () => {
 
       <Divider />
       <List>
-        {["Dashboard", "List of Expenses", "Add Expense", "Add Source", "Report"].map(
-          (text, index) => (
-            <ListItem key={text} disablePadding>
+        {[{display: "Dashboard", t: t('dashboard')}, {display: "List of Expenses", t: t("list-of-expenses") }, {display: "Add Expense", t: t("add-expense") }, {display: "Add Source", t: t("add-source") }].map(
+          (menuItem, index) => (
+            <ListItem key={menuItem.display} disablePadding>
               <ListItemButton
                 component={Link}
                 to={
-                  text === "Dashboard"
+                  menuItem.display === "Dashboard"
                     ? "/dashboard"
-                    : text === "List of Expenses"
+                    : menuItem.display === "List of Expenses"
                     ? "/my-expenses"
-                    : text === "Add Expense"
+                    : menuItem.display === "Add Expense"
                     ? "/expenses"
-                    : text === "Add Source"
+                    : menuItem.display === "Add Source"
                     ? "/sources"
-                    : text === "Report"
+                    : menuItem.display === "Report"
                     ? "/report"
-                    : `/${text.toLowerCase()}`
+                    : `/${menuItem.display.toLowerCase()}`
                 }
               >
                 <ListItemIcon>
                   {iconComponents[index % iconComponents.length]}
                 </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemText primary={menuItem.t} />
               </ListItemButton>
             </ListItem>
           )
@@ -158,16 +164,30 @@ const Sidebar = () => {
         <MenuIcon />
       </Button>
       <Drawer open={open} onClose={toggleDrawer(false)}>
-      <article data-theme={isDarkMode ? "dark" : "light"}>
+      
         
           {DrawerList}
         
+          <Box
+            sx={{
+              display: 'flex',
+              width: '100%',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              color: 'var(--expense-secondary)',
+              borderRadius: 1,
+              p: 3,
+              mt: 'auto',
+            }}
+          >
+          
+          <button onClick={toggleTheme} type="button" className="button-small outline secondary" >
+            <span style={{color: "#bbb"}}>{theme} mode</span> {theme === 'light' ? <Brightness7Icon /> : <Brightness4Icon />}
+          </button>
+          <ToggleLanguage style="toggle" />
+        </Box>
 
-        <label>
-          <input type="checkbox" checked={isDarkMode} onChange={toggleTheme} />
-          Dark Mode
-        </label>
-        </article>
+        
       </Drawer>
     </div>
   );

@@ -421,3 +421,7 @@ div.expense-table-wrapper {
   font-size: 16px;
   font-style: Bold;
 }
+
+#language-dropdown > summary::after {
+  display: none;
+}
