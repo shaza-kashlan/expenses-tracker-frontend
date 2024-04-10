@@ -1,9 +1,8 @@
 import { useNavigate, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sidebar from "./Sidebar";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
-import logo from "../../assets/logo.png";
 
 const Header = ({ loggedin }) => {
 

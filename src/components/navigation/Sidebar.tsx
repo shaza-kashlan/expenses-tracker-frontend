@@ -19,7 +19,9 @@ import PaidRoundedIcon from "@mui/icons-material/PaidRounded";
 import BarChartRoundedIcon from "@mui/icons-material/BarChartRounded";
 import { AuthContext } from "../../contexts/AuthContext";
 import ListIcon from '@mui/icons-material/List';
-// import Switch from '@mui/material/Switch';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import IconButton from '@mui/material/IconButton';
 
 const Sidebar = () => {
 
@@ -165,11 +167,24 @@ const Sidebar = () => {
         
           {DrawerList}
         
+          <Box
+            sx={{
+              display: 'flex',
+              width: '100%',
+              alignItems: 'center',
+              justifyContent: 'left',
+              color: 'var(--expense-secondary)',
+              borderRadius: 1,
+              p: 3,
+              mt: 'auto',
+            }}
+          >
+      
+          <button onClick={toggleTheme} type="button" className="button-small outline secondary" >
+          <span style={{color: "#bbb"}}>{theme} mode</span> {theme === 'light' ? <Brightness7Icon /> : <Brightness4Icon />}
+          </button>
+        </Box>
 
-        <label>
-          <input type="checkbox" checked={theme === "dark"} onChange={toggleTheme} />
-          Dark Mode
-        </label>
         
       </Drawer>
     </div>
