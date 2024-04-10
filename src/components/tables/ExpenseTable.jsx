@@ -16,8 +16,7 @@ import DateFilter, {dateFilterFunction} from "./DateFilter";
 
 
 
-const ExpenseTable = ({data = []}) => {
-    const [tableData, setTableData] = useState(data);
+const ExpenseTable = ({data = [], account}) => {
     const [columnFilters, setColumnFilters] = useState([]);
     const [globalFilter, setGlobalFilter] = useState('');
     const [totalSpend, setTotalSpend] = useState(null)
@@ -42,7 +41,7 @@ const ExpenseTable = ({data = []}) => {
             sortingFn: "datetime",
             cell:(props) => {
                
-                return <p>{props.getValue()}</p>
+                return props.getValue()
             }
         },
         {
@@ -69,19 +68,19 @@ const ExpenseTable = ({data = []}) => {
             },
         },
         {
-            accessorKey: "wallet",
+            accessorKey: "payment_method",
             header: "Wallet",
             cell:(props) => {
                 
-                return <p>{props.getValue()}</p>
+                return props.getValue()
             }
         },
         {
-            accessorKey: "category",
+            accessorKey: "notes",
             header: "Category",
             cell:(props) => {
                 
-                return <p>{props.getValue()}</p>
+                return props.getValue()
             }
         },
     ]
@@ -109,7 +108,7 @@ const ExpenseTable = ({data = []}) => {
         columnResizeMode: "onChange",
     });
 
-    console.log(columnFilters)
+    //console.log(columnFilters)
     
   return (
     <>
@@ -126,6 +125,8 @@ const ExpenseTable = ({data = []}) => {
     <div className="container-fluid expense-summary">
         <p style={{fontSize: "x-large"}}>The balance is <strong>{totalSpend} buckaroos</strong></p>
     </div>
+
+    <div className="expense-table-wrapper">
 
     <table className="expense-table">
     <thead>
@@ -204,6 +205,7 @@ const ExpenseTable = ({data = []}) => {
           ))}
         </tfoot>
     </table>
+    </div>
     <p>
     Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
     </p>
