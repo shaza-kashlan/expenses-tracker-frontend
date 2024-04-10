@@ -101,9 +101,9 @@ const UpdateExpenseForm = () => {
       } catch (error) {
         console.log(
           "there was an error while fetching expense to update",
-          err.response.data.message
+          error.response.data.message
         );
-        setError(err.response.data.message);
+        setError(error.response.data.message);
       }
     };
     getExpense();
