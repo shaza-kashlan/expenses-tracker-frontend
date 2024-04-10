@@ -13,6 +13,10 @@
   $enable-semantic-container: true
 );
 
+
+body {
+  min-height: 100dvh;
+}
 @font-face {
   font-family: "DMSans";
   src: url("./assets/fonts/DMSans-Regular-BF64376d323f095.ttf")
@@ -310,7 +314,8 @@ main {
 }
 
 #add-expense-form,
-#update-expense-form {
+#update-expense-form,
+#user-form {
   .MuiCardHeader-action {
     visibility: hidden;
   }
@@ -378,3 +383,10 @@ main {
 }
 
 //user profile
+.small {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-style: Bold;
+  color: #928d8d;
+}
