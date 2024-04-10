@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+
 import {
   Card,
   CardHeader,
@@ -16,7 +18,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { API_URL } from "../../App";
 
 const AddExpenseSourceForm = () => {
-
+  const nav = useNavigate();
   const { t } = useTranslation();
   //state for collapse cards
   const [gerneralSectionOpen, setGeneralSectionOpen] = useState(false);
@@ -125,6 +127,7 @@ const AddExpenseSourceForm = () => {
       });
 
       console.log("Source added successfully:", response.data);
+
       setOpenSnackBar({
         ...openSnackBar,
         open: true,
@@ -149,6 +152,7 @@ const AddExpenseSourceForm = () => {
         numberStyle: "normal",
         dateFormat: "",
       });
+      nav("/my-expenses");
     } catch (error) {
       console.error("There was a problem adding the source:", error);
       setOpenSnackBar({
@@ -161,7 +165,11 @@ const AddExpenseSourceForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} id="add-expense-source-form" className="collapsible-form ">
+    <form
+      onSubmit={handleSubmit}
+      id="add-expense-source-form"
+      className="collapsible-form "
+    >
       <Card className="muiCard-root">
         <CardHeader
           className="muiCardHeader-root"
@@ -204,9 +212,7 @@ const AddExpenseSourceForm = () => {
           >
             <option value="">{t("select-type")}</option>
             <option value="bank">{t("bank_statement")}</option>
-            <option value="credit_card">
-              {t("credit_card_statement")}
-            </option>
+            <option value="credit_card">{t("credit_card_statement")}</option>
             <option value="cash_invoice">{t("invoice")}</option>
           </select>
           <select
