@@ -27,9 +27,9 @@ const Sidebar = () => {
   const [theme, setTheme] = useState(() => {
 
     // Retrieve theme preference from local storage
-    const savedTheme = localStorage.getItem("theme") ?? "dark";
+    const savedTheme = localStorage.getItem("theme") ?? "light"; // Default to light mode if not found as that has our defined style
     document.documentElement.setAttribute("data-theme",savedTheme)
-    return savedTheme // Default to dark mode if not found
+    return savedTheme 
   });
   // function to set the theme
   const toggleTheme = () => {
