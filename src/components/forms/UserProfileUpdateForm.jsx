@@ -45,10 +45,11 @@ const UserProfileUpdateForm = () => {
 
     setOpenSnackBar({ ...openSnackBar, open: false });
   };
+
   const [formData, setFormData] = useState({
     emailAddress: "",
     userName: "",
-    fullName: "", // Ensure fullName is initialized correctly
+    fullName: "",
     address: {
       street: "",
       number: "",
@@ -78,7 +79,22 @@ const UserProfileUpdateForm = () => {
           },
         });
         const userData = response.data;
-        setFormData(userData);
+        setFormData({
+          emailAddress: userData.emailAddress || "",
+          userName: userData.userName || "",
+          fullName: userData.fullName || "",
+          address: {
+            street: userData.address?.street || "",
+            number: userData.address?.number || "",
+            city: userData.address?.city || "",
+            postcode: userData.address?.postcode || "",
+            country: userData.address?.country || "",
+          },
+          imageUrl: userData.imageUrl || null,
+          mobileNumber: userData.mobileNumber || "",
+        });
+
+        console.log("respons update", userData);
         if (userData.imageUrl) {
           setThumbnail(userData.imageUrl);
         }
