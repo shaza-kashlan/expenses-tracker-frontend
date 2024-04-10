@@ -147,6 +147,10 @@ const UserProfileUpdateForm = () => {
 
       const imageUrl = response.data.imageUrl;
       setThumbnail(imageUrl);
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        imageUrl: imageUrl,
+      }));
     } catch (error) {
       console.error("Error uploading image:", error);
     }
@@ -160,6 +164,7 @@ const UserProfileUpdateForm = () => {
       console.error("Access token not found in local storage");
       return;
     }
+    console.log("send data ", formData);
 
     try {
       const response = await axios.put(`${API_URL}/users`, formData, {
