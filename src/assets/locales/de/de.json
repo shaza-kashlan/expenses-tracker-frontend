@@ -91,5 +91,15 @@
   "update-entry": "Ausgabeneintrag aktualisieren",
   "failed-to-update-entry": "Aktualisierung der Ausgabe fehlgeschlagen. Bitte versuchen Sie es später erneut.",
   "update-entry-button": "Ausgabeninformationen aktualisieren",
-  "entry-updated-success": "Ausgabe erfolgreich aktualisiert!"
+  "entry-updated-success": "Ausgabe erfolgreich aktualisiert!",
+  "address": "Schreiben Sie Ihre Adresse im Detail",
+  "user-updated-success": "Benutzerinformationen erfolgreich aktualisiert",
+  "failed-to-update-user": "Aktualisierung des Benutzers fehlgeschlagen. Bitte versuchen Sie es später erneut.",
+  "street": "Straße",
+  "street-number": "Hausnummer",
+  "city": "Stadt",
+  "postcode": "Postleitzahl",
+  "country": "Land",
+  "mobile-number": "Handynummer",
+  "full-name": "Vollständiger Name"
 }
