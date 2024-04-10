@@ -7,7 +7,6 @@ const ToggleLanguage = ({style}) => {
     const changeLanguage = (lng) => {
         localStorage.setItem('language',lng)
         i18n.changeLanguage(lng); // Function to change the language
-        console.log('lng',i18n.language)
     };
 
     if (style === "toggle") {
