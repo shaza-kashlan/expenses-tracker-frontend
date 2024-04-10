@@ -5,7 +5,6 @@ import profileImage from "../../assets/images/ProfileIcon.png";
 import { API_URL } from "../../App";
 
 const UserProfileUpdateForm = () => {
-
   const { t } = useTranslation();
 
   const [formData, setFormData] = useState({

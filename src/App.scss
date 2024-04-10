@@ -1,4 +1,6 @@
 @use "@picocss/pico/scss/pico" with (
+  $css-var-prefix: "--expense-",
+  // Must start with "--"
   // Theme color
   // amber, azure, blue, cyan, fuchsia, green, grey, indigo, jade, lime, orange, pink, pumpkin, purple, red, sand, slate, violet, yellow, zinc
   $theme-color: "zinc",
@@ -11,8 +13,31 @@
   $enable-semantic-container: true
 );
 
+@font-face {
+  font-family: "DMSans";
+  src: url("./assets/fonts/DMSans-Regular-BF64376d323f095.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "DMSansBold";
+  src: url("./assets/fonts/DMSans-Bold-BF64376d32191f2.ttf") format("truetype");
+}
+
+:root {
+  --expense-primary-background: linear-gradient(to right, #e33c3c, #23203f);
+  --expense-font-sans: "DMSans";
+  --expense-text-primary-color: #ffffff;
+  --expense-text-secondary-color: #e3b53c;
+  --expense-button-primary-color: linear-gradient(to right, #ecbb3b, #e33c3c);
+  --expense-font-sans-bold: "DMSansBold";
+  --expense-nav-bar-color: #1b1830;
+  --expense-button-color: #e3823c;
+}
+
+html,
 body {
-  min-height: 100dvh;
+  font-family: "DMSans", sans-serif;
 }
 
 .rag-green {
@@ -23,7 +48,8 @@ body {
 }
 
 .button-more-info {
-  background-color: #00ffff00;
+  // background-color: var(--expense-button-primary-color);
+
   padding: 0;
   width: 1.5rem;
   height: 1.5rem;
@@ -36,20 +62,19 @@ body {
   margin: 0 auto;
   min-height: 100dvh;
   text-align: center;
-  background-color: azure;
+  background: var(--expense-primary-background);
   display: grid;
   grid-template-rows: 75px 1fr;
 }
 
 header#main-header {
-  background-color: bisque;
+  background-color: var(--expense-nav-bar-color);
   max-width: 100% !important;
   height: 75px;
   justify-content: center;
   align-content: center;
 
   > nav {
-    background-color: burlywood;
     margin: 0 auto;
     padding: 0 1rem;
     @media screen and (min > 576px) {
@@ -75,12 +100,18 @@ header#main-header {
 
 main {
   max-width: 1280px;
-  background-color: beige;
+  //background-color: beige;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: var(--pico-block-spacing-vertical) 0 !important;
+  p {
+    a {
+      color: var(--expense-text-secondary-color);
+    }
+    color: var(--expense-text-primary-color);
+  }
 }
 
 #login-form,
@@ -90,6 +121,13 @@ main {
 
   @media screen and (width > 576px) {
     padding: 0rem 2rem 3rem 2rem;
+  }
+  button {
+    background-color: var(--expense-button-color);
+  }
+  h4 {
+    color: var(--expense-text-secondary-color);
+    font-family: var(--expense-font-sans-bold);
   }
 }
 
@@ -269,7 +307,6 @@ main {
   }
 }
 
-
 // utilities
 
 .button-small {
@@ -280,18 +317,18 @@ main {
   margin-left: auto;
 }
 
-.splide > div.splide__track[aria-busy=true]::before {
-    display: block;
-    width: 0;
-    height: 0;
-    background-image: none;
-    background-size: 0;
-    background-repeat: no-repeat;
-    content: "";
+.splide > div.splide__track[aria-busy="true"]::before {
+  display: block;
+  width: 0;
+  height: 0;
+  background-image: none;
+  background-size: 0;
+  background-repeat: no-repeat;
+  content: "";
 }
 
 .wallet-summary-card {
-  max-width: 375px; 
+  max-width: 375px;
   margin: 1rem auto;
 
   > header {
@@ -302,7 +339,6 @@ main {
     > p {
       margin: 0;
       font-weight: 600;
-
     }
   }
 
@@ -331,3 +367,5 @@ main {
   visibility: hidden;
   height: 0;
 }
+
+//user profile
