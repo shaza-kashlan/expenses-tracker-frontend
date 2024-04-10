@@ -12,48 +12,37 @@ const Header = ({ loggedin }) => {
   const { user, setUser } = useContext(AuthContext);
   return (
        <header id="main-header"> 
-       {/* <article data-theme={isDarkMode ? "dark" : "light"}> */}
-      <nav>
-        <ul>
-          {/* Render the correct link based on login status */}
+        <nav>
+          <ul>
+            {/* Render the correct link based on login status */}
+            {loggedin ? (
+              <Link to="/dashboard">
+                <li>🤑</li>
+              </Link>
+            ) : (
+              <Link to="/">
+                <li>🤑</li>
+              </Link>
+            )}
+          </ul>
           {loggedin ? (
-            <Link to="/dashboard">
-              <li>🤑</li>
-            </Link>
+            <ul>
+              <li>
+                <Sidebar loggedin={true}/>
+              </li>
+            </ul>
           ) : (
-            <Link to="/">
-              <li>🤑</li>
-            </Link>
+            <ul>
+              <button
+                type="button"
+                className="button-small"
+                onClick={() => navigate("/login")}
+              >
+                {t("login")}
+              </button>
+            </ul>
           )}
-        </ul>
-        {loggedin ? (
-          <ul>
-            <li>
-              <Sidebar loggedin={user ? true : false}/>
-            </li>
-          </ul>
-        ) : (
-          <ul>
-            <button
-              type="button"
-              className="button-small"
-              onClick={() => navigate("/login")}
-            >
-              {t("login")}
-            </button>
-          </ul>
-        )}  
-          <ul>
-            <button
-              type="button"
-              className="button-small"
-              onClick={() => navigate("/login")}
-            >
-              {t("login")}
-            </button>
-          </ul>
-      </nav>
-      {/* </article> */}
+        </nav>
     </header>
   );
 };

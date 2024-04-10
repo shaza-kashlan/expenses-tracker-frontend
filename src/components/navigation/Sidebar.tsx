@@ -24,18 +24,20 @@ import ListIcon from '@mui/icons-material/List';
 const Sidebar = () => {
 
 
-  const [isDarkMode, setIsDarkMode] = useState(() => {
+  const [theme, setTheme] = useState(() => {
 
     // Retrieve theme preference from local storage
-    const savedTheme = localStorage.getItem("theme");
-    return savedTheme ? JSON.parse(savedTheme) : true; // Default to dark mode if not found
+    const savedTheme = localStorage.getItem("theme") ?? "dark";
+    document.documentElement.setAttribute("data-theme",savedTheme)
+    return savedTheme // Default to dark mode if not found
   });
   // function to set the theme
   const toggleTheme = () => {
-    const newMode = !isDarkMode;
-    setIsDarkMode(newMode);
+    const newMode = theme === "dark" ? "light" : "dark";
+    setTheme(newMode);
     // Save theme preference to local storage
-    localStorage.setItem("theme", JSON.stringify(newMode));
+    document.documentElement.setAttribute("data-theme",newMode)
+    localStorage.setItem("theme", newMode);
   };
 
   const [open, setOpen] = React.useState(false);
@@ -122,7 +124,7 @@ const Sidebar = () => {
 
       <Divider />
       <List>
-        {["Dashboard", "List of Expenses", "Add Expense", "Add Source", "Report"].map(
+        {["Dashboard", "List of Expenses", "Add Expense", "Add Source"].map(
           (text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton
@@ -130,7 +132,7 @@ const Sidebar = () => {
                 to={
                   text === "Dashboard"
                     ? "/dashboard"
-                    : text === "List of Expenses"
+                    : text === "my-expenses"
                     ? "/my-expenses"
                     : text === "Add Expense"
                     ? "/expenses"
@@ -160,16 +162,16 @@ const Sidebar = () => {
         <MenuIcon />
       </Button>
       <Drawer open={open} onClose={toggleDrawer(false)}>
-      <article data-theme={isDarkMode ? "dark" : "light"}>
+      
         
           {DrawerList}
         
 
         <label>
-          <input type="checkbox" checked={isDarkMode} onChange={toggleTheme} />
+          <input type="checkbox" checked={theme === "dark"} onChange={toggleTheme} />
           Dark Mode
         </label>
-        </article>
+        
       </Drawer>
     </div>
   );

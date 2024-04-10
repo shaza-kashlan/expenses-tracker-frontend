@@ -101,5 +101,6 @@
   "postcode": "Postleitzahl",
   "country": "Land",
   "mobile-number": "Handynummer",
-  "full-name": "Vollständiger Name"
+  "full-name": "Vollständiger Name",
+  "my-expenses": "Meine Ausgaben"
 }
