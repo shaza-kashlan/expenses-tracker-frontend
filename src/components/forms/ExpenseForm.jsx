@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -17,9 +17,18 @@ import {
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { API_URL } from "../../App";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const ExpenseForm = () => {
+
   const nav = useNavigate();
+
+
+  const {expenses, setExpenses} = useContext(AuthContext)
+
+  console.log('exp on exp page', expenses)
+
+
   const { t } = useTranslation();
   //state for snackbar alert
   const [openSnackBar, setOpenSnackBar] = React.useState({
@@ -126,6 +135,9 @@ const ExpenseForm = () => {
         severity: "success",
         message: t("entry-added-success"),
       });
+
+      // Update context
+      setExpenses(prevExpenses => { return {count: prevExpenses.count + 1, expenses: [...prevExpenses.expenses, newExpense]}})
 
       // Reset form data
       setFormData({
