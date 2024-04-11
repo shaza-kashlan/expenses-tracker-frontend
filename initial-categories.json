@@ -1,0 +1,171 @@
+[
+    {
+        "name": "Home",
+        "description": "Spend on your home",
+        "icon": "🏡",
+        "created_by_user_id": "66169fc7cee31bfa682a3521",
+        "public":true
+    },{
+        "name": "Bars",
+        "description": "Getting tuned up",
+        "icon": "🍸",
+        "created_by_user_id": "66169fc7cee31bfa682a3521",
+        "patterns":["SISYPHOS", "ZUM STARKEN AUGUST"],
+        "public":true
+    },{
+        "name": "Restaurants",
+        "description": "Look at Mr. Moneybags, eating spaghetti from a plate",
+        "icon": "🍝",
+        "created_by_user_id": "66169fc7cee31bfa682a3521",
+        "patterns": [
+            "McDonald's",
+            "ROCOTO",
+            "BABU RESTAURANT",
+            "CHUTNIFY",
+            "Burgermeister",
+            "RISA CHICKEN",
+            "CITYCHICKEN",
+            "WALHALLA",
+            "VIETBOWL",
+            "Kai Maison",
+            "Ristorante Roma",
+            "DOCA CUISINE"
+        ],
+        "public":true
+    },{
+        "name": "Stores",
+        "description": "Spend, spend, spend",
+        "icon": "🛍️",
+        "created_by_user_id": "66169fc7cee31bfa682a3521",
+        "patterns": ["GALERIA HERMANNPLATZ","Decathlon"],
+        "public":true
+    },{
+        "name": "Food Delivery",
+        "description": "Too lazy to cook",
+        "icon": "🥡",
+        "created_by_user_id": "66169fc7cee31bfa682a3521",
+        "patterns": ["Uber Eats", "UBER   *EATS", "Wolt"],
+        "public":true
+    },{
+        "name": "Supermarkets",
+        "description": "The bear necessities",
+        "icon": "🏪",
+        "created_by_user_id": "66169fc7cee31bfa682a3521",
+        "patterns": ["BIO COMPANY", "EDEKA", "Lidl", "REWE", "Penny Market", "Penny", "PENNY DANKT","Galeria Markt"],
+        "public":true
+    },{
+        "name":"Beauty",
+        "description": "You don't want to look like the beast",
+        "created_by_user_id": "66169fc7cee31bfa682a3521",
+        "icon": "💅",
+        "public":true
+    },{
+        "name": "Travel",
+        "description": "Getting from A to Mount Doom",
+        "icon": "🚀",
+        "created_by_user_id": "66169fc7cee31bfa682a3521",
+        "patterns": [
+            "BVG",
+            "Uber",
+            "UBER",
+            "Voi",
+            "TIER",
+            "BRITISH AIRWAYS",
+            "DB Vertrieb",
+            "FLIXBUS",
+            "OEBB",
+            "Wiener Linien"
+        ],
+        "public":true
+    },{
+        "name": "Cafes",
+        "description": "Having a nice cafe con leche in the Plaza Mayor",
+        "icon": "☕",
+        "created_by_user_id": "66169fc7cee31bfa682a3521",
+        "patterns": ["DAS HOVEN", "The Barn", "Pavillon am Uf", "Kaffee 9"],
+        "public":true
+    },{
+        "name": "Pharmacies",
+        "description": "Gimme dem drugs",
+        "icon": "💊",
+        "created_by_user_id": "66169fc7cee31bfa682a3521",
+        "patterns":["APOTHEKE","DM Drogerie", "DM-Fil","easyApotheke"],
+        "public":true
+    },{
+        "name": "Health",
+        "description": "At least you have your health",
+        "icon": "🤒",
+        "created_by_user_id": "66169fc7cee31bfa682a3521",
+        "patterns":["OURARING", "Holmes Place"],
+        "public":true
+    },{
+        "name": "Culture",
+        "description": "La di da",
+        "icon": "🧐",
+        "created_by_user_id": "66169fc7cee31bfa682a3521",
+        "patterns":["THE NEW YORK TIMES"],
+        "public":true
+    },{
+        "name": "Sports",
+        "description": "F#$k it, let's go bowling",
+        "icon": "🎳",
+        "created_by_user_id": "66169fc7cee31bfa682a3521",
+        "public":true
+    },{
+        "name": "Entertainment",
+        "description": "Make 'em laugh",
+        "icon": "🎭",
+        "created_by_user_id": "66169fc7cee31bfa682a3521",
+        "public":true
+    },{
+        "name": "Pets",
+        "description": "Your best friends",
+        "icon": "🦑",
+        "created_by_user_id": "66169fc7cee31bfa682a3521",
+        "patterns":["Zooplus", "DAS FUTTERHAUS"],
+        "public":true
+    },{
+        "name": "DIY",
+        "description": "Please don't make it worse ...",
+        "icon": "🛠️",
+        "created_by_user_id": "66169fc7cee31bfa682a3521","patterns":["Bauhaus", "OBI"],
+        "public":true
+    },{
+        "name": "Insurances",
+        "description": "An insurance for everything",
+        "icon": "📄",
+        "created_by_user_id": "66169fc7cee31bfa682a3521","patterns":["Allianz Versicherung"],
+        "public":true
+    },{
+        "name": "Charity",
+        "description": "String",
+        "icon": "🙏",
+        "created_by_user_id": "66169fc7cee31bfa682a3521",
+        "patterns":["AKTION TIER", "DRK", "International Rescue Committee"],
+        "public":true
+    },{
+        "name": "Clothing",
+        "description": "Stuff to wear so people do not see your shame",
+        "icon": "👗",
+        "created_by_user_id": "66169fc7cee31bfa682a3521",
+        "public":true
+    },{
+        "name": "Other",
+        "description": "I don't know what this is, I just know it cost money, honey",
+        "icon": "🤷",
+        "created_by_user_id": "66169fc7cee31bfa682a3521",
+        "public":true
+    },{
+        "name": "Car",
+        "description": "Why not just get a bike?",
+        "icon": "🚗",
+        "created_by_user_id": "66169fc7cee31bfa682a3521",
+        "public":true
+    },{
+        "name": "Crime",
+        "description": "Doing crime or being the victim of crime",
+        "icon": "👮",
+        "created_by_user_id": "66169fc7cee31bfa682a3521",
+        "public":true
+    }
+]

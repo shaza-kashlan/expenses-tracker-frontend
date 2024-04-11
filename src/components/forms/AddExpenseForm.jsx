@@ -24,9 +24,10 @@ const AddExpenseForm = () => {
   const nav = useNavigate();
 
 
-  const {expenses, setExpenses} = useContext(AuthContext)
+  const {expenses, setExpenses, categories} = useContext(AuthContext)
 
-  console.log('exp on exp page', expenses)
+  //console.log('exp on exp page', expenses)
+  console.log('cats on exp page', categories)
 
 
   const { t } = useTranslation();
@@ -228,25 +229,17 @@ const AddExpenseForm = () => {
               placeholder={t("date")}
               required
             />
-            <small>{t("select-catagory of expense")}</small>
+            <small>{t("select-expense-category")}</small>
             <select
               name="category"
               value={formData.category}
               onChange={handleChange}
               required
             >
-              <option value="">{t("select-catagory of expense")}</option>
-              <option value="Home">{t("Home")}</option>
-              <option value="Food">{t("Food")}</option>
-              <option value="Travel">{t("Travel")}</option>
-              <option value="Entertainment">{t("Entertainment")}</option>
-              <option value="Clothing">{t("Clothing")}</option>
-              <option value="Shopping">{t("Shopping")}</option>
-              <option value="Transportation">{t("Transportation")}</option>
-              <option value="Repair">{t("Repair")}</option>
-              <option value="Pet">{t("Pet")}</option>
-              <option value="Health">{t("Health")}</option>
-              <option value="660d67ada9de44c5a8b6ca2a">{t("Other")}</option>
+              <option value="">{t("select-expense-category")}</option>
+              {categories.categories.map(category => {
+                return <option key={category._id} value={category._id}>{category.icon} {t(category.name)}</option>
+              })}
             </select>
             <small>{t("select-type")}</small>
             <select

@@ -77,11 +77,11 @@ const ExpenseTable = ({data = [], account}) => {
             }
         },
         {
-            accessorKey: "notes",
+            accessorKey: "category",
             header: "Category",
             cell:(props) => {
                 
-                return props.getValue()
+                return props.getValue()?.icon ?? 'unset'
             }
         },
     ]
