@@ -159,9 +159,6 @@ const Dashboard = ({data}) => {
              { dataKey: "totalExpense", label: t("Expense")},
              { dataKey: "totalIncome", label: t("Income")},
           ]}
-          tooltip={
-            {classes: "barchart-tooltip"}
-          }
         />
       </div>
       {t("You've had")}
