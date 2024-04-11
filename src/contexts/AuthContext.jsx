@@ -10,6 +10,7 @@ const AuthWrapper = ({ children }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [expenses, setExpenses] = useState(null)
+	const [sources, setSources] = useState(null)
 	const [categories, setCategories] = useState({count: 0, categories: []})
 
 	const authenticateUser = () => {
@@ -135,9 +136,31 @@ const AuthWrapper = ({ children }) => {
 			}
 		}
 	}
+
+	const getSources = async () => {
+		if (isLoggedIn && user._id) {
+			try {
+				const token = localStorage.getItem("accessToken");
+				const sourcesResponse = await axios.get(`${API_URL}/sources`, {
+					headers: {
+						authorization: `Bearer ${token}`,
+					}
+				})
+				//console.log(expensesResponse)
+				const sourcesArray = sourcesResponse.data
+				console.log(`got ${sourcesArray.length} sources`, sourcesArray)
+				setSources({count:sourcesArray.length, sources: sourcesArray})
+			}
+			catch(err) {
+				console.error("error getting users's list of sources",err)
+			}
+		}
+	}
+
 	useEffect(() => {
 		getExpenses();
 		getCategories();
+		getSources();
 	}, [isLoggedIn]);
 
 	//logout function
@@ -158,7 +181,9 @@ const AuthWrapper = ({ children }) => {
 				handleLogout,
 				expenses,
 				setExpenses,
-				categories
+				categories,
+				sources, 
+				setSources
 			}}
 		>
 			{children}

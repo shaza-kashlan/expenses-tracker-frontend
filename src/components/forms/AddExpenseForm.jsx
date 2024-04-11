@@ -24,10 +24,10 @@ const AddExpenseForm = () => {
   const nav = useNavigate();
 
 
-  const {expenses, setExpenses, categories} = useContext(AuthContext)
+  const {sources, setExpenses, categories} = useContext(AuthContext)
 
   //console.log('exp on exp page', expenses)
-  console.log('cats on exp page', categories)
+  console.log('sources on exp page', sources)
 
 
   const { t } = useTranslation();
@@ -54,6 +54,7 @@ const AddExpenseForm = () => {
     category: "",
     date: new Date().toISOString().split("T")[0],
     payment_method: "",
+    source: "",
     expense_type: "expense", // Default to expense
     notes: "",
     tags: "",
@@ -92,7 +93,7 @@ const AddExpenseForm = () => {
       amount: "",
       category: "",
       date: new Date().toISOString().split("T")[0],
-
+      source: "",
       payment_method: "",
       notes: "",
       tags: "",
@@ -119,6 +120,7 @@ const AddExpenseForm = () => {
     console.log("form data", formData);
     const newExpense = {
       ...formData,
+      payment_method: sources.sources.find(source => source._id === formData.source).type.toLowerCase().split('_')[0],
       amount:
         tabValue === 0 ? -Math.abs(formData.amount) : Math.abs(formData.amount),
     };
@@ -241,21 +243,22 @@ const AddExpenseForm = () => {
                 return <option key={category._id} value={category._id}>{category.icon} {t(category.name)}</option>
               })}
             </select>
+
             <small>{t("select-type")}</small>
             <select
-              name="payment_method"
-              value={formData.payment_method}
+              name="source"
+              value={formData.source}
               onChange={handleChange}
               required
             >
               <option value="">{t("select-type")}</option>
-              <option value="bank_statement">{t("bank_statement")}</option>
-              <option value="credit_card_statement">
-                {t("credit_card_statement")}
-              </option>
-              <option value="invoice">{t("invoice")}</option>
-              <option value="cash">{t("Cash")}</option>
+              {sources.sources.map(source => (
+                <option key={source._id} value={source._id}>{t(source.name)}</option>
+              )
+              )}
             </select>
+
+
             <select
               className="hidden"
               name="expense_type"

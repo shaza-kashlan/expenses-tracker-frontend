@@ -22,6 +22,7 @@ const ExpenseTable = ({data = [], account}) => {
     const [totalSpend, setTotalSpend] = useState(null)
     const navigate = useNavigate()
 
+
     useEffect(() => {
       const total = table.getFilteredRowModel().rows.reduce((total,row) => total + +row.getValue("amount"),0)
       console.log('got a different amount in use effect',total)

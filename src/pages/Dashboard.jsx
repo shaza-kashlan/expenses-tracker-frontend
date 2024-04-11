@@ -44,7 +44,7 @@ const Dashboard = ({data}) => {
   };
 
   const getExpenseCountPerWallet = (data) => {
-    console.log('doing per wall', data)
+    //console.log('doing per wall', data)
     const counts = data.reduce((acc, item) => {
       return { ...acc, [item.source.name]: acc[item?.source.name] + 1 || 1 };
     }, {});
@@ -60,7 +60,7 @@ const Dashboard = ({data}) => {
   useEffect(() => {
     //console.log('loggin in effect', data)
     if (data?.count > 0) {
-      console.log('got something', data)
+      //console.log('got something', data)
 
       const calculatedWallets = Array.from(new Set(data.expenses.map((expense) => ({_id: expense.source._id, name: expense.source.name}))))
 
@@ -86,7 +86,7 @@ const Dashboard = ({data}) => {
 
     }
     else {
-      console.log('still waiting')
+      //console.log('still waiting')
     }
 
   },[expenses])
