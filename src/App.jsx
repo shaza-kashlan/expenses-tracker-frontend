@@ -7,7 +7,6 @@ import { Login } from "./components/forms/Login";
 import { HomePage } from "./pages/HomePage";
 import { IsProtected } from "./components/forms/IsProtected";
 import ExpenseForm from "./components/forms/ExpenseForm";
-import ExampleTranslation from "./components/ExampleTranslation";
 import i18n from "../i18n";
 import { useEffect } from "react";
 import LandingPage from "./pages/LandingPage";
@@ -22,8 +21,7 @@ import LoggedOutPage from "./pages/LoggedOutPage.jsx";
 
 export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 
-import {myData} from "../demo-data"
-
+import { myData } from "../demo-data";
 
 function App() {
   //get information from contexts
@@ -38,31 +36,29 @@ function App() {
     <>
       <Header loggedin={user ? true : false} />
 
-			<main>
-				<Routes>
-					<Route path="/" element={<LandingPage />} />
-					<Route path="/signup" element={<SignUp />} />
-					<Route path="/login" element={<Login />} />
+      <main>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/loggedout" element={<LoggedOutPage />} />
-					<Route
-						path="/dashboard"
-						element={
-							<IsProtected>
-								<Dashboard data={myData} />
-							</IsProtected>
-						}
-					/>
-					<Route
-						path="/home"
-						element={
-							<IsProtected>
-								<HomePage />
-							</IsProtected>
-						}
-					/>
-					<Route path="*" element={<h1> 404 Not found</h1>} />
-
-          <Route path="/translation" element={<ExampleTranslation />} />
+          <Route
+            path="/dashboard"
+            element={
+              <IsProtected>
+                <Dashboard data={myData} />
+              </IsProtected>
+            }
+          />
+          <Route
+            path="/home"
+            element={
+              <IsProtected>
+                <HomePage />
+              </IsProtected>
+            }
+          />
+          <Route path="*" element={<h1> 404 Not found</h1>} />
           <Route
             path="/profile"
             element={
@@ -112,8 +108,6 @@ function App() {
             }
           />
           <Route path="*" element={<h1> 404 Not found</h1>} />
-
-          <Route path="/translation" element={<ExampleTranslation />} />
         </Routes>
       </main>
     </>

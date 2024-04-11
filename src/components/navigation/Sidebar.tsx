@@ -21,11 +21,12 @@ import { AuthContext } from "../../contexts/AuthContext";
 import ListIcon from '@mui/icons-material/List';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import IconButton from '@mui/material/IconButton';
+import ToggleLanguage from "../ToggleLanguage";
+import { useTranslation } from "react-i18next";
 
 const Sidebar = () => {
 
-
+  const { t, i18n } = useTranslation();
   const [theme, setTheme] = useState(() => {
 
     // Retrieve theme preference from local storage
@@ -125,29 +126,23 @@ const Sidebar = () => {
 
       <Divider />
       <List>
-        {["Dashboard", "List of Expenses", "Add Expense", "Add Source"].map(
-          (text, index) => (
-            <ListItem key={text} disablePadding>
+        {[
+          {display: "Dashboard", t: t('dashboard'), to:"/dashboard"}, 
+          {display: "List of Expenses", t: t("list-of-expenses"), to: "/my-expenses" }, 
+          {display: "Add Expense", t: t("add-expense"), to: "/expenses" }, 
+          {display: "Add Source", t: t("add-source"), to: "/sources" }].map(
+          (menuItem, index) => (
+            <ListItem key={menuItem.display} disablePadding>
               <ListItemButton
                 component={Link}
                 to={
-                  text === "Dashboard"
-                    ? "/dashboard"
-                    : text === "List of Expenses"
-                    ? "/my-expenses"
-                    : text === "Add Expense"
-                    ? "/expenses"
-                    : text === "Add Source"
-                    ? "/sources"
-                    : text === "Report"
-                    ? "/report"
-                    : `/${text.toLowerCase()}`
+                  menuItem.to ?? `/${menuItem.display.toLowerCase()}`
                 }
               >
                 <ListItemIcon>
                   {iconComponents[index % iconComponents.length]}
                 </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemText primary={menuItem.t} />
               </ListItemButton>
             </ListItem>
           )
@@ -172,17 +167,18 @@ const Sidebar = () => {
               display: 'flex',
               width: '100%',
               alignItems: 'center',
-              justifyContent: 'left',
+              justifyContent: 'space-between',
               color: 'var(--expense-secondary)',
               borderRadius: 1,
               p: 3,
               mt: 'auto',
             }}
           >
-      
+          
           <button onClick={toggleTheme} type="button" className="button-small outline secondary" >
-          <span style={{color: "#bbb"}}>{theme} mode</span> {theme === 'light' ? <Brightness7Icon /> : <Brightness4Icon />}
+            <span style={{color: "#bbb"}}>{theme} mode</span> {theme === 'light' ? <Brightness7Icon /> : <Brightness4Icon />}
           </button>
+          <ToggleLanguage style="toggle" />
         </Box>
 
         
