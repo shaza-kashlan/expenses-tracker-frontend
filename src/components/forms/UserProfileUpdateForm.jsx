@@ -98,7 +98,7 @@ const UserProfileUpdateForm = () => {
           mobileNumber: userData.mobileNumber || "",
         });
 
-        console.log("respons update", userData);
+       // console.log("respons update", userData);
         if (userData.imageUrl) {
           setThumbnail(userData.imageUrl);
         }
@@ -169,7 +169,7 @@ const UserProfileUpdateForm = () => {
       console.error("Access token not found in local storage");
       return;
     }
-    console.log("send data ", formData);
+    //console.log("send data ", formData);
 
     try {
       const response = await axios.put(`${API_URL}/users`, formData, {

@@ -1,0 +1,19 @@
+
+[
+    {
+        "name": "First Bank",
+        "type" : "bank",
+        "public": true,
+        "created_by_user_id": "660d205410464d8fa79a3faf"
+    },    {
+        "name": "First Card",
+        "type" : "credit_card",
+        "public": true,
+        "created_by_user_id": "660d205410464d8fa79a3faf"
+    },    {
+        "name": "First Cash",
+        "type" : "cash",
+        "public": true,
+        "created_by_user_id": "660d205410464d8fa79a3faf"
+    }
+]
