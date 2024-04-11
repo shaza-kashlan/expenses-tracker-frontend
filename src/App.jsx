@@ -21,7 +21,7 @@ import LoggedOutPage from "./pages/LoggedOutPage.jsx";
 
 export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 
-import { myData } from "../demo-data";
+//import { myData } from "../demo-data";
 import toast, { Toaster } from "react-hot-toast";
 
 export const makeToast = (type, message = "here is your toast", customIcon) => {
@@ -46,7 +46,7 @@ export const makeToast = (type, message = "here is your toast", customIcon) => {
 
 function App() {
   //get information from contexts
-  const { user, setUser } = useContext(AuthContext);
+  const { user, expenses } = useContext(AuthContext);
 
   useEffect(() => {
     // Change language to English when the app starts
@@ -68,7 +68,7 @@ function App() {
             path="/dashboard"
             element={
               <IsProtected>
-                <Dashboard data={myData} />
+                <Dashboard data={expenses} />
               </IsProtected>
             }
           />
