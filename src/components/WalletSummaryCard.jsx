@@ -18,7 +18,7 @@ const WalletSummaryCard = ({data, wallet}) => {
   return (
     <article className="wallet-summary-card">
       <header>
-        <h2>{wallet}</h2> 
+        <h2>{t(`${wallet}`)}</h2> 
         <p className="align-right">{totalBalance.toFixed(2)} €</p>
         </header>
       <section>

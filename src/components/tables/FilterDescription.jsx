@@ -1,4 +1,6 @@
+import { useTranslation } from "react-i18next";
 const FilterDescription = ({columnFilters, setColumnFilters}) => {
+    const { t } = useTranslation();
     const expenseDescription = columnFilters.find(
         filter => filter.id === "description"
     )?.value || ""
@@ -15,11 +17,11 @@ const FilterDescription = ({columnFilters, setColumnFilters}) => {
                 <input
                 type="filter"
                 name="filter"
-                placeholder="Search ..."
+                placeholder={t("Search ...")}
                 value={expenseDescription}
                 onChange={(event) => onFilterChange("description",event.target.value)}
                 />
-                <button type="button" onClick={() => onFilterChange("description","")}>Clear</button>
+                <button type="button" onClick={() => onFilterChange("description","")}>{t("Clear")}</button>
             </fieldset>
         </form>
     </>

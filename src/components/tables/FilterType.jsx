@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 export const typeFilter = (row, _, value) => {
     
     if (value === "expense") {
@@ -10,7 +11,7 @@ export const typeFilter = (row, _, value) => {
 }
 
 const FilterType = ({ columnFilters, setColumnFilters}) => {
-
+    const { t } = useTranslation();
     const expenseType = columnFilters.find(
         filter => filter.id === "amount"
     )?.value || ""
@@ -24,18 +25,18 @@ const FilterType = ({ columnFilters, setColumnFilters}) => {
   return (
     <>
     <form>
-        <label htmlFor="type">The expense type</label>
+        <label htmlFor="type">{t("The expense type")}</label>
         <select 
             name="type" 
             aria-label="Select type..." 
             defaultValue={"all"} 
             onChange={(event) => onFilterChange("amount",event.target.value)}
         >
-            <option value="all">All</option>
-            <option value="expense">Expense</option>
-            <option value="income">Income</option>
+            <option value="all">{t("All")}</option>
+            <option value="expense">{t("Expense")}</option>
+            <option value="income">{t("Income")}</option>
         </select>
-        <small>Select the type of expense</small>
+        <small>{t("Select the type of expense")}</small>
     </form>
     </>
   )
