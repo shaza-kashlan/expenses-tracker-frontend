@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import FilterDescription from "./FilterDescription";
 import FilterType, {typeFilter} from "./FilterType";
 import DateFilter, {dateFilterFunction} from "./DateFilter";
-
+import { useTranslation } from "react-i18next";
 
 
 
@@ -21,8 +21,7 @@ const ExpenseTable = ({data = [], account}) => {
     const [globalFilter, setGlobalFilter] = useState('');
     const [totalSpend, setTotalSpend] = useState(null)
     const navigate = useNavigate()
-
-
+    const { t } = useTranslation();
     useEffect(() => {
       const total = table.getFilteredRowModel().rows.reduce((total,row) => total + +row.getValue("amount"),0)
       //console.log('got a different amount in use effect',total)
@@ -43,7 +42,7 @@ const ExpenseTable = ({data = [], account}) => {
         },
         {
             accessorKey: "date",
-            header: "Date",
+            header:t("Date"),
             filterFn: dateFilterFunction,
             sortingFn: "datetime",
             cell:(props) => {
@@ -53,7 +52,7 @@ const ExpenseTable = ({data = [], account}) => {
         },
         {
             accessorKey: "description",
-            header: "Description",
+            header: t("Description"),
             cell:(props) => {
                 const theDescription = props.getValue()
                 return theDescription.length > 25 ? `${theDescription.slice(0,25)} ...` : theDescription
@@ -61,7 +60,7 @@ const ExpenseTable = ({data = [], account}) => {
         },
         {
             accessorKey: "amount",
-            header: "Amount",
+            header: t("Amount"),
             cell:(props) => {
                 const theAmount = props.getValue()
                 return <span className={theAmount < 0 ? 'rag-red' : "rag-green"}>{theAmount.toFixed(2)} €</span>
@@ -71,7 +70,7 @@ const ExpenseTable = ({data = [], account}) => {
         },
         {
             accessorKey: "payment_method",
-            header: "Wallet",
+            header: t("Wallet"),
             cell:(props) => {
                 
                 return props.getValue()
@@ -82,7 +81,7 @@ const ExpenseTable = ({data = [], account}) => {
             header: "Category",
             cell:(props) => {
                 
-                return props.getValue()?.icon ?? 'unset'
+                return props.getValue()?.icon ?? "¯\_(ツ)_/¯ "
             }
         },
     ]
@@ -114,8 +113,8 @@ const ExpenseTable = ({data = [], account}) => {
     
   return (
     <>
-    <h1>ExpenseTable</h1>
-    <p>I've got {data.length} bits of data </p>
+    <h1>{t("ExpenseTable")}</h1>
+    <p>{t("I've got")} {data.length} {t("bits of data")}  </p>
     <hr />
 
     
@@ -125,7 +124,7 @@ const ExpenseTable = ({data = [], account}) => {
     <DateFilter columnFilters={columnFilters} setColumnFilters={setColumnFilters} />
     </div>
     <div className="container-fluid expense-summary">
-        <p style={{fontSize: "x-large"}}>The balance is <strong>{totalSpend} buckaroos</strong></p>
+        <p style={{fontSize: "x-large"}}>{t("The balance is")} <strong>{totalSpend} {t("buckaroos")}</strong></p>
     </div>
 
     <div className="expense-table-wrapper">
@@ -193,7 +192,7 @@ const ExpenseTable = ({data = [], account}) => {
     </table>
     </div>
     <p>
-    Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+    {t("Page")} {table.getState().pagination.pageIndex + 1} {t("of")}  {table.getPageCount()}
     </p>
     <div role="group">
         <button 

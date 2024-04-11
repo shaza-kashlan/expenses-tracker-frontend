@@ -7,8 +7,8 @@ const LoggedOutPage = () => {
     const { t } = useTranslation();
   return (
     <article style={{marginTop: "40%"}}>
-      <h4>You have successfully logged out</h4>
-      <p>Thank you for using our Expense tracker application</p>
+      <h4>{t("You have successfully logged out.")}</h4>
+      <p>{t("Thank you for using our Expense tracker application.")}</p>
 
       <button type="button" onClick={() => navigate("/login")}>
 				{t("Login again")}

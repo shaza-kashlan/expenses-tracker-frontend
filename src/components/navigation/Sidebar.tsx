@@ -118,7 +118,7 @@ const Sidebar = () => {
                   usericonComponents[0]
                 )}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={t(`${text}`)} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -176,7 +176,7 @@ const Sidebar = () => {
           >
           
           <button onClick={toggleTheme} type="button" className="button-small outline secondary" >
-            <span style={{color: "#bbb"}}>{theme} mode</span> {theme === 'light' ? <Brightness7Icon /> : <Brightness4Icon />}
+            <span style={{color: "#bbb"}}>{t(`${theme} mode`)}</span> {theme === 'light' ? <Brightness7Icon /> : <Brightness4Icon />}
           </button>
           <ToggleLanguage style="toggle" />
         </Box>

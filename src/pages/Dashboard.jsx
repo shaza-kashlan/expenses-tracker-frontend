@@ -2,9 +2,10 @@ import WalletSummaryCard from "../components/WalletSummaryCard";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 import { BarChart, PieChart } from "@mui/x-charts";
+import { useTranslation } from "react-i18next";
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
-
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = ({data}) => {
   const {expenses} = useContext(AuthContext)
@@ -14,6 +15,8 @@ const Dashboard = ({data}) => {
   const [expenseCountByWallet, setExpenseCountByWallet] = useState(null)
   const [expenseByTypeAndWallet, setExpenseByTypeAndWallet] = useState(null)
   const [chartData, setChartData] = useState(null)
+  const { t } = useTranslation();
+  const navigate = useNavigate()
 
   const calculateExpenses = (wallets, data) => {
     //console.log('doing expenses' , data, wallets);
@@ -33,7 +36,7 @@ const Dashboard = ({data}) => {
         }
         return acc;
       }, 0);
-      console.log('trying to push something', wallet, totalExpense, totalIncome)
+      //console.log('trying to push something', wallet, totalExpense, totalIncome)
       wallet._id && expenseArray.push({
         wallet: wallet._id,
         name: wallet.name[0].toUpperCase() + wallet.name.slice(1),
@@ -49,10 +52,10 @@ const Dashboard = ({data}) => {
     const counts = data.reduce((acc, item) => {
       return { ...acc, [item.source.name]: acc[item?.source.name] + 1 || 1 };
     }, {});
-    //console.log('counts',counts)
+    console.log('wallets',wallets)
     const countsArr = Object.keys(counts).map((element, index) => ({
       id: index,
-      value: counts[element],
+      value: t(`${counts[element]}`),
       label: element[0].toUpperCase() + element.slice(1),
     }));
     return countsArr;
@@ -86,8 +89,10 @@ const Dashboard = ({data}) => {
       setIsLoading(false)
 
     }
-    else {
-      //console.log('still waiting')
+    else if (data?.count === 0) {
+      console.log('still waiting')
+      setExpenseData(data.expenses)
+      setIsLoading(false)
     }
 
   },[expenses])
@@ -96,16 +101,18 @@ const Dashboard = ({data}) => {
 
 
 
-  // console.log(Object.keys(expenseByTypeAndWallet))
+   //console.log("obbb",Object.keys(expenseByTypeAndWallet))
   // console.log(JSON.stringify(chartData,null,4))
 
   //console.log(expenseByTypeAndWallet)
   return isLoading ? 
     (<h2 aria-busy="true" style={{marginTop: "35%"}}>Loading dashboard</h2>)
-  : (
+  : expenseData.length === 0 
+    ? <article style={{marginTop: "35%"}}><h2>add your first expense</h2><button onClick={() => {navigate('/expenses')}}>Track an expense</button></article>
+    : (
     <>
       <h1>Dashboard</h1>
-      <p>Got {data.length} bits of data</p>
+      <p>{t("Got")} {data.length} {t("bits of data")}</p>
 
       <Splide
         aria-label="Your wallets"
@@ -142,7 +149,7 @@ const Dashboard = ({data}) => {
         ))}
       </Splide>
       <hr />
-      <h2>Income vs Expense</h2>
+      <h2>{t("Income vs Expense")}</h2>
       <div
         style={{
           minHeight: "600px",
@@ -155,17 +162,14 @@ const Dashboard = ({data}) => {
           dataset={expenseByTypeAndWallet}
           xAxis={[{ scaleType: "band", dataKey: "name" }]}
           series={[
-            { dataKey: "totalExpense", label: "Expense" },
-            { dataKey: "totalIncome", label: "Income" },
+             { dataKey: "totalExpense", label: t("Expense")},
+             { dataKey: "totalIncome", label: t("Income")},
           ]}
-          tooltip={
-            {classes: "barchart-tooltip"}
-          }
         />
       </div>
-
+      {t("You've had")}
       <hr />
-      <h2>Total tracked expenses</h2>
+      <h2>{t("Total tracked expenses")}</h2>
       <div
         style={{
           minHeight: "400px",
