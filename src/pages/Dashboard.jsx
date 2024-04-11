@@ -8,7 +8,7 @@ import { AuthContext } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = ({data}) => {
-  const {expenses} = useContext(AuthContext)
+  const {expenses, sources} = useContext(AuthContext)
   const [expenseData, setExpenseData] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [wallets, setWallets] = useState([])
@@ -52,12 +52,14 @@ const Dashboard = ({data}) => {
     const counts = data.reduce((acc, item) => {
       return { ...acc, [item.source.name]: acc[item?.source.name] + 1 || 1 };
     }, {});
-    console.log('wallets',wallets)
+    console.log('cuunts',counts)
+    console.log('wallets',sources.sources)
     const countsArr = Object.keys(counts).map((element, index) => ({
       id: index,
       value: t(`${counts[element]}`),
       label: element[0].toUpperCase() + element.slice(1),
     }));
+    console.log('arr',countsArr)
     return countsArr;
   };
 
@@ -68,13 +70,13 @@ const Dashboard = ({data}) => {
 
       const calculatedWallets = Array.from(new Set(data.expenses.map((expense) => ({_id: expense.source._id, name: expense.source.name}))))
 
-      setWallets(calculatedWallets);
+      setWallets(sources.sources);
 
       const calculatedExpenseCountPerWallet = getExpenseCountPerWallet(data.expenses)
       
       setExpenseCountByWallet(calculatedExpenseCountPerWallet);
 
-      const calculatedExpenseByTypeAndWallet = calculateExpenses(calculatedWallets, data.expenses)
+      const calculatedExpenseByTypeAndWallet = calculateExpenses(sources.sources, data.expenses)
       
       setExpenseByTypeAndWallet(calculatedExpenseByTypeAndWallet);
 
@@ -112,7 +114,7 @@ const Dashboard = ({data}) => {
     : (
     <>
       <h1>Dashboard</h1>
-      <p>{t("Got")} {data.length} {t("bits of data")}</p>
+      {/* <p>{t("Got")} {data.length} {t("bits of data")}</p> */}
 
       <Splide
         aria-label="Your wallets"
@@ -139,14 +141,17 @@ const Dashboard = ({data}) => {
           },
         }}
       >
-        {wallets.map((wallet) => (
-          <SplideSlide key={wallet._id + crypto.randomUUID()}>
+        {wallets.map((wallet) => {
+          const filteredExpenses = expenseData.filter((expense) => expense.source._id === wallet._id)
+          return (
+            filteredExpenses.length &&
+          <SplideSlide key={wallet._id}>
             <WalletSummaryCard
               wallet={wallet.name}
-              data={expenseData.filter((expense) => expense.source._id === wallet._id)}
+              data={filteredExpenses}
             />
           </SplideSlide>
-        ))}
+        )})}
       </Splide>
       <hr />
       <h2>{t("Income vs Expense")}</h2>
