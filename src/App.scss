@@ -29,7 +29,7 @@ body {
 }
 
 :root {
-  --my-gradient-one: linear-gradient(to right, #e33c3c, #23203f);
+  --my-gradient-one: linear-gradient(to right, #e33c3c, #23203f 80%);
   --my-gradient-two: linear-gradient(99.61deg, #e3823c 14.81%, #e33c3c 89.9%);
 }
 
@@ -64,7 +64,7 @@ body {
 }
 
 .MuiSvgIcon-root {
-  color: var(--expense-color);
+  color: var(--expense-primary-background);
 }
 
 .MuiDrawer-root .MuiPaper-root {
