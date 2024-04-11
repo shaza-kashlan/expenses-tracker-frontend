@@ -180,25 +180,13 @@ const UpdateExpenseForm = () => {
           })
         )
 
-      // setOpenSnackBar({
-      //   ...openSnackBar,
-      //   open: true,
-      //   severity: "success",
-      //   message: t("entry-updated-success"),
-      // });
       makeToast("success",t("entry-updated-success"))
       nav('/my-expenses')
       //setTimeout(() => nav('/my-expenses'), 1000)
       
     } catch (error) {
       console.error("There was a problem updating the expense:", error);
-      // setOpenSnackBar({
-      //   ...openSnackBar,
-      //   open: true,
-      //   severity: "error",
-      //   message: t("failed-to-update-entry"),
-      // });
-      toast.error(t("failed-to-update-entry"))
+      makeToast("error",t("failed-to-update-entry"))
     }
   };
 
