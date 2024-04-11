@@ -101,5 +101,8 @@
   "postcode": "Postleitzahl",
   "country": "Land",
   "mobile-number": "Handynummer",
-  "full-name": "Vollständiger Name"
+  "full-name": "Vollständiger Name",
+  "list-of-expenses": "Ausabenprotokol",
+  "add-expense": "Ausgabe hinzufügen",
+  "add-source": "Quelle hinzufügen"
 }

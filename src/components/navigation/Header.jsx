@@ -1,39 +1,59 @@
+import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sidebar from "./Sidebar";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import logo from "../../assets/logo.png";
+import LanguageIcon from '@mui/icons-material/Language';
+import ToggleLanguage from "../ToggleLanguage";
 
 const Header = ({ loggedin }) => {
-
   const navigate = useNavigate();
-  const { t } = useTranslation();
+
+  const { t, i18n } = useTranslation();
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng); // Function to change the language
+  };
+
   const { user, setUser } = useContext(AuthContext);
+
   return (
-       <header id="main-header"> 
-       {/* <article data-theme={isDarkMode ? "dark" : "light"}> */}
+    <header id="main-header">
       <nav>
         <ul>
-          {/* Render the correct link based on login status */}
           {loggedin ? (
             <Link to="/dashboard">
-              <li>🤑</li>
+              <li>
+                <img
+                  src={logo}
+                  style={{ width: "80px", height: "auto" }}
+                  alt="Logo"
+                />
+              </li>
             </Link>
           ) : (
             <Link to="/">
-              <li>🤑</li>
+              <img
+                src={logo}
+                style={{ width: "80px", height: "auto" }}
+                alt="Logo"
+              />
             </Link>
           )}
         </ul>
         {loggedin ? (
           <ul>
             <li>
-              <Sidebar loggedin={user ? true : false}/>
+              <Sidebar loggedin={user ? true : false} />
             </li>
           </ul>
         ) : (
           <ul>
+            <li>
+              <ToggleLanguage />
+            </li>
             <button
               type="button"
               className="button-small"
@@ -41,8 +61,9 @@ const Header = ({ loggedin }) => {
             >
               {t("login")}
             </button>
+
           </ul>
-        )}  
+        )}
       </nav>
       {/* </article> */}
     </header>

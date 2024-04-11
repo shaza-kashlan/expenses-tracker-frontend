@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+
 import {
   Card,
   CardHeader,
@@ -19,9 +21,13 @@ import { AuthContext } from "../../contexts/AuthContext";
 
 const ExpenseForm = () => {
 
+  const nav = useNavigate();
+
+
   const {expenses, setExpenses} = useContext(AuthContext)
 
   console.log('exp on exp page', expenses)
+
 
   const { t } = useTranslation();
   //state for snackbar alert
@@ -112,8 +118,9 @@ const ExpenseForm = () => {
     console.log("form data", formData);
     const newExpense = {
       ...formData,
-      amount:  tabValue === 0 ? -Math.abs(formData.amount) : Math.abs(formData.amount)
-    }
+      amount:
+        tabValue === 0 ? -Math.abs(formData.amount) : Math.abs(formData.amount),
+    };
 
     try {
       const response = await axios.post(`${API_URL}/expenses`, newExpense, {
@@ -143,6 +150,7 @@ const ExpenseForm = () => {
         notes: "",
         tags: "",
       });
+      nav("/my-expenses");
     } catch (error) {
       console.error("There was a problem adding the entry:", error);
 
@@ -157,7 +165,11 @@ const ExpenseForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} id="add-expense-form"  className="collapsible-form ">
+    <form
+      onSubmit={handleSubmit}
+      id="add-expense-form"
+      className="collapsible-form "
+    >
       <Card>
         <CardHeader
           title={t("general-entry-information")}
