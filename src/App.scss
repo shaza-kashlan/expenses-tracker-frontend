@@ -56,6 +56,21 @@ body {
   --expense-fill-one-color: #a858ee;
   --expense-fill-credit-color: #ff5b1e;
   --expense-fill-bank-color: #e84040;
+  --expense-barchart-popover-text-color: #2e2e2e;
+}
+
+/* Dark color scheme (Auto) */
+/* Automatically enabled if user has Dark mode enabled */
+@media only screen and (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --expense-barchart-popover-text-color: #e4e4e4;
+  }
+}
+
+/* Dark color scheme (Forced) */
+/* Enabled if forced with data-theme="dark" */
+[data-theme="dark"] {
+  --expense-barchart-popover-text-color: #e4e4e4;
 }
 
 html,
@@ -489,6 +504,11 @@ div.expense-table-wrapper {
 .css-1mhcdve-MuiPieArc-root {
   stroke: var(--expense-card-background-color) !important;
   stroke-width: 1.5;
+}
+
+.css-sfv08n-MuiChartsTooltip-root * {
+    color: var(--expense-barchart-popover-text-color);
+  
 }
 
 #language-dropdown > summary::after {

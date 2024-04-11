@@ -158,6 +158,9 @@ const Dashboard = ({data}) => {
             { dataKey: "totalExpense", label: "Expense" },
             { dataKey: "totalIncome", label: "Income" },
           ]}
+          tooltip={
+            {classes: "barchart-tooltip"}
+          }
         />
       </div>
 
