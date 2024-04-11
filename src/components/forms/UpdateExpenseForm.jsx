@@ -17,9 +17,15 @@ import {
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { API_URL } from "../../App";
+import { AuthContext } from "../../contexts/AuthContext";
+import { makeToast } from "../../App";
+
+
 
 const UpdateExpenseForm = () => {
   const { expenseId } = useParams();
+  const {setExpenses, categories, sources} = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(true)
 
   const nav = useNavigate();
   const { t } = useTranslation();
@@ -32,7 +38,7 @@ const UpdateExpenseForm = () => {
 
   const { vertical, horizontal, open } = openSnackBar;
 
-  const handleClose = (event, reason) => {
+  const handleClose = (_, reason) => {
     if (reason === "clickaway") {
       return;
     }
@@ -50,10 +56,11 @@ const UpdateExpenseForm = () => {
     payment_method: "",
     expense_type: "",
     notes: "",
+    source: "",
     tags: "",
   });
 
-  const handleTabChange = (event, newValue) => {
+  const handleTabChange = (_, newValue) => {
     setTabValue(newValue);
     setFormData({
       ...formData,
@@ -63,6 +70,7 @@ const UpdateExpenseForm = () => {
       category: formData.category || "",
       date: formData.date || "",
       payment_method: formData.payment_method || "",
+      source: formData.source || "",
       notes: formData.notes || "",
       tags: formData.tags || "",
     });
@@ -84,26 +92,31 @@ const UpdateExpenseForm = () => {
       try {
         const response = await axios.get(`${API_URL}/expenses/${expenseId}`, {
           headers: headers,
+          params: {include_source_details: true}
         });
-        console.log("here is details of expense", response.data);
+        //console.log("here is details of expense", response.data);
         // Update formData with existing source data
         setFormData({
           description: response.data.description || "",
           amount: response.data.amount || "",
-          category: response.data.category || "",
+          category: response.data?.category?._id || "",
           date: response.data.date || "",
           payment_method: response.data.payment_method || "",
           expense_type: response.data.expense_type || "",
           notes: response.data.notes || "",
           tags: response.data.tags || "",
+          source: response.data?.source?._id || ""
         });
         setTabValue(response.data.expense_type === "expense" ? 0 : 1);
+        setIsLoading(false)
       } catch (error) {
         console.log(
           "there was an error while fetching expense to update",
-          error.response.data.message
+          error
         );
-        setError(error.response.data.message);
+        //setError(error.response.data.message);
+        makeToast("error", "couldn't find that expense 😔, you will be redirected to the expense list")
+        setTimeout(() => nav("/my-expenses"), 1500)
       }
     };
     getExpense();
@@ -153,34 +166,42 @@ const UpdateExpenseForm = () => {
     }
 
     try {
+      const updatedExpense = {
+        ...formData,
+        amount: updatedAmount,
+      }
       const response = await axios.put(
         `${API_URL}/expenses/${expenseId}`,
-        {
-          ...formData,
-          amount: updatedAmount,
-        },
+        updatedExpense,
         { headers }
       );
 
-      console.log("expense updated successfully:", response.data);
-      setOpenSnackBar({
-        ...openSnackBar,
-        open: true,
-        severity: "success",
-        message: t("entry-updated-success"),
-      });
+      //console.log("expense updated successfully:", response.data);
+
+      // Update context
+      setExpenses(prevExpenses => ({
+        count: prevExpenses.count + 1, 
+        expenses: prevExpenses.expenses.map(expense => 
+            expense._id === expenseId ? {...updatedExpense, _id: expenseId} : expense)
+          })
+        )
+
+      makeToast("success",t("entry-updated-success"))
+      nav('/my-expenses')
+      //setTimeout(() => nav('/my-expenses'), 1000)
+      
     } catch (error) {
       console.error("There was a problem updating the expense:", error);
-      setOpenSnackBar({
-        ...openSnackBar,
-        open: true,
-        severity: "error",
-        message: t("failed-to-update-entry"),
-      });
+      makeToast("error",t("failed-to-update-entry"))
     }
   };
 
-  return (
+
+  return isLoading ? (
+      (<div style={{marginTop: "35%"}}>
+        <h2 aria-busy="true">Loading expense</h2>
+      </div>)
+    ) : (
     <form onSubmit={handleUpdateExpense} id="update-expense-form" className="collapsible-form ">
       <Card>
         <CardHeader
@@ -240,41 +261,33 @@ const UpdateExpenseForm = () => {
               placeholder={t("date")}
               required
             />
-            <small>{t("select-catagory of expense")}</small>
+            <small>{t("select-expense-category")}</small>
             <select
               name="category"
               value={formData.category}
               onChange={handleChange}
               required
             >
-              <option value="">{t("select-catagory of expense")}</option>
-              <option value="Home">{t("Home")}</option>
-              <option value="Food">{t("Food")}</option>
-              <option value="Travel">{t("Travel")}</option>
-              <option value="Entertainment">{t("Entertainment")}</option>
-              <option value="Clothing">{t("Clothing")}</option>
-              <option value="Shopping">{t("Shopping")}</option>
-              <option value="Transportation">{t("Transportation")}</option>
-              <option value="Repair">{t("Repair")}</option>
-              <option value="Pet">{t("Pet")}</option>
-              <option value="Health">{t("Health")}</option>
-              <option value="660d67ada9de44c5a8b6ca2a">{t("Other")}</option>
+              <option value="">{t("select-expense-category")}</option>
+              {categories.categories.map(category => {
+                return <option key={category._id} value={category._id}>{category.icon} {t(category.name)}</option>
+              })}
             </select>
+
             <small>{t("select-type")}</small>
             <select
-              name="payment_method"
-              value={formData.payment_method}
+              name="source"
+              value={formData.source}
               onChange={handleChange}
               required
             >
               <option value="">{t("select-type")}</option>
-              <option value="bank_statement">{t("bank_statement")}</option>
-              <option value="credit_card_statement">
-                {t("credit_card_statement")}
-              </option>
-              <option value="invoice">{t("invoice")}</option>
-              <option value="cash">{t("Cash")}</option>
+              {sources.sources.map(source => (
+                <option key={source._id} value={source._id}>{t(source.name)}</option>
+              )
+              )}
             </select>
+
             <select
             className="hidden"
               name="expense_type"
@@ -320,8 +333,7 @@ const UpdateExpenseForm = () => {
         </Alert>
       </Snackbar>
       <button type="submit">{t("update-expense")}</button>
-    </form>
-  );
+    </form>);
 };
 
 export default UpdateExpenseForm;

@@ -14,6 +14,8 @@ import { styled } from "@mui/material/styles";
 import { API_URL } from "../../App";
 import { FaEdit } from "react-icons/fa";
 import profileImage from "../../assets/images/ProfileIcon.png";
+import { AuthContext } from "../../contexts/AuthContext";
+import { useContext } from "react";
 
 const AvatarContainer = styled("div")({
   textAlign: "center",
@@ -64,6 +66,8 @@ const UserProfileUpdateForm = () => {
 
   const [thumbnail, setThumbnail] = useState(profileImage);
 
+  const { user, setUser } = useContext(AuthContext);
+
   useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem("accessToken");
@@ -94,10 +98,11 @@ const UserProfileUpdateForm = () => {
           mobileNumber: userData.mobileNumber || "",
         });
 
-        console.log("respons update", userData);
+       // console.log("respons update", userData);
         if (userData.imageUrl) {
           setThumbnail(userData.imageUrl);
         }
+        console.log("user", user);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -164,7 +169,7 @@ const UserProfileUpdateForm = () => {
       console.error("Access token not found in local storage");
       return;
     }
-    console.log("send data ", formData);
+    //console.log("send data ", formData);
 
     try {
       const response = await axios.put(`${API_URL}/users`, formData, {
@@ -180,6 +185,8 @@ const UserProfileUpdateForm = () => {
         severity: "success",
         message: t("user-updated-success"),
       });
+      setUser({ ...user, imageUrl: response.data.imageUrl });
+      console.log("userContext", user);
     } catch (error) {
       console.error("Error updating user profile:", error.message);
       setOpenSnackBar({

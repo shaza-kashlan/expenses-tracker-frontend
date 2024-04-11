@@ -19,14 +19,15 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { API_URL } from "../../App";
 import { AuthContext } from "../../contexts/AuthContext";
 
-const ExpenseForm = () => {
+const AddExpenseForm = () => {
 
   const nav = useNavigate();
 
 
-  const {expenses, setExpenses} = useContext(AuthContext)
+  const {sources, setExpenses, categories} = useContext(AuthContext)
 
-  console.log('exp on exp page', expenses)
+  //console.log('exp on exp page', expenses)
+  //console.log('sources on exp page', sources)
 
 
   const { t } = useTranslation();
@@ -53,6 +54,7 @@ const ExpenseForm = () => {
     category: "",
     date: new Date().toISOString().split("T")[0],
     payment_method: "",
+    source: "",
     expense_type: "expense", // Default to expense
     notes: "",
     tags: "",
@@ -91,7 +93,7 @@ const ExpenseForm = () => {
       amount: "",
       category: "",
       date: new Date().toISOString().split("T")[0],
-
+      source: "",
       payment_method: "",
       notes: "",
       tags: "",
@@ -115,9 +117,10 @@ const ExpenseForm = () => {
     };
 
     // Send formData to backend server
-    console.log("form data", formData);
+    //console.log("form data", formData);
     const newExpense = {
       ...formData,
+      payment_method: sources.sources.find(source => source._id === formData.source).type.toLowerCase().split('_')[0],
       amount:
         tabValue === 0 ? -Math.abs(formData.amount) : Math.abs(formData.amount),
     };
@@ -126,7 +129,7 @@ const ExpenseForm = () => {
       const response = await axios.post(`${API_URL}/expenses`, newExpense, {
         headers,
       });
-      console.log("Entry added successfully:", response.data);
+      //console.log("Entry added successfully:", response.data);
       // Show success Snackbar
       setOpenSnackBar({
         open: true,
@@ -228,41 +231,34 @@ const ExpenseForm = () => {
               placeholder={t("date")}
               required
             />
-            <small>{t("select-catagory of expense")}</small>
+            <small>{t("select-expense-category")}</small>
             <select
               name="category"
               value={formData.category}
               onChange={handleChange}
               required
             >
-              <option value="">{t("select-catagory of expense")}</option>
-              <option value="Home">{t("Home")}</option>
-              <option value="Food">{t("Food")}</option>
-              <option value="Travel">{t("Travel")}</option>
-              <option value="Entertainment">{t("Entertainment")}</option>
-              <option value="Clothing">{t("Clothing")}</option>
-              <option value="Shopping">{t("Shopping")}</option>
-              <option value="Transportation">{t("Transportation")}</option>
-              <option value="Repair">{t("Repair")}</option>
-              <option value="Pet">{t("Pet")}</option>
-              <option value="Health">{t("Health")}</option>
-              <option value="660d67ada9de44c5a8b6ca2a">{t("Other")}</option>
+              <option value="">{t("select-expense-category")}</option>
+              {categories.categories.map(category => {
+                return <option key={category._id} value={category._id}>{category.icon} {t(category.name)}</option>
+              })}
             </select>
+
             <small>{t("select-type")}</small>
             <select
-              name="payment_method"
-              value={formData.payment_method}
+              name="source"
+              value={formData.source}
               onChange={handleChange}
               required
             >
               <option value="">{t("select-type")}</option>
-              <option value="bank_statement">{t("bank_statement")}</option>
-              <option value="credit_card_statement">
-                {t("credit_card_statement")}
-              </option>
-              <option value="invoice">{t("invoice")}</option>
-              <option value="cash">{t("Cash")}</option>
+              {sources.sources.map(source => (
+                <option key={source._id} value={source._id}>{t(source.name)}</option>
+              )
+              )}
             </select>
+
+
             <select
               className="hidden"
               name="expense_type"
@@ -315,4 +311,4 @@ const ExpenseForm = () => {
   );
 };
 
-export default ExpenseForm;
+export default AddExpenseForm;

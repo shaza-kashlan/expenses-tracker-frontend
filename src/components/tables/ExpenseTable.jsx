@@ -24,7 +24,7 @@ const ExpenseTable = ({data = [], account}) => {
     const { t } = useTranslation();
     useEffect(() => {
       const total = table.getFilteredRowModel().rows.reduce((total,row) => total + +row.getValue("amount"),0)
-      console.log('got a different amount in use effect',total)
+      //console.log('got a different amount in use effect',total)
       setTotalSpend(total.toFixed(2))
     },[columnFilters])
 
@@ -77,11 +77,11 @@ const ExpenseTable = ({data = [], account}) => {
             }
         },
         {
-            accessorKey: "notes",
-            header: t("Category"),
+            accessorKey: "category",
+            header: "Category",
             cell:(props) => {
                 
-                return props.getValue()
+                return props.getValue()?.icon ?? "¯\_(ツ)_/¯ "
             }
         },
     ]

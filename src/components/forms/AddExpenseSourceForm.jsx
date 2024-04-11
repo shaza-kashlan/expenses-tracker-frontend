@@ -119,14 +119,14 @@ const AddExpenseSourceForm = () => {
     };
 
     // Send formData to backend server
-    console.log("form data", formData);
+    //console.log("form data", formData);
 
     try {
       const response = await axios.post(`${API_URL}/sources`, formData, {
         headers,
       });
 
-      console.log("Source added successfully:", response.data);
+      //console.log("Source added successfully:", response.data);
 
       setOpenSnackBar({
         ...openSnackBar,
