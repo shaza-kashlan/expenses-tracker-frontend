@@ -33,7 +33,8 @@ const Dashboard = ({data}) => {
         }
         return acc;
       }, 0);
-      expenseArray.push({
+      console.log('trying to push something', wallet, totalExpense, totalIncome)
+      wallet._id && expenseArray.push({
         wallet: wallet._id,
         name: wallet.name[0].toUpperCase() + wallet.name.slice(1),
         totalExpense,
@@ -152,7 +153,7 @@ const Dashboard = ({data}) => {
       >
         <BarChart
           dataset={expenseByTypeAndWallet}
-          xAxis={[{ scaleType: "band", dataKey: "wallet" }]}
+          xAxis={[{ scaleType: "band", dataKey: "name" }]}
           series={[
             { dataKey: "totalExpense", label: "Expense" },
             { dataKey: "totalIncome", label: "Income" },
