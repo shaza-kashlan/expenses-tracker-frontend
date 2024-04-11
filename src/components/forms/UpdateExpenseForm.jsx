@@ -25,6 +25,7 @@ import { makeToast } from "../../App";
 const UpdateExpenseForm = () => {
   const { expenseId } = useParams();
   const {setExpenses} = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(true)
 
   const nav = useNavigate();
   const { t } = useTranslation();
@@ -103,6 +104,7 @@ const UpdateExpenseForm = () => {
           tags: response.data.tags || "",
         });
         setTabValue(response.data.expense_type === "expense" ? 0 : 1);
+        setIsLoading(false)
       } catch (error) {
         console.log(
           "there was an error while fetching expense to update",
@@ -190,7 +192,12 @@ const UpdateExpenseForm = () => {
     }
   };
 
-  return (
+
+  return isLoading ? (
+      (<div style={{marginTop: "35%"}}>
+        <h2 aria-busy="true">Loading expense</h2>
+      </div>)
+    ) : (
     <form onSubmit={handleUpdateExpense} id="update-expense-form" className="collapsible-form ">
       <Card>
         <CardHeader
@@ -330,8 +337,7 @@ const UpdateExpenseForm = () => {
         </Alert>
       </Snackbar>
       <button type="submit">{t("update-expense")}</button>
-    </form>
-  );
+    </form>);
 };
 
 export default UpdateExpenseForm;
