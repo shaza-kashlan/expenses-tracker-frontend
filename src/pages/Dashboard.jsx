@@ -144,7 +144,7 @@ const Dashboard = ({data}) => {
         {wallets.map((wallet) => {
           const filteredExpenses = expenseData.filter((expense) => expense.source._id === wallet._id)
           return (
-            filteredExpenses.length &&
+            filteredExpenses.length > 0 &&
           <SplideSlide key={wallet._id}>
             <WalletSummaryCard
               wallet={wallet.name}
