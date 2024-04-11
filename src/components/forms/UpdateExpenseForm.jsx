@@ -18,10 +18,13 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { API_URL } from "../../App";
 import { AuthContext } from "../../contexts/AuthContext";
+import { makeToast } from "../../App";
+
+
 
 const UpdateExpenseForm = () => {
   const { expenseId } = useParams();
-  const {expenses, setExpenses} = useContext(AuthContext)
+  const {setExpenses} = useContext(AuthContext);
 
   const nav = useNavigate();
   const { t } = useTranslation();
@@ -34,7 +37,7 @@ const UpdateExpenseForm = () => {
 
   const { vertical, horizontal, open } = openSnackBar;
 
-  const handleClose = (event, reason) => {
+  const handleClose = (_, reason) => {
     if (reason === "clickaway") {
       return;
     }
@@ -55,7 +58,7 @@ const UpdateExpenseForm = () => {
     tags: "",
   });
 
-  const handleTabChange = (event, newValue) => {
+  const handleTabChange = (_, newValue) => {
     setTabValue(newValue);
     setFormData({
       ...formData,
@@ -105,7 +108,9 @@ const UpdateExpenseForm = () => {
           "there was an error while fetching expense to update",
           error.response.data.message
         );
-        setError(error.response.data.message);
+        //setError(error.response.data.message);
+        makeToast("error", "couldn't find that expense 😔, you will be redirected to the expense list")
+        setTimeout(() => nav("/my-expenses"), 1500)
       }
     };
     getExpense();
@@ -171,26 +176,29 @@ const UpdateExpenseForm = () => {
       setExpenses(prevExpenses => ({
         count: prevExpenses.count + 1, 
         expenses: prevExpenses.expenses.map(expense => 
-            expense._id === expenseId ? updatedExpense : expense)
+            expense._id === expenseId ? {...updatedExpense, _id: expenseId} : expense)
           })
         )
 
-      setOpenSnackBar({
-        ...openSnackBar,
-        open: true,
-        severity: "success",
-        message: t("entry-updated-success"),
-      });
-      setTimeout(() => nav('/my-expenses'), 1000)
+      // setOpenSnackBar({
+      //   ...openSnackBar,
+      //   open: true,
+      //   severity: "success",
+      //   message: t("entry-updated-success"),
+      // });
+      makeToast("success",t("entry-updated-success"))
+      nav('/my-expenses')
+      //setTimeout(() => nav('/my-expenses'), 1000)
       
     } catch (error) {
       console.error("There was a problem updating the expense:", error);
-      setOpenSnackBar({
-        ...openSnackBar,
-        open: true,
-        severity: "error",
-        message: t("failed-to-update-entry"),
-      });
+      // setOpenSnackBar({
+      //   ...openSnackBar,
+      //   open: true,
+      //   severity: "error",
+      //   message: t("failed-to-update-entry"),
+      // });
+      toast.error(t("failed-to-update-entry"))
     }
   };
 
