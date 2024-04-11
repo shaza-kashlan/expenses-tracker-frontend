@@ -75,6 +75,51 @@ body {
   font-weight: 600;
 }
 
+:root {
+  --my-gradient-one: linear-gradient(to right, #e33c3c, #23203f);
+  --my-gradient-two: linear-gradient(99.61deg, #e3823c 14.81%, #e33c3c 89.9%);
+}
+
+[data-theme="light"],
+:root:not([data-theme="dark"]) {
+  --expense-background-color: var(--my-gradient-one);
+  --expense-font-family: "DMSans";
+  --expense-font-sans: "DMSans";
+  --expense-color: #ffffff;
+  --expense-h1-color: #fff;
+  --expense-h2-color: #fff;
+  --expense-text-secondary-color: #e3b53c;
+  --expense-primary-background: #e3823c;
+  --expense-font-sans-bold: "DMSansBold";
+  --expense-nav-bar-color: #23203f;
+  --expense-card-sectioning-background-color: #19173d;
+  --expense-card-background-color: #1c173d;
+  --expense-form-background-color: #25223fe9;
+  --expense-form-header-color: #25223f;
+  --expense-muted-color: #cac9c9;
+  --expense-fill-color: #e3b53c;
+  --expense-chart-fill-color: #3e198c;
+  --expense-fill-cash-color: #8efdad;
+  --expense-fill-one-color: #a858ee;
+  --expense-fill-credit-color: #ff5b1e;
+  --expense-fill-bank-color: #e84040;
+  --expense-barchart-popover-text-color: #2e2e2e;
+}
+
+/* Dark color scheme (Auto) */
+/* Automatically enabled if user has Dark mode enabled */
+@media only screen and (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --expense-barchart-popover-text-color: #e4e4e4;
+  }
+}
+
+/* Dark color scheme (Forced) */
+/* Enabled if forced with data-theme="dark" */
+[data-theme="dark"] {
+  --expense-barchart-popover-text-color: #e4e4e4;
+}
+
 html,
 body {
   font-family: "DMSans", sans-serif;
@@ -512,6 +557,11 @@ div.expense-table-wrapper {
 .css-1mhcdve-MuiPieArc-root {
   stroke: var(--expense-card-background-color) !important;
   stroke-width: 1.5;
+}
+
+.css-sfv08n-MuiChartsTooltip-root * {
+    color: var(--expense-barchart-popover-text-color);
+  
 }
 
 #language-dropdown > summary::after {
