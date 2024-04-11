@@ -6,7 +6,7 @@ import SignUp from "./components/forms/Signup";
 import { Login } from "./components/forms/Login";
 import { HomePage } from "./pages/HomePage";
 import { IsProtected } from "./components/forms/IsProtected";
-import ExpenseForm from "./components/forms/ExpenseForm";
+import AddExpenseForm from "./components/forms/AddExpenseForm.jsx";
 import i18n from "../i18n";
 import { useEffect } from "react";
 import LandingPage from "./pages/LandingPage";
@@ -87,7 +87,7 @@ function App() {
             path="/expenses"
             element={
               <IsProtected>
-                <ExpenseForm />
+                <AddExpenseForm />
               </IsProtected>
             }
           />

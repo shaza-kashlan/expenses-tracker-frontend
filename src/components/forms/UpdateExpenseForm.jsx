@@ -17,9 +17,11 @@ import {
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { API_URL } from "../../App";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const UpdateExpenseForm = () => {
   const { expenseId } = useParams();
+  const {expenses, setExpenses} = useContext(AuthContext)
 
   const nav = useNavigate();
   const { t } = useTranslation();
@@ -153,22 +155,34 @@ const UpdateExpenseForm = () => {
     }
 
     try {
+      const updatedExpense = {
+        ...formData,
+        amount: updatedAmount,
+      }
       const response = await axios.put(
         `${API_URL}/expenses/${expenseId}`,
-        {
-          ...formData,
-          amount: updatedAmount,
-        },
+        updatedExpense,
         { headers }
       );
 
       console.log("expense updated successfully:", response.data);
+
+      // Update context
+      setExpenses(prevExpenses => ({
+        count: prevExpenses.count + 1, 
+        expenses: prevExpenses.expenses.map(expense => 
+            expense._id === expenseId ? updatedExpense : expense)
+          })
+        )
+
       setOpenSnackBar({
         ...openSnackBar,
         open: true,
         severity: "success",
         message: t("entry-updated-success"),
       });
+      setTimeout(() => nav('/my-expenses'), 1000)
+      
     } catch (error) {
       console.error("There was a problem updating the expense:", error);
       setOpenSnackBar({
