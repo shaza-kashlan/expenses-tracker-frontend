@@ -1,21 +1,68 @@
 @use "@picocss/pico/scss/pico" with (
   $css-var-prefix: "--expense-",
-  // Must start with "--"
-  // Theme color
-  // amber, azure, blue, cyan, fuchsia, green, grey, indigo, jade, lime, orange, pink, pumpkin, purple, red, sand, slate, violet, yellow, zinc
   $theme-color: "zinc",
-
-  // Define the root element used to target <header>, <main>, <footer>
-  // with $enable-semantic-container and $enable-responsive-spacings
   $semantic-root-element: "#root",
-
-  // Enable <header>, <main>, <footer> inside $semantic-root-element as containers
   $enable-semantic-container: true
 );
 
 body {
   min-height: 100dvh;
 }
+
+// Dark Theme
+:root {
+  --expense-background-color: linear-gradient(to right, #e33c3c, #23203f 80%);
+  --expense-font-family: "DMSans", sans-serif;
+  --expense-color: #ffffff;
+  --expense-h1-color: #fff;
+  --expense-h2-color: #fff;
+  --expense-text-secondary-color: #e3b53c;
+  --expense-primary-background: #e3823c;
+  --expense-nav-bar-color: #23203f;
+  --expense-card-sectioning-background-color: #19173d;
+  --expense-card-background-color: #1c173d;
+  --expense-form-background-color: #25223fe9;
+  --expense-form-header-color: #25223f;
+  --expense-muted-color: #cac9c9;
+  --expense-fill-color: #e3b53c;
+  --expense-chart-fill-color: #3e198c;
+  --expense-fill-cash-color: #8efdad;
+  --expense-fill-one-color: #a858ee;
+  --expense-fill-credit-color: #14a9b7;
+  --expense-fill-bank-color: #a77e7e;
+  --expense-primary-inverse: #fff;
+  --expense-header-card-color: #cac9c9;
+  --expense-form-element-border-color: #fff;
+  /* Text Field Styles */
+  --expense-textfield-background-dark: #444444; /* Dark gray background for text fields in dark mode */
+  --expense-textfield-color: #ffffff; /* White text color for text fields in dark mode */
+}
+
+// Light Theme
+[data-theme="light"],
+:root:not([data-theme="dark"]) {
+  --expense-background-color: #ffffff;
+  --expense-color: #23203f;
+  --expense-h1-color: #23203f;
+  --expense-h2-color: #23203f;
+  --expense-text-secondary-color: #e3b53c;
+  --expense-primary-background: #e3823c;
+  --expense-nav-bar-color: #23203f;
+  --expense-card-sectioning-background-color: #f0f0f0;
+  --expense-card-background-color: #ffffff;
+  --expense-form-background-color: #f5f5f5;
+  --expense-form-header-color: #ffffff;
+  --expense-muted-color: #5d5353;
+  --expense-fill-color: #e3b53c;
+  --expense-chart-fill-color: #3e198c;
+  --expense-fill-cash-color: #8efdad;
+  --expense-fill-one-color: #a858ee;
+  --expense-fill-credit-color: #14a9b7;
+  --expense-fill-bank-color: #a77e7e;
+  --expense-primary-inverse: #000000;
+  --expense-header-card-color: #ffff;
+}
+
 @font-face {
   font-family: "DMSans";
   src: url("./assets/fonts/DMSans-Regular-BF64376d323f095.ttf")
@@ -77,20 +124,24 @@ html,
 body {
   font-family: "DMSans", sans-serif;
 }
+select,
+input {
+  background-color: var(--expense-card-background-color);
+}
 
 .MuiSvgIcon-root {
-  color: var(--expense-color);
+  color: var(--expense-primary-background);
 }
 
 .MuiDrawer-root .MuiPaper-root {
   background-color: var(--expense-card-background-color) !important;
 }
 
-.rag-green {
-  color: green;
-}
-.rag-red {
-  color: red;
+.MuiInputBase-root {
+  background-color: var(--expense-textfield-background) !important;
+  color: var(--expense-textfield-color) !important;
+  border-radius: 4px;
+  padding: 10px;
 }
 
 .button-more-info {
@@ -151,12 +202,13 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 2rem;
   padding: var(--pico-block-spacing-vertical) 0 !important;
   p {
     a {
-      // color: var(--expense-text-secondary-color);
+      color: var(--expense-text-secondary-color);
     }
-    //color: var(--expense-text-primary-color);
+    color: var(--expense-text-primary-color);
   }
 }
 
@@ -168,11 +220,9 @@ main {
   @media screen and (width > 576px) {
     padding: 0rem 2rem 3rem 2rem;
   }
-  button {
-    //background-color: var(--expense-button-color);
-  }
+
   h4 {
-    //color: var(--expense-text-secondary-color);
+    color: var(--expense-text-secondary-color);
     font-family: var(--expense-font-sans-bold);
   }
 }
@@ -273,7 +323,7 @@ div.expense-table-wrapper {
 
 .collapsible-form {
   padding: 0rem 3rem 3rem 3rem;
-  margin: 0;
+  margin-top: 2rem;
 
   h3 {
     text-align: center;
@@ -334,12 +384,12 @@ div.expense-table-wrapper {
 
   /* Style for the checked state of the checkbox */
   input[type="checkbox"]:checked {
-    background-color: rgb(93, 22, 22);
+    background-color: var(--expense-text-secondary-color);
   }
 
   .muiCard-root {
     margin-bottom: 1rem; /* Add margin between cards */
-    border: 1px solid #ccc; /* Example border for cards */
+    border: 1px solid #ece9e9; /* Example border for cards */
     border-radius: 8px; /* Rounded corners for cards */
     box-shadow: 0 2px 4px rgba(235, 2, 2, 0.1); /* Shadow effect for cards */
   }
@@ -438,7 +488,9 @@ div.expense-table-wrapper {
   font-size: 16px;
   font-style: Bold;
 }
-
+.css-1mht7iu .css-yu72g0 {
+  fill: none;
+}
 //dashboard
 .css-1vuxth3-MuiBarElement-root {
   fill: var(
@@ -451,55 +503,56 @@ div.expense-table-wrapper {
   ) !important; /* Override fill color for expense bars */
 }
 .MuiChartsLegend-root .MuiChartsLegend-series rect.MuiChartsLegend-mark {
-  fill: var(--expense-fill-color);
+  fill: var(--expense-fill-color) !important;
 }
 
 .MuiChartsLegend-root
   .MuiChartsLegend-series:nth-child(2)
   rect.MuiChartsLegend-mark {
-  fill: var(--expense-chart-fill-color);
+  fill: var(--expense-chart-fill-color) !important;
 }
 .css-1k2u9zb-MuiChartsAxis-root .MuiChartsAxis-tickLabel {
   fill: var(--expense-color) !important;
   font-style: italic;
 }
 
-.MuiChartsLegend-root text {
-  fill: #fff6f6 !important;
-}
 //pie chart
 
 .MuiPieArc-root:nth-child(1) {
-  fill: #02b2af; /* Color for the first slice */
+  fill: var(--expense-fill-color) !important; /* Color for the first slice */
+}
+.MuiChartsLegend-series:nth-child(1) rect {
+  fill: var(
+    --expense-fill-color
+  ) !important; /* Match text color with 1 slice color */
 }
 
 .MuiPieArc-root:nth-child(2) {
-  fill: #2e96ff; /* Color for the second slice */
+  fill: var(--expense-chart-fill-color) !important; /* Color for the 2 slice */
+}
+.MuiChartsLegend-series:nth-child(2) rect {
+  fill: var(
+    --expense-chart-fill-color
+  ) !important; /* Match text color with 2 slice color */
 }
 
 .MuiPieArc-root:nth-child(3) {
-  fill: #b800d8; /* Color for the third slice */
+  fill: var(--expense-fill-credit-color) !important; /* Color for the 3 slice */
+}
+.MuiChartsLegend-series:nth-child(3) rect {
+  fill: var(
+    (--expense-fill-credit-color)
+  ) !important; /* Match text color with 3 slice color */
 }
 
 .MuiPieArc-root:nth-child(4) {
-  fill: #60009b; /* Color for the fourth slice */
+  fill: var(--expense-fill-bank-color) !important; /* Color for the 3 slice */
 }
-
-// .MuiChartsLegend-series:nth-child(1) rect {
-//   fill: #02b2af !important; /* Match text color with first slice color */
-// }
-
-// .MuiChartsLegend-series:nth-child(2) rect {
-//   fill: #2e96ff !important; /* Match text color with second slice color */
-// }
-
-// .MuiChartsLegend-series:nth-child(3) rect {
-//   fill: #b800d8 !important; /* Match text color with third slice color */
-// }
-
-// .MuiChartsLegend-series:nth-child(4) rect {
-//   fill: #60009b !important; /* Match text color with fourth slice color */
-// }
+.MuiChartsLegend-series:nth-child(4) rect {
+  fill: var(
+    (--expense-fill-bank-color)
+  ) !important; /* Match text color with 3 slice color */
+}
 
 .css-1mhcdve-MuiPieArc-root {
   stroke: var(--expense-card-background-color) !important;
@@ -513,4 +566,7 @@ div.expense-table-wrapper {
 
 #language-dropdown > summary::after {
   display: none;
+}
+.css-bhp9pd-MuiPaper-root-MuiCard-root {
+  background-color: var(--expense-header-card-color) !important;
 }
