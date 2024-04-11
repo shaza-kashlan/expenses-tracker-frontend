@@ -456,22 +456,19 @@ div.expense-table-wrapper {
   ) !important; /* Override fill color for expense bars */
 }
 .MuiChartsLegend-root .MuiChartsLegend-series rect.MuiChartsLegend-mark {
-  fill: var(--expense-fill-color);
+  fill: var(--expense-fill-color) !important;
 }
 
 .MuiChartsLegend-root
   .MuiChartsLegend-series:nth-child(2)
   rect.MuiChartsLegend-mark {
-  fill: var(--expense-chart-fill-color);
+  fill: var(--expense-chart-fill-color) !important;
 }
 .css-1k2u9zb-MuiChartsAxis-root .MuiChartsAxis-tickLabel {
   fill: var(--expense-color) !important;
   font-style: italic;
 }
 
-// .MuiChartsLegend-root text {
-//   fill: #fff6f6 !important;
-// }
 //pie chart
 
 .MuiPieArc-root:nth-child(1) {
