@@ -126,23 +126,17 @@ const Sidebar = () => {
 
       <Divider />
       <List>
-        {[{display: "Dashboard", t: t('dashboard')}, {display: "List of Expenses", t: t("list-of-expenses") }, {display: "Add Expense", t: t("add-expense") }, {display: "Add Source", t: t("add-source") }].map(
+        {[
+          {display: "Dashboard", t: t('dashboard'), to:"/dashboard"}, 
+          {display: "List of Expenses", t: t("list-of-expenses"), to: "/my-expenses" }, 
+          {display: "Add Expense", t: t("add-expense"), to: "/expenses" }, 
+          {display: "Add Source", t: t("add-source"), to: "/sources" }].map(
           (menuItem, index) => (
             <ListItem key={menuItem.display} disablePadding>
               <ListItemButton
                 component={Link}
                 to={
-                  menuItem.display === "Dashboard"
-                    ? "/dashboard"
-                    : menuItem.display === "List of Expenses"
-                    ? "/my-expenses"
-                    : menuItem.display === "Add Expense"
-                    ? "/expenses"
-                    : menuItem.display === "Add Source"
-                    ? "/sources"
-                    : menuItem.display === "Report"
-                    ? "/report"
-                    : `/${menuItem.display.toLowerCase()}`
+                  menuItem.to ?? `/${menuItem.display.toLowerCase()}`
                 }
               >
                 <ListItemIcon>

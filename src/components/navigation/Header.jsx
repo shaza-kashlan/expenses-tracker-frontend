@@ -5,7 +5,6 @@ import Sidebar from "./Sidebar";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import logo from "../../assets/logo.png";
-import LanguageIcon from '@mui/icons-material/Language';
 import ToggleLanguage from "../ToggleLanguage";
 
 const Header = ({ loggedin }) => {
@@ -13,9 +12,6 @@ const Header = ({ loggedin }) => {
 
   const { t, i18n } = useTranslation();
 
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng); // Function to change the language
-  };
 
   const { user, setUser } = useContext(AuthContext);
 
