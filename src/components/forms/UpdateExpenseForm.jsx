@@ -17,9 +17,15 @@ import {
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { API_URL } from "../../App";
+import { AuthContext } from "../../contexts/AuthContext";
+import { makeToast } from "../../App";
+
+
 
 const UpdateExpenseForm = () => {
   const { expenseId } = useParams();
+  const {setExpenses} = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(true)
 
   const nav = useNavigate();
   const { t } = useTranslation();
@@ -32,7 +38,7 @@ const UpdateExpenseForm = () => {
 
   const { vertical, horizontal, open } = openSnackBar;
 
-  const handleClose = (event, reason) => {
+  const handleClose = (_, reason) => {
     if (reason === "clickaway") {
       return;
     }
@@ -53,7 +59,7 @@ const UpdateExpenseForm = () => {
     tags: "",
   });
 
-  const handleTabChange = (event, newValue) => {
+  const handleTabChange = (_, newValue) => {
     setTabValue(newValue);
     setFormData({
       ...formData,
@@ -98,12 +104,15 @@ const UpdateExpenseForm = () => {
           tags: response.data.tags || "",
         });
         setTabValue(response.data.expense_type === "expense" ? 0 : 1);
+        setIsLoading(false)
       } catch (error) {
         console.log(
           "there was an error while fetching expense to update",
           error.response.data.message
         );
-        setError(error.response.data.message);
+        //setError(error.response.data.message);
+        makeToast("error", "couldn't find that expense 😔, you will be redirected to the expense list")
+        setTimeout(() => nav("/my-expenses"), 1500)
       }
     };
     getExpense();
@@ -153,34 +162,42 @@ const UpdateExpenseForm = () => {
     }
 
     try {
+      const updatedExpense = {
+        ...formData,
+        amount: updatedAmount,
+      }
       const response = await axios.put(
         `${API_URL}/expenses/${expenseId}`,
-        {
-          ...formData,
-          amount: updatedAmount,
-        },
+        updatedExpense,
         { headers }
       );
 
       console.log("expense updated successfully:", response.data);
-      setOpenSnackBar({
-        ...openSnackBar,
-        open: true,
-        severity: "success",
-        message: t("entry-updated-success"),
-      });
+
+      // Update context
+      setExpenses(prevExpenses => ({
+        count: prevExpenses.count + 1, 
+        expenses: prevExpenses.expenses.map(expense => 
+            expense._id === expenseId ? {...updatedExpense, _id: expenseId} : expense)
+          })
+        )
+
+      makeToast("success",t("entry-updated-success"))
+      nav('/my-expenses')
+      //setTimeout(() => nav('/my-expenses'), 1000)
+      
     } catch (error) {
       console.error("There was a problem updating the expense:", error);
-      setOpenSnackBar({
-        ...openSnackBar,
-        open: true,
-        severity: "error",
-        message: t("failed-to-update-entry"),
-      });
+      makeToast("error",t("failed-to-update-entry"))
     }
   };
 
-  return (
+
+  return isLoading ? (
+      (<div style={{marginTop: "35%"}}>
+        <h2 aria-busy="true">Loading expense</h2>
+      </div>)
+    ) : (
     <form onSubmit={handleUpdateExpense} id="update-expense-form" className="collapsible-form ">
       <Card>
         <CardHeader
@@ -320,8 +337,7 @@ const UpdateExpenseForm = () => {
         </Alert>
       </Snackbar>
       <button type="submit">{t("update-expense")}</button>
-    </form>
-  );
+    </form>);
 };
 
 export default UpdateExpenseForm;

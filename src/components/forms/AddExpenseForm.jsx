@@ -19,7 +19,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { API_URL } from "../../App";
 import { AuthContext } from "../../contexts/AuthContext";
 
-const ExpenseForm = () => {
+const AddExpenseForm = () => {
 
   const nav = useNavigate();
 
@@ -315,4 +315,4 @@ const ExpenseForm = () => {
   );
 };
 
-export default ExpenseForm;
+export default AddExpenseForm;

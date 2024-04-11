@@ -6,7 +6,7 @@ import SignUp from "./components/forms/Signup";
 import { Login } from "./components/forms/Login";
 import { HomePage } from "./pages/HomePage";
 import { IsProtected } from "./components/forms/IsProtected";
-import ExpenseForm from "./components/forms/ExpenseForm";
+import AddExpenseForm from "./components/forms/AddExpenseForm.jsx";
 import i18n from "../i18n";
 import { useEffect } from "react";
 import LandingPage from "./pages/LandingPage";
@@ -22,6 +22,27 @@ import LoggedOutPage from "./pages/LoggedOutPage.jsx";
 export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
 
 import { myData } from "../demo-data";
+import toast, { Toaster } from "react-hot-toast";
+
+export const makeToast = (type, message = "here is your toast", customIcon) => {
+  switch (type) {
+    case "success": 
+      toast.success((t)=> (<span onClick={() => toast.dismiss(t.id)}>{message}</span>),{
+        icon:  customIcon ?? "🚀",}
+        )
+      break;
+    case "error": 
+      toast.error((t)=> (<span onClick={() => toast.dismiss(t.id)}>{message}</span>),{
+        icon: customIcon ??  "😭",}
+        )
+      break;
+    default:
+      toast((t)=> (<span onClick={() => toast.dismiss(t.id)}>{message}</span>),{
+        icon: customIcon ??  "🧐",}
+        )
+  }
+
+}
 
 function App() {
   //get information from contexts
@@ -34,6 +55,7 @@ function App() {
 
   return (
     <>
+      <Toaster/>
       <Header loggedin={user ? true : false} />
 
       <main>
@@ -87,7 +109,7 @@ function App() {
             path="/expenses"
             element={
               <IsProtected>
-                <ExpenseForm />
+                <AddExpenseForm />
               </IsProtected>
             }
           />
