@@ -7,7 +7,7 @@ export const HomePage = () => {
   const { t } = useTranslation();
   return (
     <div>
-      <h1>Welcome {user.userName}</h1>
+      <h1>{t("Welcome ")} {user.userName}</h1>
 
       <button onClick={handleLogout}>{t("logout")}</button>
     </div>

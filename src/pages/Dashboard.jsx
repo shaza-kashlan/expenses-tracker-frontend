@@ -2,8 +2,11 @@ import WalletSummaryCard from "../components/WalletSummaryCard";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 import { BarChart, PieChart } from "@mui/x-charts";
+import { useTranslation } from "react-i18next";
+
 
 const Dashboard = ({ data }) => {
+  const { t } = useTranslation();
   const wallets = Array.from(new Set(data.map((expense) => expense.wallet)));
 
   const calculateExpenses = (wallets, data) => {
@@ -61,7 +64,7 @@ const Dashboard = ({ data }) => {
   return (
     <>
       <h1>Dashboard</h1>
-      <p>Got {data.length} bits of data</p>
+      <p>{t("Got")} {data.length} {t("bits of data")}</p>
 
       <Splide
         aria-label="Your wallets"
@@ -98,7 +101,7 @@ const Dashboard = ({ data }) => {
         ))}
       </Splide>
       <hr />
-      <h2>Income vs Expense</h2>
+      <h2>{t("Income vs Expense")}</h2>
       <div
         style={{
           minHeight: "600px",
@@ -118,7 +121,7 @@ const Dashboard = ({ data }) => {
       </div>
 
       <hr />
-      <h2>Total tracked expenses</h2>
+      <h2>{t("Total tracked expenses")}</h2>
       <div
         style={{
           minHeight: "400px",

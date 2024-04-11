@@ -173,7 +173,7 @@ const AddExpenseSourceForm = () => {
       <Card className="muiCard-root">
         <CardHeader
           className="muiCardHeader-root"
-          title={t("gerneral-source-information")}
+          title={t("general-source-information")}
           action={
             <IconButton
               onClick={() => setGeneralSectionOpen(!gerneralSectionOpen)}
