@@ -114,7 +114,7 @@ const Dashboard = ({data}) => {
     : (
     <>
       <h1>Dashboard</h1>
-      <p>{t("Got")} {data.length} {t("bits of data")}</p>
+      {/* <p>{t("Got")} {data.length} {t("bits of data")}</p> */}
 
       <Splide
         aria-label="Your wallets"
@@ -144,6 +144,7 @@ const Dashboard = ({data}) => {
         {wallets.map((wallet) => {
           const filteredExpenses = expenseData.filter((expense) => expense.source._id === wallet._id)
           return (
+            filteredExpenses.length &&
           <SplideSlide key={wallet._id}>
             <WalletSummaryCard
               wallet={wallet.name}
