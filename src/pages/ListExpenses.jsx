@@ -9,9 +9,9 @@ const ListExpenses = () => {
 
     useEffect(() => {
       if (!expenses ) {
-        console.log('got nothing', expenses)
+        //console.log('got nothing', expenses)
       } else {
-        console.log('got something', expenses)
+        //console.log('got something', expenses)
         setIsLoading(false)
       }
 

@@ -20,7 +20,7 @@ export const Login = () => {
     axios
       .post(`${API_URL}/users/login`, userToLogin)
       .then((response) => {
-        console.log("you logged in", response.data);
+        //console.log("you logged in", response.data);
 
         localStorage.setItem("accessToken", response.data.accessToken);
         localStorage.setItem("refreshToken", response.data.refreshToken);
@@ -30,7 +30,7 @@ export const Login = () => {
       .then(() => nav("/dashboard"))
       .catch((err) => {
         if (err.response && err.response.status === 400) {
-          console.log("inside catch", err);
+          //console.log("inside catch", err);
           setError(err.response.data.message);
         } else {
           console.error("An unexpected error occurred:", err);

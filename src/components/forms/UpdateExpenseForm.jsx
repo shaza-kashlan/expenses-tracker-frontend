@@ -94,7 +94,7 @@ const UpdateExpenseForm = () => {
           headers: headers,
           params: {include_source_details: true}
         });
-        console.log("here is details of expense", response.data);
+        //console.log("here is details of expense", response.data);
         // Update formData with existing source data
         setFormData({
           description: response.data.description || "",
@@ -176,7 +176,7 @@ const UpdateExpenseForm = () => {
         { headers }
       );
 
-      console.log("expense updated successfully:", response.data);
+      //console.log("expense updated successfully:", response.data);
 
       // Update context
       setExpenses(prevExpenses => ({

@@ -148,7 +148,7 @@ const AuthWrapper = ({ children }) => {
 				})
 				//console.log(expensesResponse)
 				const sourcesArray = sourcesResponse.data
-				console.log(`got ${sourcesArray.length} sources`, sourcesArray)
+				//console.log(`got ${sourcesArray.length} sources`, sourcesArray)
 				setSources({count:sourcesArray.length, sources: sourcesArray})
 			}
 			catch(err) {

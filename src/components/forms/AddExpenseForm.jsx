@@ -27,7 +27,7 @@ const AddExpenseForm = () => {
   const {sources, setExpenses, categories} = useContext(AuthContext)
 
   //console.log('exp on exp page', expenses)
-  console.log('sources on exp page', sources)
+  //console.log('sources on exp page', sources)
 
 
   const { t } = useTranslation();
@@ -117,7 +117,7 @@ const AddExpenseForm = () => {
     };
 
     // Send formData to backend server
-    console.log("form data", formData);
+    //console.log("form data", formData);
     const newExpense = {
       ...formData,
       payment_method: sources.sources.find(source => source._id === formData.source).type.toLowerCase().split('_')[0],
@@ -129,7 +129,7 @@ const AddExpenseForm = () => {
       const response = await axios.post(`${API_URL}/expenses`, newExpense, {
         headers,
       });
-      console.log("Entry added successfully:", response.data);
+      //console.log("Entry added successfully:", response.data);
       // Show success Snackbar
       setOpenSnackBar({
         open: true,
