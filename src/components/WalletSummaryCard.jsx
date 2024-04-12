@@ -7,7 +7,7 @@ const WalletSummaryCard = ({data, wallet}) => {
   if (data.length === 0) { 
     return
   }
-  console.log('wall card data', data, 'wallet card wallet',wallet)
+  //console.log('wall card data', data, 'wallet card wallet',wallet)
   const { t } = useTranslation();
   const totalBalance = data.reduce((acc,expense) => acc + expense.amount,0)
 

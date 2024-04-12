@@ -55,7 +55,7 @@ const Dashboard = ({data}) => {
     console.log('cuunts',counts)
     console.log('wallets',sources.sources)
     const countsArr = Object.keys(counts).map((element, index) => ({
-      id: index,
+      id: sources.sources.find(wallet => wallet.name === element)._id,
       value: t(`${counts[element]}`),
       label: element[0].toUpperCase() + element.slice(1),
     }));
@@ -141,16 +141,21 @@ const Dashboard = ({data}) => {
           },
         }}
       >
-        {wallets.map((wallet) => {
-          const filteredExpenses = expenseData.filter((expense) => expense.source._id === wallet._id)
+        {expenseCountByWallet.map((wallet) => {
+          console.log('wallet',wallet)
+          const filteredExpenses = expenseData.filter((expense) => expense.source._id === wallet.id)
+          console.log("got one",expenseCountByWallet, filteredExpenses)
           return (
-            filteredExpenses.length > 0 &&
-          <SplideSlide key={wallet._id}>
+            expenseCountByWallet.length > 1 ?
+          (<SplideSlide key={wallet._id}>
             <WalletSummaryCard
-              wallet={wallet.name}
+              wallet={filteredExpenses[0].source.name}
               data={filteredExpenses}
             />
-          </SplideSlide>
+          </SplideSlide>) : (<WalletSummaryCard key={wallet.id}
+              wallet={filteredExpenses[0].source.name}
+              data={filteredExpenses}
+            />)
         )})}
       </Splide>
       <hr />
