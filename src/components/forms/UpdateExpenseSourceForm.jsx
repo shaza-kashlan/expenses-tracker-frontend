@@ -44,7 +44,7 @@ const UpdateExpenseSourceForm = () => {
     type: "",
     format: "",
     public: true,
-    uniqueField: "",
+    unique_field: "",
     mapping: {
       date: "",
       description: "",
@@ -52,8 +52,8 @@ const UpdateExpenseSourceForm = () => {
       amount: "",
       payee: "",
     },
-    numberStyle: "normal",
-    dateFormat: "", // New field added
+    number_style: "normal",
+    date_format: "", // New field added
   });
 
   useEffect(() => {
@@ -73,23 +73,24 @@ const UpdateExpenseSourceForm = () => {
           headers: headers,
         });
         const existingSource = response.data;
-
+        console.log(existingSource)
         // Update formData with existing source data
         setFormData({
-          name: existingSource.name || "",
-          type: existingSource.type || "",
-          format: existingSource.format || "",
-          public: existingSource.public,
-          uniqueField: existingSource.uniqueField || "",
-          mapping: {
-            date: existingSource.mapping?.date || "",
-            description: existingSource.mapping?.description || "",
-            notes: existingSource.mapping?.notes || "",
-            amount: existingSource.mapping?.amount || "",
-            payee: existingSource.mapping?.payee || "",
-          },
-          numberStyle: existingSource.numberStyle || "normal",
-          dateFormat: existingSource.dateFormat || "", // New field added
+          // name: existingSource.name || "",
+          // type: existingSource.type || "",
+          // format: existingSource.format || "",
+          // public: existingSource.public,
+          // uniqueField: existingSource.uniqueField || "",
+          // mapping: {
+          //   date: existingSource.mapping?.date || "",
+          //   description: existingSource.mapping?.description || "",
+          //   notes: existingSource.mapping?.notes || "",
+          //   amount: existingSource.mapping?.amount || "",
+          //   payee: existingSource.mapping?.payee || "",
+          // },
+          // numberStyle: existingSource.numberStyle || "normal",
+          // dateFormat: existingSource.dateFormat || "", // New field added
+          ...existingSource
         });
       } catch (error) {
         console.error("Error fetching source data:", error);
@@ -358,8 +359,8 @@ const UpdateExpenseSourceForm = () => {
           >
             <small>{t("number-style")}</small>
             <select
-              name="numberStyle"
-              value={formData.numberStyle}
+              name="number_style"
+              value={formData.number_style}
               onChange={handleChange}
               required
             >
@@ -370,8 +371,8 @@ const UpdateExpenseSourceForm = () => {
             <input
               type="text"
               className="form-control"
-              name="dateFormat"
-              value={formData.dateFormat}
+              name="date_format"
+              value={formData.date_format}
               onChange={handleChange}
               placeholder={t("DateFormat")}
               onTouchStart={(e) => e.stopPropagation()}
@@ -379,8 +380,8 @@ const UpdateExpenseSourceForm = () => {
             <small>{t("uniqFiels-des")}</small>
             <input
               type="text"
-              name="uniqueField"
-              value={formData.uniqueField}
+              name="unique_field"
+              value={formData.unique_field}
               onChange={handleChange}
               placeholder={t("uniqueField")}
             />
