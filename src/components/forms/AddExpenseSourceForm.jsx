@@ -47,7 +47,7 @@ const AddExpenseSourceForm = () => {
     type: "",
     format: "",
     public: true,
-    uniqueField: "",
+    unique_field: "",
     mapping: {
       date: "",
       description: "",
@@ -55,9 +55,9 @@ const AddExpenseSourceForm = () => {
       amount: "",
       payee: "",
     },
-    numberStyle: "normal",
+    number_style: "normal",
     image: null,
-    dateFormat: "",
+    date_format: "",
   });
 
   const handleChange = (e) => {
@@ -141,7 +141,7 @@ const AddExpenseSourceForm = () => {
         type: "",
         format: "",
         public: true,
-        uniqueField: "",
+        unique_field: "",
         mapping: {
           date: "",
           description: "",
@@ -149,8 +149,8 @@ const AddExpenseSourceForm = () => {
           amount: "",
           payee: "",
         },
-        numberStyle: "normal",
-        dateFormat: "",
+        number_style: "normal",
+        date_format: "",
       });
       nav("/my-expenses");
     } catch (error) {
@@ -347,8 +347,8 @@ const AddExpenseSourceForm = () => {
           >
             <small>{t("number-style")}</small>
             <select
-              name="numberStyle"
-              value={formData.numberStyle}
+              name="number_style"
+              value={formData.number_style}
               onChange={handleChange}
               required
             >
@@ -359,8 +359,8 @@ const AddExpenseSourceForm = () => {
             <input
               type="text"
               className="form-control"
-              name="dateFormat"
-              value={formData.dateFormat}
+              name="date_format"
+              value={formData.date_format}
               onChange={handleChange}
               placeholder={t("DateFormat")}
               onTouchStart={(e) => e.stopPropagation()}
@@ -368,8 +368,8 @@ const AddExpenseSourceForm = () => {
             <small>{t("uniqFiels-des")}</small>
             <input
               type="text"
-              name="uniqueField"
-              value={formData.uniqueField}
+              name="unique_field"
+              value={formData.unique_field}
               onChange={handleChange}
               placeholder={t("uniqueField")}
             />
