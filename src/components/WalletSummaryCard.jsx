@@ -32,8 +32,8 @@ const WalletSummaryCard = ({data, wallet}) => {
         <p className="push-apart">{t("Last used:")} <span>{lastUsed}</span></p>
         </section>
         <footer>
-          <button type="button" className="button-small" onClick={() => navigate(`/sources/660e9ba097cea6ff1b929df4/expenses`)} >{t("View transactions")}</button>
-          <button type="button" className="button-small" onClick={() => navigate(`/sources/660e9ba097cea6ff1b929df4`)} >{t("Edit this wallet")}</button>
+          <button type="button" className="button-small" onClick={() => navigate(`/my-expenses`)} >{t("View transactions")}</button>
+          <button type="button" className="button-small" onClick={() => navigate(`/sources/${data[0].source._id}`)} >{t("Edit this wallet")}</button>
         </footer>
       </article>
     )
