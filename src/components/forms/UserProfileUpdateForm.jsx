@@ -185,7 +185,7 @@ const UserProfileUpdateForm = () => {
         severity: "success",
         message: t("user-updated-success"),
       });
-      setUser({ ...user, imageUrl: response.data.imageUrl });
+      setUser(prevUser => ({ ...response.data }));
       console.log("userContext", user);
     } catch (error) {
       console.error("Error updating user profile:", error.message);
